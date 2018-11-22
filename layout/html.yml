@@ -51,7 +51,7 @@ content:
               plugin: 'wf/embed'
               method: js
               data:
-                file: /plugin/theme/analysis/js/function.js
+                file: /plugin/plugin/analysis/js/function.js
       body:
         type: body
         innerHTML: 'body...'

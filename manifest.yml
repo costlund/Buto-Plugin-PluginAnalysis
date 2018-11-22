@@ -7,6 +7,9 @@ plugin:
     name: wf/yml
     version: '1.0'
   -
+    name: wf/table
+    version: '1.0'
+  -
     name: datatable/datatable_1_10_16
     version: '1.0'
 sys:

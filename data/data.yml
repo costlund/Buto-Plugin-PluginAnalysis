@@ -1,1 +1,11 @@
-title: Theme Analsysis
+title: Plugin Analsysis
+manifest:
+  version: '1.0'
+  plugin:
+  sys:
+    -
+      name: mercury
+      version:
+        - '1.0'
+  php:
+    - '7.2'

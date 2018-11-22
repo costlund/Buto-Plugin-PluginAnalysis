@@ -15,31 +15,22 @@
               innerHTML: Name
             -
               type: th
-              innerHTML: Version (theme)
-            -
-              type: th
-              innerHTML: Plugin module
-            -
-              type: th
-              innerHTML: Plugin
-            -
-              type: th
-              innerHTML: Event
-            -
-              type: th
               innerHTML: Manifest
             -
               type: th
-              innerHTML: Version (plugin)
+              innerHTML: Version
             -
               type: th
-              innerHTML: Version conflict
+              innerHTML: Plugins
             -
               type: th
-              innerHTML: Manifest plugin
+              innerHTML: Conflict
             -
               type: th
-              innerHTML: Version conflict
+              innerHTML: Public folder
+            -
+              type: th
+              innerHTML: Public folder match
     -
       type: tbody
       innerHTML: rs:trs
@@ -53,7 +44,7 @@
           id: my_table
           json:
             paging: true
-            iDisplayLength : 100
+            iDisplayLength : 10
             ordering: true
             info: true
             searching: true

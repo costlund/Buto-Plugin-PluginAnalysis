@@ -1,20 +1,11 @@
 type: tr
+attribute:
+  data-id: rs:id
+  onclick: PluginPluginAnalysis.plugin(this.getAttribute('data-id'))
 innerHTML:
   -
     type: td
     innerHTML: rs:name
-  -
-    type: td
-    innerHTML: rs:version
-  -
-    type: td
-    innerHTML: rs:plugin_module
-  -
-    type: td
-    innerHTML: rs:plugin
-  -
-    type: td
-    innerHTML: rs:event
   -
     type: td
     innerHTML: rs:has_manifest
@@ -23,13 +14,15 @@ innerHTML:
     innerHTML: rs:version_manifest
   -
     type: td
-    innerHTML: rs:theme_version_conflict
+    innerHTML: rs:plugins
   -
     type: td
-    innerHTML: rs:manifest_plugin
+    innerHTML: rs:conflict
   -
     type: td
-    innerHTML: rs:version_conflict
-   
+    innerHTML: rs:has_public_folder_text
+  -
+    type: td
+    innerHTML: rs:public_folder_match_text
    
    

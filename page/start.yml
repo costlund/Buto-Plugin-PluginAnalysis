@@ -2,7 +2,7 @@ settings:
   layout:
     - html
     - main
-  title: yml:/plugin/theme/analysis/data/data.yml:title
+  title: yml:/plugin/plugin/analysis/data/data.yml:title
 content:
   -
     type: script
@@ -22,6 +22,8 @@ content:
       id: start
       style: 'min-height:600px'
     innerHTML: 'start...'
-      
+  -
+    type: script
+    innerHTML: "PluginPluginAnalysis.analys()"
 
-  
+    

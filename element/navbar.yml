@@ -33,7 +33,7 @@
           type: a
           attribute:
             class: navbar-brand
-            onclick: "PluginThemeAnalysis.analys();"
+            onclick: "PluginPluginAnalysis.analys();"
           innerHTML:
             -
               type: span
