@@ -76,17 +76,15 @@
     class: well
   innerHTML:
     -
+      type: div
+      settings:
+        enabled: rs:conflict
+      attribute:
+        class: alert alert-warning
+      innerHTML: Has conflict
+    -
       type: h2
       innerHTML: Plugin
-    -
-      type: div
-      innerHTML:
-        -
-          type: strong
-          innerHTML: Plugin conflict
-        -
-          type: span
-          innerHTML: rs:conflict
     -
       type: widget
       data:
