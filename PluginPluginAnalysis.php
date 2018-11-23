@@ -49,11 +49,32 @@ class PluginPluginAnalysis{
      */
     wfDocument::mergeLayout($page->get());
   }
+  private function getUsage(){
+    $usage = array();
+    foreach ($this->plugins->get() as $key => $value) {
+      $item = new PluginWfArray($value);
+      if($item->get('manifest/plugin')){
+        foreach ($item->get('manifest/plugin') as $key2 => $value2) {
+          $item2 = new PluginWfArray($value2);
+          if($this->plugin->get('name')==$item2->get('name')){
+            $usage[] = array('name' => $item->get('name'), 'row_click' => "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
+          }
+        }
+      }
+    }
+    return $usage;
+  }
   public function page_plugin(){
     $element = new PluginWfYml(__DIR__.'/element/plugin.yml');
     $this->setPlugin();
+    
+    
+    
+    //wfHelp::yml_dump($this->plugin);
+    
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
+    $element->setByTag(array('usage' => $this->getUsage()));
     wfDocument::renderElement($element->get());
     wfHelp::yml_dump($this->plugin->get());
   }
@@ -156,6 +177,13 @@ class PluginPluginAnalysis{
     $key = str_replace('_A_DOT_', '.', $key);
     $this->setPlugins();
     $this->plugin = new PluginWfArray($this->plugins->get($key));
+    if($this->plugin->get('manifest/plugin')){
+      foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
+        $item = new PluginWfArray($value);
+        $this->plugin->set("manifest/plugin/$key/row_click", "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
+      }
+    }
+    return null;
   }
   private function scan_dir($dir){
     $startfolder=$dir;

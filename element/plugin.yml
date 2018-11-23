@@ -102,4 +102,19 @@
     class: well
     style: 'font-style:italic'
   innerHTML: Has no plugin
+-
+  type: div
+  attribute:
+    class: well
+  innerHTML:
+    -
+      type: h2
+      innerHTML: Usage
+    -
+      type: widget
+      data:
+        plugin: wf/table
+        method: render_many
+        data:
+          rs: rs:usage
       

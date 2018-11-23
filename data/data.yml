@@ -1,6 +1,9 @@
 title: Plugin Analsysis
 manifest:
   version: '1.0'
+  history:
+    '1.0': 
+      description: First version.
   plugin:
   sys:
     -
@@ -9,3 +12,7 @@ manifest:
         - '1.0'
   php:
     - '7.2'
+  author: 
+  links: 
+    - 'https://github.com'
+  description: ''
