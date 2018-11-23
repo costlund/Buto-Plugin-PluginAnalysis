@@ -74,14 +74,27 @@ class PluginPluginAnalysis{
     }
     return $history;
   }
+  private function getLinks(){
+    $links = array();
+    if($this->plugin->get('manifest/links')){
+      foreach ($this->plugin->get('manifest/links') as $key => $value) {
+        $links[] = array('name' => $key, 'url' => $value, 'row_click' => "window.open('$value')");
+      }
+    }
+    return $links;
+  }
   public function page_plugin(){
     $element = new PluginWfYml(__DIR__.'/element/plugin.yml');
     $this->setPlugin();
-    //wfHelp::yml_dump($this->plugin);
+    //wfHelp::yml_dump($this->plugin->get('manifest/links'));
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
-    $element->setByTag(array('usage' => $this->getUsage()));
+    $usage = $this->getUsage();
+    $element->setByTag(array('usage' => $usage, 'has_usage' => sizeof($usage)));
     $element->setByTag(array('history' => $this->getHistory()));
+    $element->setByTag($this->plugin->get('manifest'), 'manifest', true);
+    $links = $this->getLinks();
+    $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
     wfDocument::renderElement($element->get());
     wfHelp::yml_dump($this->plugin->get());
   }

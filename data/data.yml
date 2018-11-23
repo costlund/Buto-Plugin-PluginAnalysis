@@ -13,6 +13,6 @@ manifest:
   php:
     - '7.2'
   author: 
-  links: 
-    - 'https://github.com'
+  links:
+    'Github': 'https://github.com'
   description: ''

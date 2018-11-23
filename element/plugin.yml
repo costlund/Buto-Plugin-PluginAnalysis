@@ -1,133 +1,216 @@
 -
   type: h1
   innerHTML: rs:name
+
 -
   type: div
+  attribute:
+    class: row
   innerHTML:
     -
-      type: strong
-      innerHTML: Version
-    -
-      type: span
-      innerHTML: rs:version_manifest
--
-  type: div
-  innerHTML:
-    -
-      type: strong
-      innerHTML: Manifest
-    -
-      type: span
-      innerHTML: rs:has_manifest
-    -
-      type: a
-      settings:
-        disabled: rs:manifest
+      type: div
       attribute:
-        data-url_id: rs:url_id
-        onclick: PluginPluginAnalysis.manifest_create(this)
-      innerHTML: Create
--
-  type: div
-  innerHTML:
-    -
-      type: strong
-      innerHTML: Files
-    -
-      type: span
-      innerHTML: rs:files_count
--
-  type: div
-  attribute:
-    class: well
-  innerHTML:
-    -
-      type: div
+        class: col-md-6
       innerHTML:
         -
-          type: strong
-          innerHTML: Public folder
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Version
+            -
+              type: span
+              innerHTML: rs:version_manifest
         -
-          type: span
-          innerHTML: rs:has_public_folder_text
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Author
+            -
+              type: span
+              innerHTML: manifest:author
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Description
+            -
+              type: span
+              innerHTML: manifest:description
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Manifest
+            -
+              type: span
+              innerHTML: rs:has_manifest
+            -
+              type: a
+              settings:
+                disabled: rs:manifest
+              attribute:
+                data-url_id: rs:url_id
+                onclick: PluginPluginAnalysis.manifest_create(this)
+              innerHTML: Create
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Files
+            -
+              type: span
+              innerHTML: rs:files_count
     -
       type: div
-      innerHTML:
-        -
-          type: strong
-          innerHTML: Public folder twin
-        -
-          type: span
-          innerHTML: rs:has_public_folder_twin_text
-    -
-      type: div
-      innerHTML:
-        -
-          type: strong
-          innerHTML: Public folder match
-        -
-          type: span
-          innerHTML: rs:public_folder_match_text
--
-  type: div
-  settings:
-    enabled: rs:plugins
-  attribute:
-    class: well
-  innerHTML:
-    -
-      type: div
-      settings:
-        enabled: rs:conflict
       attribute:
-        class: alert alert-warning
-      innerHTML: Has conflict
-    -
-      type: h2
-      innerHTML: Plugin
-    -
-      type: widget
-      data:
-        plugin: wf/table
-        method: render_many
-        data:
-          rs: rs:plugin
+        class: col-md-6
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: div
+              innerHTML:
+                -
+                  type: strong
+                  innerHTML: Public folder
+                -
+                  type: span
+                  innerHTML: rs:has_public_folder_text
+            -
+              type: div
+              innerHTML:
+                -
+                  type: strong
+                  innerHTML: Public folder twin
+                -
+                  type: span
+                  innerHTML: rs:has_public_folder_twin_text
+            -
+              type: div
+              innerHTML:
+                -
+                  type: strong
+                  innerHTML: Public folder match
+                -
+                  type: span
+                  innerHTML: rs:public_folder_match_text
 -
   type: div
-  settings:
-    disabled: rs:plugins
   attribute:
-    class: well
-    style: 'font-style:italic'
-  innerHTML: Has no plugin
--
-  type: div
-  attribute:
-    class: well
+    class: row
   innerHTML:
     -
-      type: h2
-      innerHTML: Usage
+      type: div
+      attribute:
+        class: col-md-6
+      innerHTML:
+        -
+          type: div
+          settings:
+            enabled: rs:plugins
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: div
+              settings:
+                enabled: rs:conflict
+              attribute:
+                class: alert alert-warning
+              innerHTML: Has conflict
+            -
+              type: h2
+              innerHTML: Plugin
+            -
+              type: widget
+              data:
+                plugin: wf/table
+                method: render_many
+                data:
+                  rs: rs:plugin
+        -
+          type: div
+          settings:
+            disabled: rs:plugins
+          attribute:
+            class: well
+            style: 'font-style:italic'
+          innerHTML: Has no plugin
     -
-      type: widget
-      data:
-        plugin: wf/table
-        method: render_many
-        data:
-          rs: rs:usage
+      type: div
+      attribute:
+        class: col-md-6
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: h2
+              innerHTML: Usage
+            -
+              type: widget
+              settings:
+                enabled: rs:has_usage
+              data:
+                plugin: wf/table
+                method: render_many
+                data:
+                  rs: rs:usage
 -
   type: div
   attribute:
-    class: well
+    class: row
   innerHTML:
     -
-      type: h2
-      innerHTML: History
+      type: div
+      attribute:
+        class: col-md-6
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: h2
+              innerHTML: History
+            -
+              type: widget
+              data:
+                plugin: wf/table
+                method: render_many
+                data:
+                  rs: rs:history
     -
-      type: widget
-      data:
-        plugin: wf/table
-        method: render_many
-        data:
-          rs: rs:history
+      type: div
+      attribute:
+        class: col-md-6
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: h2
+              innerHTML: Links
+            -
+              type: widget
+              settings:
+                enabled: rs:has_links
+              data:
+                plugin: wf/table
+                method: render_many
+                data:
+                  rs: rs:links
       
