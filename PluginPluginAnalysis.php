@@ -64,17 +64,24 @@ class PluginPluginAnalysis{
     }
     return $usage;
   }
+  private function getHistory(){
+    $history = array();
+    if($this->plugin->get('manifest/history')){
+      foreach ($this->plugin->get('manifest/history') as $key => $value) {
+        $item = new PluginWfArray($value);
+        $history[] = array('version' => $key, 'description' => $item->get('description'));
+      }
+    }
+    return $history;
+  }
   public function page_plugin(){
     $element = new PluginWfYml(__DIR__.'/element/plugin.yml');
     $this->setPlugin();
-    
-    
-    
     //wfHelp::yml_dump($this->plugin);
-    
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
     $element->setByTag(array('usage' => $this->getUsage()));
+    $element->setByTag(array('history' => $this->getHistory()));
     wfDocument::renderElement($element->get());
     wfHelp::yml_dump($this->plugin->get());
   }

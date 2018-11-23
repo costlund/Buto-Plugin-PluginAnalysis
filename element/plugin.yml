@@ -115,4 +115,19 @@
         method: render_many
         data:
           rs: rs:usage
+-
+  type: div
+  attribute:
+    class: well
+  innerHTML:
+    -
+      type: h2
+      innerHTML: History
+    -
+      type: widget
+      data:
+        plugin: wf/table
+        method: render_many
+        data:
+          rs: rs:history
       
