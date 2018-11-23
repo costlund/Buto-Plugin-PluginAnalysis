@@ -69,7 +69,7 @@ class PluginPluginAnalysis{
     if($this->plugin->get('manifest/history')){
       foreach ($this->plugin->get('manifest/history') as $key => $value) {
         $item = new PluginWfArray($value);
-        $history[] = array('version' => $key, 'description' => $item->get('description'));
+        $history[] = array('version' => $key, 'date' => $item->get('date'), 'description' => $item->get('description'));
       }
     }
     return $history;
@@ -142,8 +142,7 @@ class PluginPluginAnalysis{
        */
       $data = new PluginWfYml(__DIR__.'/data/data.yml');
       $data->set('manifest/plugin', $plugin);
-      //wfHelp::yml_dump($data->get('manifest'));
-      
+      $data->set('manifest/history/1.0/date', date('Y-m-d'));
       /**
        * Create manifest.
        */
@@ -152,7 +151,6 @@ class PluginPluginAnalysis{
         wfHelp::yml_dump($filename);
         file_put_contents($filename, wfHelp::getYmlDump($data->get('manifest')));
       }
-      
     }
   }
   private function doPluginSearch($needle, $content){
@@ -175,11 +173,8 @@ class PluginPluginAnalysis{
     }
   }
   public function page_analys(){
-    
     $this->setPlugins();
-    
     //wfHelp::yml_dump($this->plugins, true);
-    
     $element = new PluginWfYml('/plugin/plugin/analysis/element/table.yml');
     $trs = array();
     foreach ($this->plugins->get() as $key => $value) {

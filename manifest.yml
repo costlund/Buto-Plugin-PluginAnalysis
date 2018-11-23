@@ -1,5 +1,7 @@
-version: '1.0.4'
+version: '1.0.5'
 history:
+  '1.0.5':
+    description: Add date to history.
   '1.0.4':
     description: Show links in plugin view.
   '1.0.3':
