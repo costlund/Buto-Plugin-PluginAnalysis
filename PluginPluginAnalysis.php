@@ -210,6 +210,9 @@ class PluginPluginAnalysis{
               }
             }
             $plugin->set($value.'.'.$value2.'/has_public_folder', $has_public_folder);
+            if($has_public_folder && (!$has_public_folder_twin || !$public_folder_match)){
+              $has_public_folder_text .= '*';
+            }
             $plugin->set($value.'.'.$value2.'/has_public_folder_text', $has_public_folder_text);
             $plugin->set($value.'.'.$value2.'/has_public_folder_twin', $has_public_folder_twin);
             $plugin->set($value.'.'.$value2.'/has_public_folder_twin_text', $has_public_folder_twin_text);

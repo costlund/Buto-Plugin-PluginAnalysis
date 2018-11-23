@@ -1,4 +1,9 @@
-version: '1.0'
+version: '1.0.1'
+history:
+  '1.0.1':
+    description: Merge two columns.
+  '1.0':
+    description: First version.
 plugin:
   -
     name: wf/array

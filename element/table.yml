@@ -28,9 +28,6 @@
             -
               type: th
               innerHTML: Public folder
-            -
-              type: th
-              innerHTML: Public folder match
     -
       type: tbody
       innerHTML: rs:trs

@@ -21,8 +21,5 @@ innerHTML:
   -
     type: td
     innerHTML: rs:has_public_folder_text
-  -
-    type: td
-    innerHTML: rs:public_folder_match_text
    
    
