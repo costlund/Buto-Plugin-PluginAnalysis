@@ -1,4 +1,6 @@
 title: Plugin Analsysis
+deprecated: false
+deprecated_description: ''
 manifest:
   version: '1.0'
   history:
