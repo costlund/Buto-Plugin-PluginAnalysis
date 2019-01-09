@@ -240,6 +240,9 @@ class PluginPluginAnalysis{
     return null;
   }
   private function scan_dir($dir){
+    if(!wfFilesystem::fileExist($dir)){
+      exit("Dir $dir does not exist.");
+    }
     $startfolder=$dir;
     $files=array();
     foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $startfolder, RecursiveDirectoryIterator::KEY_AS_PATHNAME ), RecursiveIteratorIterator::CHILD_FIRST ) as $file => $info ) {
