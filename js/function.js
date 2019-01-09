@@ -1,6 +1,17 @@
 function PluginPluginAnalysis(){
-  this.analys = function(){
-    PluginWfAjax.load('start', '/[[class]]/analys');
+  this.reload = function(){
+    PluginWfAjax.update('start');
+  }
+  this.analys = function(theme){
+    if(theme){
+      PluginWfAjax.load('start', '/[[class]]/analys?theme='+theme);
+      $('#modal_plugin').modal('hide');
+    }else{
+      PluginWfAjax.load('start', '/[[class]]/analys');
+    }
+  }
+  this.theme_analys = function(btn){
+    PluginWfBootstrapjs.modal({id: 'modal_plugin', label: btn.innerHTML, url: '/plugin_analysis/theme_analys', resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close', size: 'sm'});
   }
   this.plugin = function(id){
     $('#modal_plugin').modal('hide');
@@ -13,9 +24,3 @@ function PluginPluginAnalysis(){
   }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();
-
-
-
-
-
-

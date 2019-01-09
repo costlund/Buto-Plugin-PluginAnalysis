@@ -1,4 +1,21 @@
 -
+  type: div
+  attribute:
+    class: alert alert-info
+  innerHTML:
+    -
+      type: a
+      attribute:
+        style: 'float:right'
+        onclick: PluginPluginAnalysis.reload()
+      innerHTML: Reload
+    -
+      type: strong
+      innerHTML: Theme
+    -
+      type: span
+      innerHTML: rs:theme
+-
   type: table
   attribute:
     class: 'table table-striped table-responsive table-hover table-condensed'

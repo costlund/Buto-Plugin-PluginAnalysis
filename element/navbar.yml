@@ -30,10 +30,9 @@
               attribute:
                 class: icon-bar
         -
-          type: a
+          type: span
           attribute:
             class: navbar-brand
-            onclick: "PluginPluginAnalysis.analys();"
           innerHTML:
             -
               type: span
@@ -51,23 +50,19 @@
           attribute:
             class: 'nav navbar-nav'
           innerHTML:
-#            -
-#              type: li
-#              innerHTML:
-#                -
-#                  type: a
-#                  innerHTML: Analys
-#            -
-#              type: li
-#              innerHTML:
-#                -
-#                  type: p
-#                  attribute:
-#                    class: navbar-text
-#                  innerHTML:
-#                    -
-#                      type: span
-#                      attribute:
-#                        class: badge
-#                        id: badge_remote
-#                      innerHTML: 
+            -
+              type: li
+              innerHTML:
+                -
+                  type: a
+                  attribute:
+                    onclick: "PluginPluginAnalysis.analys();"
+                  innerHTML: All plugin
+            -
+              type: li
+              innerHTML:
+                -
+                  type: a
+                  attribute:
+                    onclick: "PluginPluginAnalysis.theme_analys(this);"
+                  innerHTML: Theme plugin

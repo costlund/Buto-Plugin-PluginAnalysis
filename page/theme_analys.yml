@@ -1,0 +1,11 @@
+-
+  type: select
+  attribute:
+    id: theme_analys_select
+  innerHTML: rs:option
+-
+  type: button
+  attribute:
+    class: btn btn-primary
+    onclick: PluginPluginAnalysis.analys(document.getElementById('theme_analys_select').value);
+  innerHTML: Analys

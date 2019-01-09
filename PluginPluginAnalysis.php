@@ -35,6 +35,45 @@ class PluginPluginAnalysis{
       $this->settings = new PluginWfArray(wfArray::get($GLOBALS, 'sys/settings/plugin_modules/'.wfArray::get($GLOBALS, 'sys/class').'/settings'));
     }
   }
+  /**
+   * Get all theme in array.
+   * @return array
+   */
+  private function getTheme(){
+    $theme = array();
+    $path1 = wfGlobals::getAppDir().'/theme';
+    $dir1 = wfFilesystem::getScandir($path1);
+    foreach ($dir1 as $key1 => $value1) {
+      $path2 = wfGlobals::getAppDir().'/theme/'.$value1;
+      if(!is_file($path2)){
+        $dir2 = wfFilesystem::getScandir($path2);
+        foreach ($dir2 as $key2 => $value2) {
+          $path3 = wfGlobals::getAppDir().'/theme/'.$value1.'/'.$value2;
+          if(!is_file($path3)){
+            $theme[] = $value1.'/'.$value2;
+          }
+        }
+        
+      }
+    }
+    return $theme;
+  }
+  public function page_theme_analys(){
+    wfPlugin::includeonce('wf/yml');
+    $page = new PluginWfYml(__DIR__.'/page/theme_analys.yml');
+    
+    
+    $theme = $this->getTheme();
+    $option = array();
+    foreach ($theme as $key => $value) {
+      $option[] = wfDocument::createHtmlElement('option', $value, array('value' => $value));
+    }
+    //wfHelp::dump($option);
+    
+    $page->setByTag(array('option' => $option));
+    
+    wfDocument::renderElement($page->get());
+  }
   public function page_start(){
     wfPlugin::includeonce('wf/yml');
     $page = new PluginWfYml(__DIR__.'/page/start.yml');
@@ -174,7 +213,6 @@ class PluginPluginAnalysis{
   }
   public function page_analys(){
     $this->setPlugins();
-    //wfHelp::yml_dump($this->plugins, true);
     $element = new PluginWfYml('/plugin/plugin/analysis/element/table.yml');
     $trs = array();
     foreach ($this->plugins->get() as $key => $value) {
@@ -184,6 +222,7 @@ class PluginPluginAnalysis{
       $trs[] = $tr->get();
     }
     $element->setByTag(array('trs' => $trs));
+    $element->setByTag(wfRequest::getAll(), 'rs', true);
     wfDocument::renderElement($element->get());
     wfHelp::yml_dump($this->plugins, true);
   }
@@ -205,71 +244,85 @@ class PluginPluginAnalysis{
     $files=array();
     foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $startfolder, RecursiveDirectoryIterator::KEY_AS_PATHNAME ), RecursiveIteratorIterator::CHILD_FIRST ) as $file => $info ) {
         if( $info->isFile() && $info->isReadable() ){
-            //$files[realpath($info->getPathname())]=array('filename'=>$info->getFilename(),'time'=> wfFilesystem::getFiletime($info->getPathname()), 'size'=> filesize($info->getPathname()) );
-            //wfHelp::yml_dump(substr($info->getPathname(), strlen($dir)));
-            //$files[substr($info->getPathname(), strlen($dir))]=array('filename'=> $info->getFilename(), 'size'=> filesize($info->getPathname()) );
             $files[substr($info->getPathname(), strlen($dir))]=array('size'=> filesize($info->getPathname()) );
         }
     }
     return $files;
   }
-  private function setPlugins(){
+  /**
+   * Get all plugins in array.
+   */
+  private function getPluginArray(){
     $dir = wfGlobals::getAppDir().'/plugin';
     $data = wfFilesystem::getScandir($dir);
-    /**
-     * Get all plugins.
-     */
-    $plugin = new PluginWfArray();
+    $plugin = array();
     foreach ($data as $key => $value) {
       if(is_dir($dir.'/'.$value)){
         $dir2 = $dir.'/'.$value;
         $data2 = wfFilesystem::getScandir($dir2);
         foreach ($data2 as $key2 => $value2) {
           if(is_dir($dir2.'/'.$value2)){
-            $plugin->set($value.'.'.$value2.'/name', $value.'/'.$value2);
-            $has_public_folder = false;
-            $has_public_folder_text = null;
-            $has_public_folder_twin = null;
-            $has_public_folder_twin_text = null;
-            $public_folder_match = null;
-            $public_folder_match_text = null;
-            $public_folder = $dir2.'/'.$value2.'/public';
-            $public_folder_twin = wfGlobals::getWebDir().'/plugin/'.$value.'/'.$value2;
-            if(is_dir($public_folder)){
-              $has_public_folder = true;
-              $has_public_folder_text = 'Yes';
-              $has_public_folder_twin = is_dir($public_folder_twin);
-              if($has_public_folder_twin){
-                $has_public_folder_twin_text = 'Yes';
-                if($this->scan_dir($public_folder)==$this->scan_dir($public_folder_twin)){
-                  $public_folder_match = true;
-                  $public_folder_match_text = 'Yes';
-                }else{
-                  $public_folder_match = false;
-                  $public_folder_match_text = 'No';
-                }
-              }else{
-                $has_public_folder_twin_text = 'No';
-              }
-            }
-            $plugin->set($value.'.'.$value2.'/has_public_folder', $has_public_folder);
-            if($has_public_folder && (!$has_public_folder_twin || !$public_folder_match)){
-              $has_public_folder_text .= '*';
-            }
-            $plugin->set($value.'.'.$value2.'/has_public_folder_text', $has_public_folder_text);
-            $plugin->set($value.'.'.$value2.'/has_public_folder_twin', $has_public_folder_twin);
-            $plugin->set($value.'.'.$value2.'/has_public_folder_twin_text', $has_public_folder_twin_text);
-            $plugin->set($value.'.'.$value2.'/public_folder_match', $public_folder_match);
-            $plugin->set($value.'.'.$value2.'/public_folder_match_text', $public_folder_match_text);
-            $plugin->set($value.'.'.$value2.'/files', $this->scan_dir($dir2.'/'.$value2));
-            $plugin->set($value.'.'.$value2.'/files_count', sizeof($plugin->get($value.'.'.$value2.'/files')));
+            $plugin[] = $value.'/'.$value2;
           }
         }
       }
     }
-    
-//    $settings = new PluginWfYml('/theme/[theme]/config/settings.yml');
-//    wfHelp::yml_dump($settings, true);
+    return $plugin;
+  }
+  private function setPlugins(){
+    $plugins_folder = wfGlobals::getAppDir().'/plugin';
+    $plugin_array = array();
+    if(wfRequest::get('theme')){
+      wfPlugin::includeonce('theme/analysis');
+      $theme_analysis = new PluginThemeAnalysis(true);
+      $theme_analysis->setData(wfRequest::get('theme'));
+      foreach ($theme_analysis->data->get() as $key => $value) {
+        $plugin_array[] = $value['name'];
+      }
+    }else{
+      $plugin_array = $this->getPluginArray();
+    }
+    $plugin = new PluginWfArray();
+    foreach ($plugin_array as $key => $value) {
+      $value_dot = str_replace('/', '.', $value);
+      $plugin->set($value_dot.'/name', $value);
+      $has_public_folder = false;
+      $has_public_folder_text = null;
+      $has_public_folder_twin = null;
+      $has_public_folder_twin_text = null;
+      $public_folder_match = null;
+      $public_folder_match_text = null;
+      $public_folder = $plugins_folder.'/'.$value.'/public';
+      $public_folder_twin = wfGlobals::getWebDir().'/plugin/'.$value;
+      if(is_dir($public_folder)){
+        $has_public_folder = true;
+        $has_public_folder_text = 'Yes';
+        $has_public_folder_twin = is_dir($public_folder_twin);
+        if($has_public_folder_twin){
+          $has_public_folder_twin_text = 'Yes';
+          if($this->scan_dir($public_folder)==$this->scan_dir($public_folder_twin)){
+            $public_folder_match = true;
+            $public_folder_match_text = 'Yes';
+          }else{
+            $public_folder_match = false;
+            $public_folder_match_text = 'No';
+          }
+        }else{
+          $has_public_folder_twin_text = 'No';
+        }
+      }
+      $plugin->set($value_dot.'/has_public_folder', $has_public_folder);
+      if($has_public_folder && (!$has_public_folder_twin || !$public_folder_match)){
+        $has_public_folder_text .= '*';
+      }
+      $plugin->set($value_dot.'/has_public_folder_text', $has_public_folder_text);
+      $plugin->set($value_dot.'/has_public_folder_twin', $has_public_folder_twin);
+      $plugin->set($value_dot.'/has_public_folder_twin_text', $has_public_folder_twin_text);
+      $plugin->set($value_dot.'/public_folder_match', $public_folder_match);
+      $plugin->set($value_dot.'/public_folder_match_text', $public_folder_match_text);
+      $plugin->set($value_dot.'/files', $this->scan_dir($plugins_folder.'/'.$value));
+      $plugin->set($value_dot.'/files_count', sizeof($plugin->get($value_dot.'/files')));
+    }
     $this->plugins = new PluginWfArray($plugin->get());
     /**
      * Manifest from theme plugin.
@@ -290,14 +343,11 @@ class PluginPluginAnalysis{
         foreach ($item->get('manifest/plugin') as $key2 => $value2) {
           $plugin = new PluginWfArray($value2);
           $version = $this->plugins->get(str_replace('/', '.', $plugin->get('name'))."/version_manifest");
-          //wfHelp::yml_dump($plugin->get('version'));
           $star = null;
-          //if($this->plugins->get("$key/version_manifest") != $plugin->get('version')){
           if($version != $plugin->get('version')){
             $star = '*';
             $conflict = 'Yes';
           }
-          //$this->plugins->set("$key/manifest/plugin/$key2/version_manifest", $this->plugins->get("$key/version_manifest"));
           $this->plugins->set("$key/manifest/plugin/$key2/version_manifest", $version);
           $str .= $plugin->get('name').'('.$plugin->get('version').$star.'), ';
         }
@@ -307,10 +357,6 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/id", $key);
       $this->plugins->set("$key/url_id", str_replace('.', '_A_DOT_', $key));
     }
-    
-    //wfHelp::yml_dump($this->plugins, true);
-
-    
   }
   private function setManifest($key, $value){
     $item = new PluginWfArray($value);
@@ -320,7 +366,6 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/has_manifest", 'Yes');
       $this->plugins->set("$key/manifest", $manifest->get());
       $this->plugins->set("$key/version_manifest", $manifest->get('version'));
-      //$this->plugins->set("$key/version", $manifest->get('version'));
       if(is_array($manifest->get('plugin'))){
         foreach ($manifest->get('plugin') as $key2 => $value2) {
           $item = new PluginWfArray($value2);
@@ -331,7 +376,6 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/has_manifest", 'No');
       $this->plugins->set("$key/manifest", null);
       $this->plugins->set("$key/version_manifest", null);
-      //$this->plugins->set("$key/version", null);
     }
   }
 }
