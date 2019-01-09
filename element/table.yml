@@ -4,12 +4,6 @@
     class: alert alert-info
   innerHTML:
     -
-      type: a
-      attribute:
-        style: 'float:right'
-        onclick: PluginPluginAnalysis.reload()
-      innerHTML: Reload
-    -
       type: strong
       innerHTML: Theme
     -

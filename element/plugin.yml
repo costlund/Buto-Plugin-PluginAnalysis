@@ -252,4 +252,25 @@
                 method: render_many
                 data:
                   rs: rs:links
+-
+  type: div
+  attribute:
+    class: row
+  innerHTML:
+    -
+      type: div
+      attribute:
+        class: col-md-12
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: h2
+              innerHTML: Readme
+            -
+              type: div
+              innerHTML: rs:readme
       

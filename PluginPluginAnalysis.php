@@ -134,7 +134,7 @@ class PluginPluginAnalysis{
     $links = $this->getLinks();
     $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
     wfDocument::renderElement($element->get());
-    wfHelp::yml_dump($this->plugin->get());
+    //wfHelp::yml_dump($this->plugin->get());
   }
   public function page_manifest_create(){
     /**
@@ -223,7 +223,7 @@ class PluginPluginAnalysis{
     $element->setByTag(array('trs' => $trs));
     $element->setByTag(wfRequest::getAll(), 'rs', true);
     wfDocument::renderElement($element->get());
-    wfHelp::yml_dump($this->plugins, true);
+    //wfHelp::yml_dump($this->plugins, true);
   }
   private function setPlugin(){
     $id = wfRequest::get('id');
@@ -242,6 +242,22 @@ class PluginPluginAnalysis{
       $theme_usage[] = array('name' => $value);
     }
     $this->plugin->set('theme_usage', $theme_usage);
+    /**
+     * Get README.md content.
+     */
+    $readme = null;
+    $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/readme.md';
+    $exist = wfFilesystem::fileExist($file);
+    if($exist){
+      $readme = file_get_contents($file);
+      wfPlugin::includeonce('readme/parser');
+      $parser = new PluginReadmeParser();
+      $readme = $parser->parse_text($readme);
+    }
+    $this->plugin->set('readme', $readme);
+    /**
+     * 
+     */
     return null;
   }
   /**

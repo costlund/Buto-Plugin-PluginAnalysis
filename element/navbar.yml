@@ -66,3 +66,16 @@
                   attribute:
                     onclick: "PluginPluginAnalysis.theme_analys(this);"
                   innerHTML: Theme plugin
+        -
+          type: ul
+          attribute:
+            class: 'nav navbar-nav navbar-right'
+          innerHTML:
+            -
+              type: li
+              innerHTML:
+                -
+                  type: a
+                  attribute:
+                    onclick: "PluginPluginAnalysis.reload();"
+                  innerHTML: Reload

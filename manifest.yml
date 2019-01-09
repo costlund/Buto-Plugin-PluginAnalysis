@@ -1,5 +1,8 @@
-version: '1.4'
+version: '1.5'
 history:
+  '1.5':
+    date: '2019-01-09'
+    description: Parse README.md file in view.
   '1.4':
     date: '2019-01-09'
     description: Get themes used by a plugin in view.
@@ -35,6 +38,9 @@ plugin:
     version: '1.0'
   -
     name: datatable/datatable_1_10_16
+    version: '1.0'
+  -
+    name: readme/parser
     version: '1.0'
 sys:
   -
