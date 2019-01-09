@@ -76,32 +76,48 @@
             class: well
           innerHTML:
             -
-              type: div
-              innerHTML:
-                -
-                  type: strong
-                  innerHTML: Public folder
-                -
-                  type: span
-                  innerHTML: rs:has_public_folder_text
+              type: h2
+              innerHTML: Public folder
             -
               type: div
+              settings:
+                enabled: rs:has_public_folder
               innerHTML:
                 -
-                  type: strong
-                  innerHTML: Public folder twin
+                  type: div
+                  innerHTML:
+                    -
+                      type: strong
+                      innerHTML: Public folder
+                    -
+                      type: span
+                      innerHTML: rs:has_public_folder_text
                 -
-                  type: span
-                  innerHTML: rs:has_public_folder_twin_text
+                  type: div
+                  innerHTML:
+                    -
+                      type: strong
+                      innerHTML: Public folder twin
+                    -
+                      type: span
+                      innerHTML: rs:has_public_folder_twin_text
+                -
+                  type: div
+                  innerHTML:
+                    -
+                      type: strong
+                      innerHTML: Public folder match
+                    -
+                      type: span
+                      innerHTML: rs:public_folder_match_text
             -
               type: div
+              settings:
+                disabled: rs:has_public_folder
               innerHTML:
                 -
-                  type: strong
-                  innerHTML: Public folder match
-                -
-                  type: span
-                  innerHTML: rs:public_folder_match_text
+                  type: i
+                  innerHTML: This plugin has no public folder.
 -
   type: div
   attribute:
@@ -114,36 +130,38 @@
       innerHTML:
         -
           type: div
-          settings:
-            enabled: rs:plugins
           attribute:
             class: well
           innerHTML:
             -
-              type: div
-              settings:
-                enabled: rs:conflict
-              attribute:
-                class: alert alert-warning
-              innerHTML: Has conflict
-            -
               type: h2
               innerHTML: Plugin
             -
-              type: widget
-              data:
-                plugin: wf/table
-                method: render_many
-                data:
-                  rs: rs:plugin
-        -
-          type: div
-          settings:
-            disabled: rs:plugins
-          attribute:
-            class: well
-            style: 'font-style:italic'
-          innerHTML: Has no plugin
+              type: div
+              settings:
+                enabled: rs:plugins
+              innerHTML:
+                -
+                  type: div
+                  settings:
+                    enabled: rs:conflict
+                  attribute:
+                    class: alert alert-warning
+                  innerHTML: Has conflict
+                -
+                  type: widget
+                  data:
+                    plugin: wf/table
+                    method: render_many
+                    data:
+                      rs: rs:plugin
+            -
+              type: div
+              settings:
+                disabled: rs:plugins
+              attribute:
+                style: 'font-style:italic'
+              innerHTML: Has no plugin
     -
       type: div
       attribute:
@@ -156,7 +174,7 @@
           innerHTML:
             -
               type: h2
-              innerHTML: Usage
+              innerHTML: Plugin usage
             -
               type: widget
               settings:
@@ -166,6 +184,27 @@
                 method: render_many
                 data:
                   rs: rs:usage
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: h2
+              innerHTML: Theme usage
+            -
+              type: widget
+              settings:
+                enabled: rs:theme_has_usage
+              data:
+                plugin: wf/table
+                method: render_many
+                data:
+                  rs: rs:theme_usage
+                  rszzz: 
+                    -
+                      x: 1
+                  
 -
   type: div
   attribute:

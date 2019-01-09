@@ -125,7 +125,6 @@ class PluginPluginAnalysis{
   public function page_plugin(){
     $element = new PluginWfYml(__DIR__.'/element/plugin.yml');
     $this->setPlugin();
-    //wfHelp::yml_dump($this->plugin->get('manifest/links'));
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
     $usage = $this->getUsage();
@@ -227,17 +226,42 @@ class PluginPluginAnalysis{
     wfHelp::yml_dump($this->plugins, true);
   }
   private function setPlugin(){
-    $key = wfRequest::get('id');
-    $key = str_replace('_A_DOT_', '.', $key);
+    $id = wfRequest::get('id');
+    $id = str_replace('_A_DOT_', '.', $id);
     $this->setPlugins();
-    $this->plugin = new PluginWfArray($this->plugins->get($key));
+    $this->plugin = new PluginWfArray($this->plugins->get($id));
     if($this->plugin->get('manifest/plugin')){
       foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
         $item = new PluginWfArray($value);
         $this->plugin->set("manifest/plugin/$key/row_click", "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
       }
     }
+    $theme_usage_temp = $this->getThemesUsingPlugin($id);
+    $theme_usage = array();
+    foreach ($theme_usage_temp as $key => $value) {
+      $theme_usage[] = array('name' => $value);
+    }
+    $this->plugin->set('theme_usage', $theme_usage);
     return null;
+  }
+  /**
+   * Get themes used by a plugin.
+   * @param string $plugin wf/example or wf.example
+   * @return array
+   */
+  private function getThemesUsingPlugin($plugin){
+    $plugin = str_replace('/', '.', $plugin);
+    $theme = $this->getTheme();
+    wfPlugin::includeonce('theme/analysis');
+    $theme_usage = array();
+    foreach ($theme as $key => $value) {
+      $obj = new PluginThemeAnalysis(true);
+      $obj->setData($value);
+      if($obj->data->get($plugin)){
+        $theme_usage[$value] = $value;
+      }
+    }
+    return $theme_usage;
   }
   private function scan_dir($dir){
     if(!wfFilesystem::fileExist($dir)){
