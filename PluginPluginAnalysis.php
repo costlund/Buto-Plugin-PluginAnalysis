@@ -239,7 +239,7 @@ class PluginPluginAnalysis{
     $theme_usage_temp = $this->getThemesUsingPlugin($id);
     $theme_usage = array();
     foreach ($theme_usage_temp as $key => $value) {
-      $theme_usage[] = array('name' => $value);
+      $theme_usage[] = $value;
     }
     $this->plugin->set('theme_usage', $theme_usage);
     /**
@@ -274,7 +274,7 @@ class PluginPluginAnalysis{
       $obj = new PluginThemeAnalysis(true);
       $obj->setData($value);
       if($obj->data->get($plugin)){
-        $theme_usage[$value] = $value;
+        $theme_usage[$value] = array('name' => $value, 'plugin' => $obj->data->get("$plugin/plugin"), 'plugin_module' => $obj->data->get("$plugin/plugin_module"), 'event' => $obj->data->get("$plugin/event"));
       }
     }
     return $theme_usage;

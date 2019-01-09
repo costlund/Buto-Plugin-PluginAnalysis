@@ -201,10 +201,6 @@
                 method: render_many
                 data:
                   rs: rs:theme_usage
-                  rszzz: 
-                    -
-                      x: 1
-                  
 -
   type: div
   attribute:

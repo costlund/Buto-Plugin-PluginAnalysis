@@ -1,5 +1,8 @@
-version: '1.5'
+version: '1.6'
 history:
+  '1.6':
+    date: '2019-01-09'
+    description: Add more data to table Theme usage.
   '1.5':
     date: '2019-01-09'
     description: Parse README.md file in view.
