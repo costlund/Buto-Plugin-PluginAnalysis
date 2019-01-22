@@ -19,6 +19,12 @@ class PluginPluginAnalysis{
        */
       wfPlugin::enable('datatable/datatable_1_10_16');
       wfPlugin::enable('wf/table');
+      wfPlugin::enable('twitter/bootstrap335v');
+      wfPlugin::enable('wf/ajax');
+      wfPlugin::enable('wf/bootstrapjs');
+      wfPlugin::enable('wf/callbackjson');
+      wfPlugin::enable('wf/dom');
+      wfPlugin::enable('wf/embed');
       /**
        * Only webmaster.
        */
