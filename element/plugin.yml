@@ -81,59 +81,33 @@
             -
               type: span
               innerHTML: rs:files_count
-    -
-      type: div
-      attribute:
-        class: col-md-6
-      innerHTML:
         -
           type: div
-          attribute:
-            class: well
           innerHTML:
             -
-              type: h2
-              innerHTML: Public folder
+              type: strong
+              innerHTML: Public folder exist
             -
-              type: div
-              settings:
-                enabled: rs:has_public_folder
-              innerHTML:
-                -
-                  type: div
-                  innerHTML:
-                    -
-                      type: strong
-                      innerHTML: Public folder
-                    -
-                      type: span
-                      innerHTML: rs:has_public_folder_text
-                -
-                  type: div
-                  innerHTML:
-                    -
-                      type: strong
-                      innerHTML: Public folder twin
-                    -
-                      type: span
-                      innerHTML: rs:has_public_folder_twin_text
-                -
-                  type: div
-                  innerHTML:
-                    -
-                      type: strong
-                      innerHTML: Public folder match
-                    -
-                      type: span
-                      innerHTML: rs:public_folder_match_text
+              type: span
+              innerHTML: rs:has_public_folder_text
+        -
+          type: div
+          innerHTML:
             -
-              type: div
-              settings:
-                disabled: rs:has_public_folder
-              innerHTML:
-                -
-                  type: i
-                  innerHTML: This plugin has no public folder.
+              type: strong
+              innerHTML: Public folder twin
+            -
+              type: span
+              innerHTML: rs:has_public_folder_twin_text
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Public folder match
+            -
+              type: span
+              innerHTML: rs:public_folder_match_text
 -
   type: div
   attribute:

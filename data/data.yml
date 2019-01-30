@@ -19,3 +19,9 @@ manifest:
   links:
     'Github': 'https://github.com'
   description: ''
+  third_part_software:
+    -
+      name: 
+      description:
+      path:
+        - /path/to/files
