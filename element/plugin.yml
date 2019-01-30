@@ -1,7 +1,6 @@
 -
   type: h1
   innerHTML: rs:name
-
 -
   type: div
   attribute:
@@ -55,6 +54,23 @@
               attribute:
                 data-url_id: rs:url_id
                 onclick: PluginPluginAnalysis.manifest_create(this)
+              innerHTML: Create
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Readme
+            -
+              type: span
+              innerHTML: rs:has_readme
+            -
+              type: a
+              settings:
+                disabled: rs:readme
+              attribute:
+                data-url_id: rs:url_id
+                onclick: PluginPluginAnalysis.readme_create(this)
               innerHTML: Create
         -
           type: div
@@ -118,6 +134,27 @@
                 -
                   type: i
                   innerHTML: This plugin has no public folder.
+-
+  type: div
+  attribute:
+    class: row
+  innerHTML:
+    -
+      type: div
+      attribute:
+        class: col-md-12
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: h2
+              innerHTML: Readme
+            -
+              type: div
+              innerHTML: rs:readme
 -
   type: div
   attribute:
@@ -248,25 +285,4 @@
                 method: render_many
                 data:
                   rs: rs:links
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
-    -
-      type: div
-      attribute:
-        class: col-md-12
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: h2
-              innerHTML: Readme
-            -
-              type: div
-              innerHTML: rs:readme
       

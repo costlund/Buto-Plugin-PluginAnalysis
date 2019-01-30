@@ -1,5 +1,8 @@
-version: '1.6'
+version: '1.7'
 history:
+  '1.7':
+    date: '2019-01-30'
+    description: Add support for creating README.md.
   '1.6':
     date: '2019-01-09'
     description: Add more data to table Theme usage.

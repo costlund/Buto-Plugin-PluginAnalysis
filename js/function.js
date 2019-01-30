@@ -22,5 +22,9 @@ function PluginPluginAnalysis(){
     var id = element.getAttribute('data-url_id');
     PluginWfBootstrapjs.modal({id: 'modal_manifest_create', label: 'Manifest create', url: '/plugin_analysis/manifest_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
   }
+  this.readme_create = function(element){
+    var id = element.getAttribute('data-url_id');
+    PluginWfBootstrapjs.modal({id: 'modal_manifest_create', label: 'Readme create', url: '/plugin_analysis/readme_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

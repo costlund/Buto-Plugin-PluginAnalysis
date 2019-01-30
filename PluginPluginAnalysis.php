@@ -142,6 +142,25 @@ class PluginPluginAnalysis{
     wfDocument::renderElement($element->get());
     //wfHelp::yml_dump($this->plugin->get());
   }
+  public function page_readme_create(){
+    /**
+     * 
+     */
+    $this->setPlugin();
+    if($this->plugin->get('has_readme')=='Yes'){
+      exit('Has already readme.');
+    }
+    /**
+     * 
+     */
+    $id = wfRequest::get('id');
+    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    $contents = file_get_contents(__DIR__.'/data/README.md');
+    $contents = str_replace("# Buto-Plugin-_", "# Buto-Plugin-".wfPlugin::to_camel_case($plugin_name), $contents);
+    $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/README.md';
+    file_put_contents($filename, $contents);
+    exit("File $filename was created!");
+  }
   public function page_manifest_create(){
     /**
      * 
@@ -259,8 +278,12 @@ class PluginPluginAnalysis{
       wfPlugin::includeonce('readme/parser');
       $parser = new PluginReadmeParser();
       $readme = $parser->parse_text($readme);
+      $this->plugin->set('readme', $readme);
+      $this->plugin->set('has_readme', 'Yes');
+    }else{
+      $this->plugin->set('readme', $readme);
+      $this->plugin->set('has_readme', 'No');
     }
-    $this->plugin->set('readme', $readme);
     /**
      * 
      */
