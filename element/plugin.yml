@@ -108,6 +108,34 @@
             -
               type: span
               innerHTML: rs:public_folder_match_text
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML:
+                -
+                  type: span
+                  innerHTML: rs:js_name
+            -
+              type: span
+              innerHTML: rs:has_js_text
+            -
+              type: a
+              settings:
+                disabled: rs:has_js
+              attribute:
+                data-url_id: rs:url_id
+                onclick: PluginPluginAnalysis.js_create(this)
+              innerHTML: Create
+            -
+              type: a
+              settings:
+                enabled: rs:has_js
+              attribute:
+                data-url_id: rs:url_id
+                onclick: PluginPluginAnalysis.js_include_method(this)
+              innerHTML: Include method
 -
   type: div
   attribute:

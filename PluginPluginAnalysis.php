@@ -140,7 +140,35 @@ class PluginPluginAnalysis{
     $links = $this->getLinks();
     $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
     wfDocument::renderElement($element->get());
-    //wfHelp::yml_dump($this->plugin->get());
+  }
+  public function page_js_include_method(){
+    $this->setPlugin();
+    $contents = file_get_contents(__DIR__.'/data/js_include_method.php');
+    $contents = str_replace("PluginXxxYyy.js", $this->plugin->get('js_name'), $contents);
+    $element = array();
+    $element[] = wfDocument::createHtmlElement('pre', $contents);
+    wfDocument::renderElement($element);
+  }
+  public function page_js_create(){
+    /**
+     * 
+     */
+    $this->setPlugin();
+    if($this->plugin->get('has_js')){
+      exit('Has already js.');
+    }
+    /**
+     * 
+     */
+    $id = wfRequest::get('id');
+    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    $contents = file_get_contents(__DIR__.'/data/PluginXxxYyy.js');
+    $contents = str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($plugin_name), $contents);
+    $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public/'.$this->plugin->get('js_name');
+    $filename_web = wfGlobals::getWebDir().'/plugin/'.$plugin_name.'/'.$this->plugin->get('js_name');
+    wfFilesystem::createFile($filename, $contents);
+    wfFilesystem::createFile($filename_web, $contents);
+    exit("File $filename and $filename_web was created !");
   }
   public function page_readme_create(){
     /**
@@ -283,6 +311,20 @@ class PluginPluginAnalysis{
     }else{
       $this->plugin->set('readme', $readme);
       $this->plugin->set('has_readme', 'No');
+    }
+    /**
+     * Get Js.
+     */
+    $js = null;
+    $this->plugin->set('js_name', 'Plugin'.wfPlugin::to_camel_case($this->plugin->get('name')).'.js');
+    $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public/'.$this->plugin->get('js_name');
+    $exist = wfFilesystem::fileExist($file);
+    if($exist){
+      $this->plugin->set('has_js', true);
+      $this->plugin->set('has_js_text', 'Yes');
+    }else{
+      $this->plugin->set('has_js', false);
+      $this->plugin->set('has_js_text', 'No');
     }
     /**
      * 
