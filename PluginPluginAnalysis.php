@@ -149,6 +149,40 @@ class PluginPluginAnalysis{
     $element[] = wfDocument::createHtmlElement('pre', $contents);
     wfDocument::renderElement($element);
   }
+  public function page_public_create(){
+    /**
+     * 
+     */
+    $this->setPlugin();
+    if($this->plugin->get('has_public_folder_twin')){
+      exit('Has already public folder.');
+    }
+    /**
+     * 
+     */
+    $id = wfRequest::get('id');
+    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    /**
+     * Create copy array.
+     */
+    $copy = array();
+    foreach ($this->plugin->get('files') as $key => $value) {
+      if(substr($key, 0, 8) != '/public/'){
+        continue;
+      }
+      $copy[] = array('from' => wfGlobals::getAppDir().'/plugin/'.$plugin_name.$key, 'to' => wfGlobals::getWebDir().'/plugin/'.$plugin_name.substr($key, 7));
+    }
+    /**
+     * Copy files.
+     */
+    foreach ($copy as $value){
+      wfFilesystem::copyFile($value['from'], $value['to']);
+    }
+    /**
+     * 
+     */
+    exit(sizeof($copy)." files was copied to /$plugin_name!");    
+  }
   public function page_js_create(){
     /**
      * 

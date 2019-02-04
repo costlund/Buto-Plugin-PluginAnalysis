@@ -34,5 +34,9 @@ function PluginPluginAnalysis(){
     var id = element.getAttribute('data-url_id');
     PluginWfBootstrapjs.modal({id: 'modal_js_include_method', label: 'Js include method', url: '/plugin_analysis/js_include_method/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
   }
+  this.public_create = function(element){
+    var id = element.getAttribute('data-url_id');
+    PluginWfBootstrapjs.modal({id: 'modal_public_create', label: 'Public create', url: '/plugin_analysis/public_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

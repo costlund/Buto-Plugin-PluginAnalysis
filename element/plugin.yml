@@ -99,6 +99,14 @@
             -
               type: span
               innerHTML: rs:has_public_folder_twin_text
+            -
+              type: a
+              settings:
+                disabled: rs:has_public_folder_twin
+              attribute:
+                data-url_id: rs:url_id
+                onclick: PluginPluginAnalysis.public_create(this)
+              innerHTML: Create
         -
           type: div
           innerHTML:
