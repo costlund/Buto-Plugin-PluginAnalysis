@@ -6,7 +6,7 @@ manifest:
   history:
     '1.0':
       date: 
-      description: First version.
+      description: Manifest created.
   plugin:
   sys:
     -
