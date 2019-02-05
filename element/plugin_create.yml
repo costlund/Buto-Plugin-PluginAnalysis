@@ -1,0 +1,17 @@
+-
+  type: h1
+  innerHTML: Create plugin
+-
+  type: input
+  attribute:
+    type: text
+    placeholder: xxx/yyy
+    onchange: |
+      this.value = this.value.toLowerCase();
+      this.value = this.value.replace(' ', '');
+-
+  type: button
+  attribute:
+    onclick: |
+      PluginPluginAnalysis.plugin_create_run(this.previousSibling.value);
+  innerHTML: Next

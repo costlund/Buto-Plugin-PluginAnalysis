@@ -64,6 +64,14 @@
                 -
                   type: a
                   attribute:
+                    onclick: "PluginPluginAnalysis.plugin_create();"
+                  innerHTML: Create
+            -
+              type: li
+              innerHTML:
+                -
+                  type: a
+                  attribute:
                     onclick: "PluginPluginAnalysis.theme_analys(this);"
                   innerHTML: Theme plugin
         -

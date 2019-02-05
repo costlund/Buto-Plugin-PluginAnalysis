@@ -38,5 +38,17 @@ function PluginPluginAnalysis(){
     var id = element.getAttribute('data-url_id');
     PluginWfBootstrapjs.modal({id: 'modal_public_create', label: 'Public create', url: '/plugin_analysis/public_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
   }
+  this.plugin_create = function(){
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_create', label: 'Plugin create', url: '/plugin_analysis/plugin_create', resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
+  }
+  this.plugin_create_run = function(name){
+    $.getJSON( "/plugin_analysis/plugin_create_run?name="+name, function( data ) {
+      if(data.success){
+        $('#modal_plugin_create').modal('hide');
+      }else{
+        alert(data.error);
+      }
+    });
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

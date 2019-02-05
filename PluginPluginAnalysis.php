@@ -149,6 +149,53 @@ class PluginPluginAnalysis{
     $element[] = wfDocument::createHtmlElement('pre', $contents);
     wfDocument::renderElement($element);
   }
+  public function page_plugin_create(){
+    $element = new PluginWfYml(__DIR__.'/element/plugin_create.yml');
+    wfDocument::renderElement($element->get());
+  }
+  public function page_plugin_create_run(){
+    $error = new PluginWfArray(array('success' => false, 'error' => null));
+    $name = wfRequest::get('name');
+    /**
+     * Check name.
+     */
+    if(!$error->get('error')){
+      wfPlugin::includeonce('string/array');
+      $plugin = new PluginStringArray();
+      $array = $plugin->from_slash($name);
+      if(sizeof($array)!=2){
+        $error->set('error', 'One slash is required.');
+      }
+    }
+    /**
+     * Check exist.
+     */
+    if(!$error->get('error')){
+      $path = wfGlobals::getAppDir()."/plugin/$name";
+      if(wfFilesystem::fileExist($path)){
+        $error->set('error', 'Folder already exist.');
+      }
+    }
+    /**
+     * Create plugin.
+     */
+    if(!$error->get('error')){
+      $contents = file_get_contents(__DIR__.'/data/PluginXxxYyy.php');
+      $contents = str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($name), $contents);
+      $filename = wfGlobals::getAppDir().'/plugin/'.$name.'/'.wfPlugin::to_camel_case($name).'.php';
+      wfFilesystem::createFile($filename, $contents);
+    }
+    /**
+     * 
+     */
+    if(!$error->get('error')){
+      $error->set('success', true);
+    }
+    /**
+     * 
+     */
+    exit(json_encode($error->get()));
+  }
   public function page_public_create(){
     /**
      * 
