@@ -182,7 +182,7 @@ class PluginPluginAnalysis{
     if(!$error->get('error')){
       $contents = file_get_contents(__DIR__.'/data/PluginXxxYyy.php');
       $contents = str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($name), $contents);
-      $filename = wfGlobals::getAppDir().'/plugin/'.$name.'/'.wfPlugin::to_camel_case($name).'.php';
+      $filename = wfGlobals::getAppDir().'/plugin/'.$name.'/Plugin'.wfPlugin::to_camel_case($name).'.php';
       wfFilesystem::createFile($filename, $contents);
     }
     /**
