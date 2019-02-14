@@ -9,7 +9,7 @@
     -
       type: div
       attribute:
-        class: col-md-6
+        class: col-md-4
       innerHTML:
         -
           type: div
@@ -144,36 +144,10 @@
                 data-url_id: rs:url_id
                 onclick: PluginPluginAnalysis.js_include_method(this)
               innerHTML: Include method
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
     -
       type: div
       attribute:
-        class: col-md-12
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: h2
-              innerHTML: Readme
-            -
-              type: div
-              innerHTML: rs:readme
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
-    -
-      type: div
-      attribute:
-        class: col-md-6
+        class: col-md-8
       innerHTML:
         -
           type: div
@@ -202,6 +176,12 @@
                     method: render_many
                     data:
                       rs: rs:plugin
+                      field:
+                        name: Name
+                        version: Ver
+                        version_manifest: VM
+                        code: Code
+                        manifest: M
             -
               type: div
               settings:
@@ -209,6 +189,52 @@
               attribute:
                 style: 'font-style:italic'
               innerHTML: Has no plugin
+        
+-
+  type: div
+  attribute:
+    class: row
+  innerHTML:
+    -
+      type: div
+      attribute:
+        class: col-md-12
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: div
+              innerHTML: rs:readme
+-
+  type: div
+  attribute:
+    class: row
+  innerHTML:
+    -
+      type: div
+      attribute:
+        class: col-md-6
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: well
+          innerHTML:
+            -
+              type: h2
+              innerHTML: Theme usage
+            -
+              type: widget
+              settings:
+                enabled: rs:theme_has_usage
+              data:
+                plugin: wf/table
+                method: render_many
+                data:
+                  rs: rs:theme_usage
     -
       type: div
       attribute:
@@ -231,23 +257,6 @@
                 method: render_many
                 data:
                   rs: rs:usage
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: h2
-              innerHTML: Theme usage
-            -
-              type: widget
-              settings:
-                enabled: rs:theme_has_usage
-              data:
-                plugin: wf/table
-                method: render_many
-                data:
-                  rs: rs:theme_usage
 -
   type: div
   attribute:

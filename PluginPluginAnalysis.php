@@ -283,19 +283,7 @@ class PluginPluginAnalysis{
        */
       $id = wfRequest::get('id');
       $plugin_name = str_replace('_A_DOT_', "/", $id);
-      /**
-       * Get content.
-       */
-      $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/Plugin'.wfPlugin::to_camel_case($plugin_name).'.php';
-      if(!wfFilesystem::fileExist($filename)){
-        exit("$filename does not exist.");
-      }
-      $content = file_get_contents($filename);
-      /**
-       * Search for plugins.
-       */
-      $this->doPluginSearch('wfPlugin::includeonce(', $content);
-      $this->doPluginSearch('wfPlugin::enable(', $content);
+      $this->set_search_plugin($plugin_name);
       $temp = array();
       foreach ($this->plugin_search as $key => $value) {
         $version = $this->plugins->get(str_replace("/", '.', $value[3]).'/version_manifest');
@@ -304,7 +292,6 @@ class PluginPluginAnalysis{
         }
         $temp[$value[3]] = array('name' => $value[3], 'version' => $version);
       }
-
       $plugin = array();
       foreach ($temp as $key => $value) {
         $plugin[] = $value;
@@ -325,6 +312,25 @@ class PluginPluginAnalysis{
       }
     }
   }
+  /**
+   * Set global param $this->search_plugin.
+   * @param string $plugin_name xx/yy
+   */
+  private function set_search_plugin($plugin_name){
+    /**
+     * Get content.
+     */
+    $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/Plugin'.wfPlugin::to_camel_case($plugin_name).'.php';
+    if(!wfFilesystem::fileExist($filename)){
+      exit("$filename does not exist.");
+    }
+    $content = file_get_contents($filename);
+    /**
+     * Search for plugins.
+     */
+    $this->doPluginSearch('wfPlugin::includeonce(', $content);
+    $this->doPluginSearch('wfPlugin::enable(', $content);
+  }
   private function doPluginSearch($needle, $content){
     /**
      * Find plugin in content.
@@ -341,7 +347,9 @@ class PluginPluginAnalysis{
       $plugin = substr($content, $pos1+strlen($needle), $pos2-$pos1-strlen($needle));
       $plugin = str_replace("'", '', $plugin);
       $plugin = str_replace('"', '', $plugin);
-      $this->plugin_search[] = array($needle, $pos1, $pos2, $plugin);
+      if(!strstr($plugin, '$')){
+        $this->plugin_search[] = array($needle, $pos1, $pos2, $plugin);
+      }
     }
   }
   public function page_analys(){
@@ -364,6 +372,47 @@ class PluginPluginAnalysis{
     $id = str_replace('_A_DOT_', '.', $id);
     $this->setPlugins();
     $this->plugin = new PluginWfArray($this->plugins->get($id));
+    /**
+     * 
+     */
+    if($this->plugin->get('has_manifest')=='Yes'){
+      $this->set_search_plugin($this->plugin->get('name'));
+      if($this->plugin->get('manifest/plugin')){
+        foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
+          $this->plugin->set("manifest/plugin/$k/code", null);
+          $this->plugin->set("manifest/plugin/$k/manifest", null);
+        }
+        /**
+         * Check if plugin in code exist in manifest.
+         */
+        foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
+          $code = 'No';
+          foreach ($this->plugin_search as $v2) {
+            if($v2[3]== $this->plugin->get("manifest/plugin/$k/name")){
+              $code = 'Yes';
+              break;
+            }
+          }
+          $this->plugin->set("manifest/plugin/$k/code", $code);
+        }
+        /**
+         * Check if plugin in manifest exist in code.
+         */
+        foreach ($this->plugin_search as $v) {
+          $manifest = 'No';
+          foreach ($this->plugin->get('manifest/plugin') as $k2 => $v2){
+            if($v[3]== $this->plugin->get("manifest/plugin/$k2/name")){
+              $manifest = 'Yes';
+              break;
+            }
+          }
+          if($manifest == 'No'){
+            $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => null, 'code' => 'Yes', 'manifest' => $manifest));
+          }
+        }
+      }
+    }
+    
     if($this->plugin->get('manifest/plugin')){
       foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
         $item = new PluginWfArray($value);

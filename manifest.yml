@@ -1,5 +1,8 @@
-version: '1.10'
+version: '1.11'
 history:
+  '1.11':
+    date: '2019-02-14'
+    description: Better support for manifest plugins changes.
   '1.10':
     date: '2019-02-05'
     description: Add support for create a plugin.
