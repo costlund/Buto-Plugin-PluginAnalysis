@@ -1,5 +1,8 @@
-version: '1.11'
+version: '1.12'
 history:
+  '1.12':
+    date: '2019-02-21'
+    description: Hide public folder items if not needed.
   '1.11':
     date: '2019-02-14'
     description: Better support for manifest plugins changes.

@@ -131,6 +131,7 @@ class PluginPluginAnalysis{
   public function page_plugin(){
     $element = new PluginWfYml(__DIR__.'/element/plugin.yml');
     $this->setPlugin();
+    //wfHelp::yml_dump($this->plugin);
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
     $usage = $this->getUsage();

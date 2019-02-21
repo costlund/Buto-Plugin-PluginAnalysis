@@ -92,6 +92,8 @@
               innerHTML: rs:has_public_folder_text
         -
           type: div
+          settings:
+            enabled: rs:has_public_folder
           innerHTML:
             -
               type: strong
@@ -109,6 +111,8 @@
               innerHTML: Create
         -
           type: div
+          settings:
+            enabled: rs:has_public_folder
           innerHTML:
             -
               type: strong
