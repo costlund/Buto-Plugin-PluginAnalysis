@@ -17,11 +17,11 @@ manifest:
     - '7.2'
   author: 
   links:
-    'Github': 'https://github.com'
+#    'Github': 'https://github.com'
   description: ''
   third_part_software:
-    -
-      name: 
-      description:
-      path:
-        - /path/to/files
+#    -
+#      name: 
+#      description:
+#      path:
+#        - /path/to/files
