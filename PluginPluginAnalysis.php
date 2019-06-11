@@ -202,7 +202,7 @@ class PluginPluginAnalysis{
      * 
      */
     $this->setPlugin();
-    if($this->plugin->get('has_public_folder_twin')){
+    if($this->plugin->get('has_public_folder_twin') && !wfRequest::get('update')){
       exit('Has already public folder.');
     }
     /**

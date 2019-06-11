@@ -83,43 +83,79 @@
               innerHTML: rs:files_count
         -
           type: div
+          settings:
+            disabled: rs:has_public_folder
           innerHTML:
             -
               type: strong
-              innerHTML: Public folder exist
+              innerHTML: Public folder
             -
               type: span
-              innerHTML: rs:has_public_folder_text
+              innerHTML: No
         -
           type: div
           settings:
             enabled: rs:has_public_folder
+          attribute:
+            class: well
           innerHTML:
             -
-              type: strong
-              innerHTML: Public folder twin
+              type: h2
+              innerHTML: Public folder
             -
-              type: span
-              innerHTML: rs:has_public_folder_twin_text
+              type: div
+              innerHTML:
+                -
+                  type: strong
+                  innerHTML: Exist
+                -
+                  type: span
+                  innerHTML: rs:has_public_folder_text
             -
-              type: a
+              type: div
               settings:
-                disabled: rs:has_public_folder_twin
-              attribute:
-                data-url_id: rs:url_id
-                onclick: PluginPluginAnalysis.public_create(this)
-              innerHTML: Create
-        -
-          type: div
-          settings:
-            enabled: rs:has_public_folder
-          innerHTML:
+                enabled: rs:has_public_folder
+              innerHTML:
+                -
+                  type: strong
+                  innerHTML: Has twin
+                -
+                  type: span
+                  innerHTML: rs:has_public_folder_twin_text
+                -
+                  type: a
+                  settings:
+                    disabled: rs:has_public_folder_twin
+                  attribute:
+                    data-url_id: rs:url_id
+                    onclick: PluginPluginAnalysis.public_create(this)
+                    class: btn btn-success
+                  innerHTML: Create
             -
-              type: strong
-              innerHTML: Public folder match
+              type: div
+              settings:
+                enabled: rs:has_public_folder
+              innerHTML:
+                -
+                  type: strong
+                  innerHTML: Match
+                -
+                  type: span
+                  innerHTML: rs:public_folder_match_text
             -
-              type: span
-              innerHTML: rs:public_folder_match_text
+              type: div
+              settings:
+                enabled: rs:has_public_folder_twin
+              innerHTML:
+                -
+                  type: a
+                  settings:
+                    disabled: rs:public_folder_match
+                  attribute:
+                    data-url_id: rs:url_id
+                    onclick: PluginPluginAnalysis.public_update(this)
+                    class: btn btn-warning
+                  innerHTML: Update
         -
           type: div
           innerHTML:
