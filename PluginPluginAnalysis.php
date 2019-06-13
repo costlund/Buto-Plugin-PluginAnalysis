@@ -131,9 +131,9 @@ class PluginPluginAnalysis{
   public function page_plugin(){
     $element = new PluginWfYml(__DIR__.'/element/plugin.yml');
     $this->setPlugin();
-    //wfHelp::yml_dump($this->plugin);
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
+    $element->setByTag($this->plugin->get('git'), 'git');
     $usage = $this->getUsage();
     $element->setByTag(array('usage' => $usage, 'has_usage' => sizeof($usage)));
     $element->setByTag(array('history' => $this->getHistory()));
@@ -374,6 +374,13 @@ class PluginPluginAnalysis{
     $this->setPlugins();
     $this->plugin = new PluginWfArray($this->plugins->get($id));
     /**
+     * Git
+     */
+    wfPlugin::includeonce('git/kbjr');
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->plugin->get('name'));
+    $this->plugin->set('git/status', $git->status());
+    /**
      * 
      */
     if($this->plugin->get('has_manifest')=='Yes'){
@@ -531,6 +538,7 @@ class PluginPluginAnalysis{
     foreach ($plugin_array as $key => $value) {
       $value_dot = str_replace('/', '.', $value);
       $plugin->set($value_dot.'/name', $value);
+      $plugin->set($value_dot.'/git', null);
       $has_public_folder = false;
       $has_public_folder_text = null;
       $has_public_folder_twin = null;

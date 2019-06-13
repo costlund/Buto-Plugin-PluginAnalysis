@@ -1,5 +1,8 @@
-version: '1.13'
+version: '1.14'
 history:
+  '1.14':
+    date: '2019-06-13'
+    description: Add GIT support.
   '1.13':
     date: '2019-06-08'
     description: Public folder update button.
@@ -65,6 +68,9 @@ plugin:
     version: '1.0'
   -
     name: readme/parser
+    version: '1.0'
+  -
+    name: git/kbjr
     version: '1.0'
 sys:
   -
