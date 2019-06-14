@@ -1,0 +1,40 @@
+-
+  type: div
+  innerHTML:
+    -
+      type: a
+      attribute:
+        data-id: rs:plugin
+        onclick: PluginPluginAnalysis.git_add(this)
+      innerHTML: Add
+    -
+      type: a
+      attribute:
+        data-id: rs:plugin
+        onclick: PluginPluginAnalysis.git_commit(this)
+      innerHTML: Commit
+    -
+      type: a
+      attribute:
+        data-id: rs:plugin
+        onclick: PluginPluginAnalysis.git_push(this)
+      innerHTML: Push
+    -
+      type: a
+      attribute:
+        data-id: rs:plugin
+        onclick: PluginPluginAnalysis.git_pull(this)
+      innerHTML: Pull
+    -
+      type: a
+      attribute:
+        data-id: rs:plugin
+        onclick: PluginPluginAnalysis.git_fetch(this)
+      innerHTML: Fetch
+-
+  type: pre
+  innerHTML: rs:status
+-
+  type: pre
+  innerHTML: rs:log
+  

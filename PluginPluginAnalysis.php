@@ -14,6 +14,7 @@ class PluginPluginAnalysis{
        */
       wfPlugin::includeonce('wf/array');
       wfPlugin::includeonce('wf/yml');
+      wfPlugin::includeonce('git/kbjr');
       /**
        * Enable.
        */
@@ -379,7 +380,11 @@ class PluginPluginAnalysis{
     wfPlugin::includeonce('git/kbjr');
     $git = new PluginGitKbjr();
     $git->set_repo($this->plugin->get('name'));
-    $this->plugin->set('git/status', $git->status());
+    if($git->exist()){
+      $this->plugin->set('git/status', $git->status());
+    }else{
+      $this->plugin->set('git/status', null);
+    }
     /**
      * 
      */
@@ -630,5 +635,49 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/manifest", null);
       $this->plugins->set("$key/version_manifest", null);
     }
+  }
+  public function page_git(){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
+    $data = new PluginWfArray();
+    $data->set('status', $git->status());
+    $data->set('log', $git->log());
+    $element = new PluginWfYml(__DIR__.'/element/git.yml');
+    $element->setByTag($data->get());
+    $element->setByTag(wfRequest::getAll());
+    wfDocument::renderElement($element->get());
+  }
+  public function page_git_add(){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
+    $git->add();
+    exit('Add...');
+  }
+  public function page_git_push(){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
+    $git->push();
+    exit('Push...');
+  }
+  public function page_git_pull(){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
+    $git->pull();
+    exit('Pull...');
+  }
+  public function page_git_fetch(){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
+    $git->fetch();
+    exit('Fetch...');
+  }
+  public function page_git_commit(){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
+    $git->commit(wfRequest::get('message'));
+    exit('Commit...');
+  }
+  private function replace_a_dot_to_slash($str){
+    return str_replace('_A_DOT_', "/", $str);
   }
 }

@@ -54,5 +54,37 @@ function PluginPluginAnalysis(){
       }
     });
   }
+  /**
+   * Git
+   */
+  this.git = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin});
+  }
+  this.git_add = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_add', label: 'GIT add', url: '/plugin_analysis/git_add?plugin='+plugin});
+  }
+  this.git_push = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_push', label: 'GIT push', url: '/plugin_analysis/git_push?plugin='+plugin});
+  }
+  this.git_pull = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_pull', label: 'GIT pull', url: '/plugin_analysis/git_pull?plugin='+plugin});
+  }
+  this.git_fetch = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_fetch', label: 'GIT fetch', url: '/plugin_analysis/git_fetch?plugin='+plugin});
+  }
+  this.git_fetch = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_fetch', label: 'GIT fetch', url: '/plugin_analysis/git_fetch?plugin='+plugin});
+  }
+  this.git_commit = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    var message = prompt("Commit message", "");
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_commit', label: 'GIT commit', url: '/plugin_analysis/git_commit?plugin='+plugin+'&message='+message});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();
