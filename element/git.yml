@@ -31,6 +31,12 @@
         data-id: rs:plugin
         onclick: PluginPluginAnalysis.git_fetch(this)
       innerHTML: Fetch
+    -
+      type: a
+      attribute:
+        data-id: rs:plugin
+        onclick: PluginPluginAnalysis.git_diff(this)
+      innerHTML: Diff
 -
   type: pre
   innerHTML: rs:status

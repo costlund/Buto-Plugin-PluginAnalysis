@@ -382,6 +382,9 @@ class PluginPluginAnalysis{
     $git->set_repo($this->plugin->get('name'));
     if($git->exist()){
       $this->plugin->set('git/status', $git->status());
+      
+//      wfHelp::textarea_dump($git->diff('PluginTestsGit.php'));
+      
     }else{
       $this->plugin->set('git/status', null);
     }
@@ -676,6 +679,12 @@ class PluginPluginAnalysis{
     $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
     $git->commit(wfRequest::get('message'));
     exit('Commit...');
+  }
+  public function page_git_diff(){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
+    $element = wfDocument::createHtmlElement('pre', $git->diff(wfRequest::get('filename')));
+    wfDocument::renderElement(array($element));
   }
   private function replace_a_dot_to_slash($str){
     return str_replace('_A_DOT_', "/", $str);
