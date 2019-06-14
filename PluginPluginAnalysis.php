@@ -382,9 +382,6 @@ class PluginPluginAnalysis{
     $git->set_repo($this->plugin->get('name'));
     if($git->exist()){
       $this->plugin->set('git/status', $git->status());
-      
-//      wfHelp::textarea_dump($git->diff('PluginTestsGit.php'));
-      
     }else{
       $this->plugin->set('git/status', null);
     }
