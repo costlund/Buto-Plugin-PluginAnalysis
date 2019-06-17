@@ -362,29 +362,18 @@ class PluginPluginAnalysis{
       $item = new PluginWfArray($value);
       $tr = new PluginWfYml('/plugin/plugin/analysis/element/table_tr.yml');
       $tr->setByTag($item->get());
+      $tr->setByTag($item->get('git'), 'git');
       $trs[] = $tr->get();
     }
     $element->setByTag(array('trs' => $trs));
     $element->setByTag(wfRequest::getAll(), 'rs', true);
     wfDocument::renderElement($element->get());
-    //wfHelp::yml_dump($this->plugins, true);
   }
   private function setPlugin(){
     $id = wfRequest::get('id');
     $id = str_replace('_A_DOT_', '.', $id);
     $this->setPlugins();
     $this->plugin = new PluginWfArray($this->plugins->get($id));
-    /**
-     * Git
-     */
-    wfPlugin::includeonce('git/kbjr');
-    $git = new PluginGitKbjr();
-    $git->set_repo($this->plugin->get('name'));
-    if($git->exist()){
-      $this->plugin->set('git/status', $git->status());
-    }else{
-      $this->plugin->set('git/status', null);
-    }
     /**
      * 
      */
@@ -540,10 +529,31 @@ class PluginPluginAnalysis{
       $plugin_array = $this->getPluginArray();
     }
     $plugin = new PluginWfArray();
+    wfPlugin::includeonce('git/kbjr');
+    $git = new PluginGitKbjr();
     foreach ($plugin_array as $key => $value) {
       $value_dot = str_replace('/', '.', $value);
       $plugin->set($value_dot.'/name', $value);
-      $plugin->set($value_dot.'/git', null);
+      /**
+       * Git
+       */
+      $git->set_repo($value);
+      if($git->exist()){
+        $plugin->set($value_dot.'/git/status', $git->status());
+        if(strstr($git->status(), 'Your branch is ahead of')){
+          $plugin->set($value_dot.'/git/has', 'Yes**');
+        }elseif(strstr($git->status(), 'nothing to commit, working tree clean')){
+          $plugin->set($value_dot.'/git/has', 'Yes');
+        }else{
+          $plugin->set($value_dot.'/git/has', 'Yes*');
+        }
+      }else{
+        $plugin->set($value_dot.'/git/status', null);
+        $plugin->set($value_dot.'/git/has', null);
+      }
+      /**
+       * 
+       */
       $has_public_folder = false;
       $has_public_folder_text = null;
       $has_public_folder_twin = null;

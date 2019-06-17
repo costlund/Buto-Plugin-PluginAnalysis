@@ -36,6 +36,9 @@
             -
               type: th
               innerHTML: Public folder
+            -
+              type: th
+              innerHTML: GIT
     -
       type: tbody
       innerHTML: rs:trs

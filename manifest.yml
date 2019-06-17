@@ -1,5 +1,8 @@
-version: '1.15'
+version: '1.16'
 history:
+  '1.17':
+    date: '2019-06-17'
+    description: Improved GIT support.
   '1.15':
     date: '2019-06-14'
     description: Add more GIT support.
