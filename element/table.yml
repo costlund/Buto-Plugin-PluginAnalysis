@@ -32,9 +32,6 @@
               innerHTML: Version
             -
               type: th
-              innerHTML: Plugins
-            -
-              type: th
               innerHTML: Conflict
             -
               type: th

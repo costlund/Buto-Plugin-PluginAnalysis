@@ -14,9 +14,6 @@ innerHTML:
     innerHTML: rs:version_manifest
   -
     type: td
-    innerHTML: rs:plugins
-  -
-    type: td
     innerHTML: rs:conflict
   -
     type: td
