@@ -21,5 +21,8 @@ innerHTML:
   -
     type: td
     innerHTML: git:has
+  -
+    type: td
+    innerHTML: git:log_date_last
    
    

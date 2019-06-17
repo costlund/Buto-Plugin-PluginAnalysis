@@ -267,6 +267,15 @@
               type: h2
               innerHTML: GIT
             -
+              type: div
+              innerHTML:
+                -
+                  type: strong
+                  innerHTML: Has
+                -
+                  type: span
+                  innerHTML: git:has
+            -
               type: pre
               settings:
                 enabled: git:status

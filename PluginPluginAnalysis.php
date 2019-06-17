@@ -538,18 +538,21 @@ class PluginPluginAnalysis{
        * Git
        */
       $git->set_repo($value);
+      $plugin->set($value_dot.'/git/status', null);
+      $plugin->set($value_dot.'/git/has', null);
+      $plugin->set($value_dot.'/git/log_date_last', null);
       if($git->exist()){
         $plugin->set($value_dot.'/git/status', $git->status());
-        if(strstr($git->status(), 'Your branch is ahead of')){
-          $plugin->set($value_dot.'/git/has', 'Yes**');
+        if(strstr($git->status(), 'Your branch is behind')){
+          $plugin->set($value_dot.'/git/has', 'Yes (behind)');
+        }elseif(strstr($git->status(), 'Your branch is ahead of')){
+          $plugin->set($value_dot.'/git/has', 'Yes (ahead)');
         }elseif(strstr($git->status(), 'nothing to commit, working tree clean')){
           $plugin->set($value_dot.'/git/has', 'Yes');
         }else{
-          $plugin->set($value_dot.'/git/has', 'Yes*');
+          $plugin->set($value_dot.'/git/has', 'Yes (changes)');
         }
-      }else{
-        $plugin->set($value_dot.'/git/status', null);
-        $plugin->set($value_dot.'/git/has', null);
+        $plugin->set($value_dot.'/git/log_date_last', $git->log_date_last());
       }
       /**
        * 

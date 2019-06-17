@@ -39,6 +39,9 @@
             -
               type: th
               innerHTML: GIT
+            -
+              type: th
+              innerHTML: GIT date
     -
       type: tbody
       innerHTML: rs:trs
