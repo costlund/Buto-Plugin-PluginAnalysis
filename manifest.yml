@@ -1,5 +1,8 @@
-version: '1.16'
+version: '1.18'
 history:
+  '1.18':
+    date: '2019-09-10'
+    description: Support webmaster/element from manifest.yml.
   '1.17':
     date: '2019-06-17'
     description: Improved GIT support.

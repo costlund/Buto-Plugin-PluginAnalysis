@@ -134,6 +134,17 @@ class PluginPluginAnalysis{
     $this->setPlugin();
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
+    /**
+     * Webmaster element.
+     */
+    wfPlugin::enable($this->plugin->get('name'));
+    if(!$this->plugin->get('manifest/webmaster/element')){
+      $this->plugin->set('manifest/webmaster/element', null);
+    }
+    $element->setByTag($this->plugin->get('manifest/webmaster'), 'webmaster');
+    /**
+     * 
+     */
     $element->setByTag($this->plugin->get('git'), 'git');
     $usage = $this->getUsage();
     $element->setByTag(array('usage' => $usage, 'has_usage' => sizeof($usage)));

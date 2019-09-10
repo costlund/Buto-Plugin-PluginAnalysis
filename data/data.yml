@@ -25,3 +25,8 @@ manifest:
 #      description:
 #      path:
 #        - /path/to/files
+webmaster:
+  element:
+    -
+      type: p
+      innerHTML: Webmaster element.

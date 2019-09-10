@@ -18,3 +18,15 @@ plugin_modules:
 ## GIT
 
 Supporting GIT.
+
+## Webmaster
+
+Add param to display elements.
+
+```
+webmaster:
+  element:
+    -
+      type: strong
+      innerHTML: Widget list.
+```
