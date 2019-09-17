@@ -606,6 +606,15 @@ class PluginPluginAnalysis{
       $plugin->set($value_dot.'/public_folder_match_text', $public_folder_match_text);
       $plugin->set($value_dot.'/files', $this->scan_dir($plugins_folder.'/'.$value));
       $plugin->set($value_dot.'/files_count', sizeof($plugin->get($value_dot.'/files')));
+      /**
+       * Icon
+       */
+      $plugin->set($value_dot.'/icon_element', null);
+      $filename = wfGlobals::getWebDir().'/plugin/'.$value.'/icon/icon.png';
+      if(wfFilesystem::fileExist($filename)){
+        $str = '<img src="/plugin/'.$value.'/icon/icon.png" style="width:30px">';
+        $plugin->set($value_dot.'/icon_element', $str);
+      }
     }
     $this->plugins = new PluginWfArray($plugin->get());
     /**

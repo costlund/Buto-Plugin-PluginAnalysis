@@ -5,6 +5,9 @@ attribute:
 innerHTML:
   -
     type: td
+    innerHTML: rs:icon_element
+  -
+    type: td
     innerHTML: rs:name
   -
     type: td

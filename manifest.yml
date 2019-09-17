@@ -1,5 +1,8 @@
-version: '1.18'
+version: '1.19'
 history:
+  '1.19':
+    date: '2019-09-17'
+    description: Add icons to table.
   '1.18':
     date: '2019-09-10'
     description: Support webmaster/element from manifest.yml.
