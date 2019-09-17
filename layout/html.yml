@@ -52,6 +52,12 @@ content:
               method: js
               data:
                 file: /plugin/plugin/analysis/js/function.js
+          -
+            type: link
+            attribute:
+              rel: icon
+              type: image/x-icon
+              href: '/plugin/plugin/analysis/icon/icon.png?x=1'
       body:
         type: body
         innerHTML: 'body...'
