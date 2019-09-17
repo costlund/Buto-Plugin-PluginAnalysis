@@ -103,7 +103,7 @@ class PluginPluginAnalysis{
         foreach ($item->get('manifest/plugin') as $key2 => $value2) {
           $item2 = new PluginWfArray($value2);
           if($this->plugin->get('name')==$item2->get('name')){
-            $usage[] = array('name' => $item->get('name'), 'row_click' => "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
+            $usage[] = array('name' => $item->get('name'), 'icon_element' => $item->get('icon_element'), 'row_click' => "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
           }
         }
       }
@@ -392,8 +392,10 @@ class PluginPluginAnalysis{
       $this->set_search_plugin($this->plugin->get('name'));
       if($this->plugin->get('manifest/plugin')){
         foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
+          $v['id_dot'] = str_replace('/', '.', $v['name']);
           $this->plugin->set("manifest/plugin/$k/code", null);
           $this->plugin->set("manifest/plugin/$k/manifest", null);
+          $this->plugin->set("manifest/plugin/$k/icon_element", $this->plugins->get($v['id_dot']."/icon_element"));
         }
         /**
          * Check if plugin in code exist in manifest.
