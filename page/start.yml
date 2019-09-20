@@ -22,8 +22,8 @@ content:
       id: start
       style: 'min-height:600px'
     innerHTML: null
-#  -
-#    type: script
-#    innerHTML: "PluginPluginAnalysis.analys()"
+  -
+    type: script
+    innerHTML: "PluginPluginAnalysis.analys()"
 
     
