@@ -225,10 +225,9 @@
                       field:
                         icon_element: Icon
                         name: Name
-                        version: Ver
-                        version_manifest: VM
-                        code: Code
-                        manifest: M
+                        version: MV
+                        version_manifest: PV
+                        find: Find
             -
               type: div
               settings:

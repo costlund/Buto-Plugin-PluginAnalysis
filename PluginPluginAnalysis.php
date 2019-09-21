@@ -346,12 +346,12 @@ class PluginPluginAnalysis{
   }
   private function doPluginSearch($needle, $content){
     /**
-     * Find plugin in content.
+     * Find (max 1000) plugins in content.
      */
     $pos1 = 0;
     $pos2 = 0;
     $length = strlen($content);
-    for($i=0;$i<10;$i++){
+    for($i=0;$i<1000;$i++){
       $pos1 = strpos($content, $needle, $pos1+1);
       $pos2 = strpos($content, ')', $pos1+1);
       if($pos1===false){
@@ -393,22 +393,19 @@ class PluginPluginAnalysis{
       if($this->plugin->get('manifest/plugin')){
         foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
           $v['id_dot'] = str_replace('/', '.', $v['name']);
-          $this->plugin->set("manifest/plugin/$k/code", null);
-          $this->plugin->set("manifest/plugin/$k/manifest", null);
+          $this->plugin->set("manifest/plugin/$k/find", 'M');
           $this->plugin->set("manifest/plugin/$k/icon_element", $this->plugins->get($v['id_dot']."/icon_element"));
         }
         /**
          * Check if plugin in code exist in manifest.
          */
         foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
-          $code = 'No';
           foreach ($this->plugin_search as $v2) {
             if($v2[3]== $this->plugin->get("manifest/plugin/$k/name")){
-              $code = 'Yes';
+              $this->plugin->set("manifest/plugin/$k/find", 'MC');
               break;
             }
           }
-          $this->plugin->set("manifest/plugin/$k/code", $code);
         }
         /**
          * Check if plugin in manifest exist in code.
@@ -416,18 +413,17 @@ class PluginPluginAnalysis{
         foreach ($this->plugin_search as $v) {
           $manifest = 'No';
           foreach ($this->plugin->get('manifest/plugin') as $k2 => $v2){
-            if($v[3]== $this->plugin->get("manifest/plugin/$k2/name")){
-              $manifest = 'Yes';
+            if($v[3]== $v2['name']){
+              $manifest = null;
               break;
             }
           }
           if($manifest == 'No'){
-            $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => null, 'code' => 'Yes', 'manifest' => $manifest));
+            $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => null, 'find' => 'C'));
           }
         }
       }
     }
-    
     if($this->plugin->get('manifest/plugin')){
       foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
         $item = new PluginWfArray($value);
