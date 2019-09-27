@@ -1,5 +1,8 @@
-version: '1.19'
+version: '1.20'
 history:
+  '1.20':
+    date: '2019-09-27'
+    description: Search for wfDocument::createWidget on manifest create.
   '1.19':
     date: '2019-09-17'
     description: Add icons to table.

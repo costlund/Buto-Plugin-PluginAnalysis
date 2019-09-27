@@ -343,6 +343,7 @@ class PluginPluginAnalysis{
      */
     $this->doPluginSearch('wfPlugin::includeonce(', $content);
     $this->doPluginSearch('wfPlugin::enable(', $content);
+    $this->doPluginSearch('wfDocument::createWidget(', $content);
   }
   private function doPluginSearch($needle, $content){
     /**
@@ -360,6 +361,15 @@ class PluginPluginAnalysis{
       $plugin = substr($content, $pos1+strlen($needle), $pos2-$pos1-strlen($needle));
       $plugin = str_replace("'", '', $plugin);
       $plugin = str_replace('"', '', $plugin);
+      /**
+       * Fix if wfDocument::createWidget(.
+       */
+      if(strstr($plugin, ',')){
+        $plugin = substr($plugin, 0, strpos($plugin, ','));
+      }
+      /**
+       *
+       */
       if(!strstr($plugin, '$')){
         $this->plugin_search[] = array($needle, $pos1, $pos2, $plugin);
       }
