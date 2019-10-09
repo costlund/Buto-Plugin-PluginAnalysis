@@ -38,6 +38,13 @@ Get data from all plugins in system.
 ```
 wfPlugin::includeonce('plugin/analysis');
 $plugin_analysis = new PluginPluginAnalysis();
+wfRequest::set('theme', wfGlobals::getTheme());
 $plugin_analysis->setPlugins();
 print_r($plugin_analysis->plugins->get());
+```
+
+This is to only ask for plugins used by current theme.
+
+```
+wfRequest::set('theme', wfGlobals::getTheme());
 ```
