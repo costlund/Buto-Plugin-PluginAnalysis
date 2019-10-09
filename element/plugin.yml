@@ -320,6 +320,11 @@
                 plugin: wf/table
                 method: render_many
                 data:
+                  field:
+                    name: Name
+                    plugin: Widget
+                    plugin_module: Page
+                    event: Event
                   rs: rs:theme_usage
     -
       type: div
@@ -370,6 +375,10 @@
                 plugin: wf/table
                 method: render_many
                 data:
+                  field:
+                    version: Version
+                    date: Date
+                    description: Description
                   rs: rs:history
     -
       type: div
