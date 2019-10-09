@@ -4,10 +4,10 @@
  */
 class PluginPluginAnalysis{
   private $settings = null;
-  private $plugins = null;
+  public $plugins = null;
   private $plugin = null;
   private $plugin_search = array();
-  function __construct($buto) {
+  function __construct($buto = false) {
     if($buto){
       /**¨
        * ¨Include.
@@ -534,7 +534,7 @@ class PluginPluginAnalysis{
     }
     return $plugin;
   }
-  private function setPlugins(){
+  public function setPlugins(){
     $plugins_folder = wfGlobals::getAppDir().'/plugin';
     $plugin_array = array();
     if(wfRequest::get('theme')){

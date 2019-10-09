@@ -30,3 +30,14 @@ webmaster:
       type: strong
       innerHTML: Widget list.
 ```
+
+## PHP
+
+Get data from all plugins in system.
+
+```
+wfPlugin::includeonce('plugin/analysis');
+$plugin_analysis = new PluginPluginAnalysis();
+$plugin_analysis->setPlugins();
+print_r($plugin_analysis->plugins->get());
+```
