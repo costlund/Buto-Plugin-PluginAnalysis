@@ -539,7 +539,7 @@ class PluginPluginAnalysis{
     $plugin_array = array();
     if(wfRequest::get('theme')){
       wfPlugin::includeonce('theme/analysis');
-      $theme_analysis = new PluginThemeAnalysis(true);
+      $theme_analysis = new PluginThemeAnalysis(array('secure' => false));
       $theme_analysis->setData(wfRequest::get('theme'));
       foreach ($theme_analysis->data->get() as $key => $value) {
         $plugin_array[] = $value['name'];
