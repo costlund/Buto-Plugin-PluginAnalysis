@@ -1,5 +1,9 @@
-version: '1.22'
+version: '1.23'
 history:
+  '1.23':
+    date: '2019-10-14'
+    title: Image element
+    description: Replace param icon_element with icon_path and use PluginImageElement to render image.
   '1.22':
     date: '2019-10-09'
     description: Declare variables as public.
@@ -93,6 +97,9 @@ plugin:
   -
     name: git/kbjr
     version: '1.1'
+  -
+    name: image/element
+    version: '1.0'
 sys:
   -
     name: mercury

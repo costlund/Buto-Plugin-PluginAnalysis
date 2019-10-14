@@ -26,6 +26,7 @@ class PluginPluginAnalysis{
       wfPlugin::enable('wf/callbackjson');
       wfPlugin::enable('wf/dom');
       wfPlugin::enable('wf/embed');
+      wfPlugin::enable('image/element');
       /**
        * Only webmaster.
        */
@@ -103,7 +104,7 @@ class PluginPluginAnalysis{
         foreach ($item->get('manifest/plugin') as $key2 => $value2) {
           $item2 = new PluginWfArray($value2);
           if($this->plugin->get('name')==$item2->get('name')){
-            $usage[] = array('name' => $item->get('name'), 'icon_element' => $item->get('icon_element'), 'row_click' => "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
+            $usage[] = array('name' => $item->get('name'), 'icon_path' => $item->get('icon_path'), 'row_click' => "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
           }
         }
       }
@@ -404,7 +405,7 @@ class PluginPluginAnalysis{
         foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
           $v['id_dot'] = str_replace('/', '.', $v['name']);
           $this->plugin->set("manifest/plugin/$k/find", 'M');
-          $this->plugin->set("manifest/plugin/$k/icon_element", $this->plugins->get($v['id_dot']."/icon_element"));
+          $this->plugin->set("manifest/plugin/$k/icon_path", $this->plugins->get($v['id_dot']."/icon_path"));
         }
         /**
          * Check if plugin in code exist in manifest.
@@ -615,14 +616,9 @@ class PluginPluginAnalysis{
       $plugin->set($value_dot.'/files', $this->scan_dir($plugins_folder.'/'.$value));
       $plugin->set($value_dot.'/files_count', sizeof($plugin->get($value_dot.'/files')));
       /**
-       * Icon
+       * Icon path
        */
-      $plugin->set($value_dot.'/icon_element', null);
-      $filename = wfGlobals::getWebDir().'/plugin/'.$value.'/icon/icon.png';
-      if(wfFilesystem::fileExist($filename)){
-        $str = '<img src="/plugin/'.$value.'/icon/icon.png" style="width:30px">';
-        $plugin->set($value_dot.'/icon_element', $str);
-      }
+      $plugin->set($value_dot.'/icon_path', '/plugin/'.$value.'/icon/icon.png');
     }
     $this->plugins = new PluginWfArray($plugin->get());
     /**

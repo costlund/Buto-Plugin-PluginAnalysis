@@ -15,8 +15,13 @@
           type: div
           innerHTML:
             -
-              type: text
-              innerHTML: rs:icon_element
+              type: widget
+              data:
+                plugin: image/element
+                method: render
+                data:
+                  path: rs:icon_path
+                  style: 'width:40px'
         -
           type: div
           innerHTML:
@@ -223,11 +228,21 @@
                     data:
                       rs: rs:plugin
                       field:
-                        icon_element: Icon
+                        icon_path: Icon
                         name: Name
                         version: MV
                         version_manifest: PV
                         find: Find
+                      element:
+                        icon_path:
+                          -
+                            type: widget
+                            data:
+                              plugin: image/element
+                              method: render
+                              data:
+                                path: wf_table:icon_path
+                                style: 'width:30px'
             -
               type: div
               settings:
@@ -349,8 +364,18 @@
                 data:
                   rs: rs:usage
                   field:
-                    icon_element: Icon
+                    icon_path: Icon
                     name: Name
+                  element:
+                    icon_path:
+                      -
+                        type: widget
+                        data:
+                          plugin: image/element
+                          method: render
+                          data:
+                            path: wf_table:icon_path
+                            style: 'width:30px'
 -
   type: div
   attribute:

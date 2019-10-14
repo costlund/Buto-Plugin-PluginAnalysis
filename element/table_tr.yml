@@ -5,7 +5,15 @@ attribute:
 innerHTML:
   -
     type: td
-    innerHTML: rs:icon_element
+    innerHTML:
+      -
+        type: widget
+        data:
+          plugin: image/element
+          method: render
+          data:
+            path: rs:icon_path
+            style: 'width:30px'
   -
     type: td
     innerHTML: rs:name
