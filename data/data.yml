@@ -2,9 +2,9 @@ title: Plugin Analsysis
 deprecated: false
 deprecated_description: ''
 manifest:
-  version: '1.0'
+  version: '1.0.0'
   history:
-    '1.0':
+    '1.0.0':
       date: 
       title: First version.
       description: Manifest created.
