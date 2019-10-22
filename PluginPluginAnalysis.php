@@ -302,7 +302,7 @@ class PluginPluginAnalysis{
       foreach ($this->plugin_search as $key => $value) {
         $version = $this->plugins->get(str_replace("/", '.', $value[3]).'/version_manifest');
         if(is_null($version)){
-          $version = '1.0';
+          $version = '1.0.0';
         }
         $temp[$value[3]] = array('name' => $value[3], 'version' => $version);
       }
@@ -315,7 +315,7 @@ class PluginPluginAnalysis{
        */
       $data = new PluginWfYml(__DIR__.'/data/data.yml');
       $data->set('manifest/plugin', $plugin);
-      $data->set('manifest/history/1.0/date', date('Y-m-d'));
+      $data->set('manifest/history/1.0.0/date', date('Y-m-d'));
       /**
        * Create manifest.
        */
