@@ -18,6 +18,11 @@ function PluginPluginAnalysis(){
     id = id.replace('.', '_A_DOT_');
     PluginWfBootstrapjs.modal({id: 'modal_plugin', label: 'Plugin', url: '/plugin_analysis/plugin/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close', size: 'lg'});
   }
+  this.plugin_clear_cache = function(id){
+    $('#modal_plugin').modal('hide');
+    id = id.replace('.', '_A_DOT_');
+    PluginWfBootstrapjs.modal({id: 'modal_plugin', label: 'Plugin', url: '/plugin_analysis/plugin/id/'+id+'/cc/1', resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close', size: 'lg'});
+  }
   this.manifest_create = function(element){
     var id = element.getAttribute('data-url_id');
     PluginWfBootstrapjs.modal({id: 'modal_manifest_create', label: 'Manifest create', url: '/plugin_analysis/manifest_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});

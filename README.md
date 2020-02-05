@@ -48,3 +48,6 @@ This is to only ask for plugins used by current theme.
 ```
 wfRequest::set('theme', wfGlobals::getTheme());
 ```
+## Cache
+
+Plugin data file (/../buto_data/theme/_theme_/plugin_analysis_plugins.yml) is created when plugin are listed. A button can be used to clear cache in plugin view.

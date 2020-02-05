@@ -394,7 +394,11 @@ class PluginPluginAnalysis{
   private function setPlugin(){
     $id = wfRequest::get('id');
     $id = str_replace('_A_DOT_', '.', $id);
-    $this->setPlugins();
+    if(!wfRequest::get('cc')){
+      $this->setPlugins(true);
+    }else{
+      $this->setPlugins();
+    }
     $this->plugin = new PluginWfArray($this->plugins->get($id));
     /**
      * 
@@ -535,7 +539,22 @@ class PluginPluginAnalysis{
     }
     return $plugin;
   }
-  public function setPlugins(){
+  public function setPlugins($cache = false){
+    /**
+     * Cache filename
+     */
+    $filename = wfGlobals::getAppDir().'/../buto_data/theme/[theme]/plugin_analysis_plugins.yml';
+    /**
+     * Cache get
+     */
+    if($cache && wfFilesystem::fileExist($filename)){
+      $temp = new PluginWfYml($filename);
+      $this->plugins = new PluginWfArray($temp->get());
+      return null;
+    }
+    /**¨
+     * ¨
+     */
     $plugins_folder = wfGlobals::getAppDir().'/plugin';
     $plugin_array = array();
     if(wfRequest::get('theme')){
@@ -654,6 +673,16 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/id", $key);
       $this->plugins->set("$key/url_id", str_replace('.', '_A_DOT_', $key));
     }
+    /**
+     * Cache save
+     */
+    $temp = new PluginWfYml($filename);
+    $temp->yml = $this->plugins->get();
+    $temp->save();
+    /**
+     * 
+     */
+    return null;
   }
   private function setManifest($key, $value){
     $item = new PluginWfArray($value);

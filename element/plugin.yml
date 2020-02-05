@@ -1,4 +1,15 @@
 -
+  type: p
+  attribute:
+    class: text-right
+  innerHTML:
+    -
+      type: a
+      attribute:
+        data-id: rs:id
+        onclick: PluginPluginAnalysis.plugin_clear_cache(this.getAttribute('data-id'))
+      innerHTML: Clear cache
+-
   type: h1
   innerHTML: rs:name
 -

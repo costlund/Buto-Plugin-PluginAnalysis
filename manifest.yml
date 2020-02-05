@@ -1,5 +1,9 @@
-version: '1.23.1'
+version: '1.24.0'
 history:
+  '1.24.0':
+    date: '2020-01-05'
+    title: Cache
+    description: Cache plugin data when list is loaded.
   '1.23.1':
     date: '2019-10-14'
     title: Version
