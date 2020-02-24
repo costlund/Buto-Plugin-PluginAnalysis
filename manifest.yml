@@ -1,5 +1,9 @@
-version: '1.24.0'
+version: '1.25.0'
 history:
+  '1.25.0':
+    date: '2020-02-21'
+    title: Git url
+    description: Display Git remote url.
   '1.24.0':
     date: '2020-01-05'
     title: Cache

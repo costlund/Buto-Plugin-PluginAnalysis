@@ -710,6 +710,7 @@ class PluginPluginAnalysis{
     $data = new PluginWfArray();
     $data->set('status', $git->status());
     $data->set('log', $git->log());
+    $data->set('remote_get_url_origin', $git->remote_get_url_origin());
     $element = new PluginWfYml(__DIR__.'/element/git.yml');
     $element->setByTag($data->get());
     $element->setByTag(wfRequest::getAll());
