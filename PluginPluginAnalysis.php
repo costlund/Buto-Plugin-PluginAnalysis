@@ -457,6 +457,16 @@ class PluginPluginAnalysis{
     $readme = null;
     $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/readme.md';
     $exist = wfFilesystem::fileExist($file);
+    /**
+     * 
+     */
+    if(!$exist){
+      $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/README.md';
+      $exist = wfFilesystem::fileExist($file);
+    }
+    /**
+     * 
+     */
     if($exist){
       $readme = file_get_contents($file);
       wfPlugin::includeonce('readme/parser');

@@ -1,5 +1,9 @@
-version: '1.25.0'
+version: '1.25.1'
 history:
+  '1.25.1':
+    date: '2020-03-05'
+    title: Readme file
+    description: Readme file could not be read due to upper case.
   '1.25.0':
     date: '2020-02-21'
     title: Git url
