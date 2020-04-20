@@ -591,19 +591,23 @@ class PluginPluginAnalysis{
       $plugin->set($value_dot.'/git/has', null);
       $plugin->set($value_dot.'/git/log_date_last', null);
       if($git->exist()){
-        $plugin->set($value_dot.'/git/status', $git->status());
-        if(strstr($git->status(), 'Your branch is behind')){
-          $plugin->set($value_dot.'/git/has', 'Yes (behind)');
-        }elseif(strstr($git->status(), 'Your branch is ahead of')){
-          $plugin->set($value_dot.'/git/has', 'Yes (ahead)');
-        }elseif(strstr($git->status(), 'but the upstream is gone')){
-          $plugin->set($value_dot.'/git/has', 'Yes (upstream)');
-        }elseif(strstr($git->status(), 'nothing to commit, working tree clean')){
-          $plugin->set($value_dot.'/git/has', 'Yes');
-        }else{
-          $plugin->set($value_dot.'/git/has', 'Yes (changes)');
+        try {
+          $plugin->set($value_dot.'/git/status', $git->status());
+          if(strstr($git->status(), 'Your branch is behind')){
+            $plugin->set($value_dot.'/git/has', 'Yes (behind)');
+          }elseif(strstr($git->status(), 'Your branch is ahead of')){
+            $plugin->set($value_dot.'/git/has', 'Yes (ahead)');
+          }elseif(strstr($git->status(), 'but the upstream is gone')){
+            $plugin->set($value_dot.'/git/has', 'Yes (upstream)');
+          }elseif(strstr($git->status(), 'nothing to commit, working tree clean')){
+            $plugin->set($value_dot.'/git/has', 'Yes');
+          }else{
+            $plugin->set($value_dot.'/git/has', 'Yes (changes)');
+          }
+          $plugin->set($value_dot.'/git/log_date_last', $git->log_date_last());
+        } catch (Exception $exc) {
+          $plugin->set($value_dot.'/git/has', 'Error ('.$exc->getMessage().')');
         }
-        $plugin->set($value_dot.'/git/log_date_last', $git->log_date_last());
       }
       /**
        * 
