@@ -155,6 +155,35 @@ class PluginPluginAnalysis{
     $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
     wfDocument::renderElement($element->get());
   }
+  public function page_versions_update(){
+    /**
+     * 
+     */
+    $this->setPlugin();
+    /**
+     * 
+     */
+    $manifest = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/manifest.yml');
+    foreach ($manifest->get('plugin') as $key => $value) {
+      $i = new PluginWfArray($value);
+      $version = $this->versions_update_get_version($i->get('name'));
+      $manifest->set("plugin/$key/version", $version);
+    }
+    $manifest->save();
+    /**
+     * 
+     */
+    exit('Versions was updated!');
+  }
+  private function versions_update_get_version($plugin){
+    foreach ($this->plugin->get('manifest/plugin') as $v) {
+      $i = new PluginWfArray($v);
+      if($i->get('name')==$plugin){
+        return $i->get('version_manifest');
+      }
+    }
+    return null;
+  }
   public function page_js_include_method(){
     $this->setPlugin();
     $contents = file_get_contents(__DIR__.'/data/js_include_method.php');

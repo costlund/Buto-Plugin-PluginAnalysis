@@ -96,5 +96,9 @@ function PluginPluginAnalysis(){
     var filename = prompt("File name", "");
     PluginWfBootstrapjs.modal({id: 'modal_plugin_git_diff', label: 'GIT diff', url: '/plugin_analysis/git_diff?plugin='+plugin+'&filename='+filename});
   }
+  this.versions_update = function(btn){
+    var plugin = btn.getAttribute('data-id');
+    PluginWfBootstrapjs.modal({id: 'modal_versions_update', label: 'Update versions', url: '/plugin_analysis/versions_update?id='+plugin});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

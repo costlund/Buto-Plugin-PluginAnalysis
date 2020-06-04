@@ -1,7 +1,11 @@
-version: '1.25.3'
+version: '1.26.0'
 history:
+  '1.26.0':
+    date: '2020-06-04'
+    title: Update versions
+    description: Click on Update versions to update versions for all dependencies.
   '1.25.3':
-    date: '2020-06-03'
+    date: '2020-06-04'
     title: Plugin view
     description: Click on name in cell to go from one plugin view to another.
   '1.25.2':

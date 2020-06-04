@@ -230,7 +230,16 @@
                     enabled: rs:conflict
                   attribute:
                     class: alert alert-warning
-                  innerHTML: Has conflict
+                  innerHTML:
+                    -
+                      type: strong
+                      innerHTML: Has conflict
+                    -
+                      type: a
+                      attribute:
+                        data-id: rs:id
+                        onclick: PluginPluginAnalysis.versions_update(this)
+                      innerHTML: Update versions
                 -
                   type: widget
                   data:
