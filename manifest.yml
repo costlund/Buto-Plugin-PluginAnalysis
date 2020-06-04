@@ -1,5 +1,9 @@
-version: '1.25.2'
+version: '1.25.3'
 history:
+  '1.25.3':
+    date: '2020-06-03'
+    title: Plugin view
+    description: Click on name in cell to go from one plugin view to another.
   '1.25.2':
     date: '2020-04-20'
     title: Git

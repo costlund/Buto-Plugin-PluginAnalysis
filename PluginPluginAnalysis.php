@@ -442,7 +442,10 @@ class PluginPluginAnalysis{
     if($this->plugin->get('manifest/plugin')){
       foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
         $item = new PluginWfArray($value);
-        $this->plugin->set("manifest/plugin/$key/row_click", "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
+        /**
+         * Click on name in cell
+         */
+        $this->plugin->set("manifest/plugin/$key/name_click", "<a href=\"#\" onclick=\"PluginPluginAnalysis.plugin('".str_replace("/", '.', $item->get('name'))."')\">".$item->get('name')."</a>");
       }
     }
     $theme_usage_temp = $this->getThemesUsingPlugin($id);

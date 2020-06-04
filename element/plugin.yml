@@ -240,7 +240,7 @@
                       rs: rs:plugin
                       field:
                         icon_path: Icon
-                        name: Name
+                        name_click: Name
                         version: MV
                         version_manifest: PV
                         find: Find
