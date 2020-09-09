@@ -45,6 +45,9 @@
             -
               type: th
               innerHTML: GIT date
+            -
+              type: th
+              innerHTML: Branch
     -
       type: tbody
       innerHTML: rs:trs

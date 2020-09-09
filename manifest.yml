@@ -1,5 +1,9 @@
-version: '1.26.1'
+version: '1.27.0'
 history:
+  '1.27.0':
+    date: '2020-09-09'
+    title: 'Git branch'
+    description: 'Add Git active branch to plugin list.'
   '1.26.1':
     date: '2020-06-05'
     title: Update versions

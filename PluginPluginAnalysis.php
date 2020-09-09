@@ -616,7 +616,13 @@ class PluginPluginAnalysis{
       $plugin->set($value_dot.'/git/log_date_last', null);
       if($git->exist()){
         try {
+          /**
+           * 
+           */
           $plugin->set($value_dot.'/git/status', $git->status());
+          /**
+           * 
+           */
           if(strstr($git->status(), 'Your branch is behind')){
             $plugin->set($value_dot.'/git/has', 'Yes (behind)');
           }elseif(strstr($git->status(), 'Your branch is ahead of')){
@@ -628,7 +634,14 @@ class PluginPluginAnalysis{
           }else{
             $plugin->set($value_dot.'/git/has', 'Yes (changes)');
           }
+          /**
+           * 
+           */
           $plugin->set($value_dot.'/git/log_date_last', $git->log_date_last());
+          /**
+           * 
+           */
+          $plugin->set($value_dot.'/git/active_branch', $git->active_branch());
         } catch (Exception $exc) {
           $plugin->set($value_dot.'/git/has', 'Error ('.$exc->getMessage().')');
         }
