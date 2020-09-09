@@ -614,6 +614,7 @@ class PluginPluginAnalysis{
       $plugin->set($value_dot.'/git/status', null);
       $plugin->set($value_dot.'/git/has', null);
       $plugin->set($value_dot.'/git/log_date_last', null);
+      $plugin->set($value_dot.'/git/active_branch', null);
       if($git->exist()){
         try {
           /**
