@@ -13,14 +13,120 @@
   type: h1
   innerHTML: rs:name
 -
+  type: ul
+  attribute:
+    class: 'nav nav-tabs'
+    id: my_navtabs
+    role: tablist
+  innerHTML:
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: General
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML:
+            -
+              type: span
+              innerHTML: Plugin
+            -
+              type: span
+              settings:
+                enabled: rs:conflict
+              innerHTML: '(conflict)'
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: Readme
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: Git
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: Theme usage
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: Plugin usage
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: History
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: Links
+-
   type: div
   attribute:
-    class: row
+    style: 'margin-top:20px;min-height:300px'
+    id: my_content
   innerHTML:
     -
       type: div
       attribute:
-        class: col-md-4
+        id: tab_general
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
       innerHTML:
         -
           type: div
@@ -122,7 +228,9 @@
             class: well
           innerHTML:
             -
-              type: h2
+              type: div
+              attribute:
+                class: font-italic
               innerHTML: Public folder
             -
               type: div
@@ -209,183 +317,44 @@
     -
       type: div
       attribute:
-        class: col-md-8
+        id: tab_plugin
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
       innerHTML:
         -
           type: div
-          attribute:
-            class: well
+          settings:
+            enabled: rs:plugins
           innerHTML:
             -
-              type: h2
-              innerHTML: Plugin
-            -
               type: div
               settings:
-                enabled: rs:plugins
-              innerHTML:
-                -
-                  type: div
-                  settings:
-                    enabled: rs:conflict
-                  attribute:
-                    class: alert alert-warning
-                  innerHTML:
-                    -
-                      type: strong
-                      innerHTML: Has conflict
-                    -
-                      type: a
-                      attribute:
-                        data-id: rs:id
-                        onclick: PluginPluginAnalysis.versions_update(this)
-                      innerHTML: Update versions
-                -
-                  type: widget
-                  data:
-                    plugin: wf/table
-                    method: render_many
-                    data:
-                      rs: rs:plugin
-                      field:
-                        icon_path: Icon
-                        name_click: Name
-                        version: MV
-                        version_manifest: PV
-                        find: Find
-                      element:
-                        icon_path:
-                          -
-                            type: widget
-                            data:
-                              plugin: image/element
-                              method: render
-                              data:
-                                path: wf_table:icon_path
-                                style: 'width:30px'
-            -
-              type: div
-              settings:
-                disabled: rs:plugins
+                enabled: rs:conflict
               attribute:
-                style: 'font-style:italic'
-              innerHTML: Has no plugin
-        
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
-    -
-      type: div
-      attribute:
-        class: col-md-12
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: div
-              innerHTML: rs:readme
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
-    -
-      type: div
-      attribute:
-        class: col-md-12
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: h2
-              innerHTML: GIT
-            -
-              type: div
+                class: alert alert-warning
               innerHTML:
                 -
                   type: strong
-                  innerHTML: Has
+                  innerHTML: Has conflict
                 -
-                  type: span
-                  innerHTML: git:has
-            -
-              type: pre
-              settings:
-                enabled: git:status
-              innerHTML: git:status
-            -
-              type: a
-              settings:
-                enabled: git:status
-              attribute:
-                data-id: rs:url_id
-                onclick: PluginPluginAnalysis.git(this)
-              innerHTML: More
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
-    -
-      type: div
-      attribute:
-        class: col-md-6
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: h2
-              innerHTML: Theme usage
+                  type: a
+                  attribute:
+                    data-id: rs:id
+                    onclick: PluginPluginAnalysis.versions_update(this)
+                  innerHTML: Update versions
             -
               type: widget
-              settings:
-                enabled: rs:theme_has_usage
               data:
                 plugin: wf/table
                 method: render_many
                 data:
-                  field:
-                    name: Name
-                    plugin: Widget
-                    plugin_module: Page
-                    event: Event
-                  rs: rs:theme_usage
-    -
-      type: div
-      attribute:
-        class: col-md-6
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: h2
-              innerHTML: Plugin usage
-            -
-              type: widget
-              settings:
-                enabled: rs:has_usage
-              data:
-                plugin: wf/table
-                method: render_many
-                data:
-                  rs: rs:usage
+                  rs: rs:plugin
                   field:
                     icon_path: Icon
-                    name: Name
+                    name_click: Name
+                    version: MV
+                    version_manifest: PV
+                    find: Find
                   element:
                     icon_path:
                       -
@@ -396,57 +365,139 @@
                           data:
                             path: wf_table:icon_path
                             style: 'width:30px'
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
-    -
-      type: div
-      attribute:
-        class: col-md-6
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
             -
-              type: h2
-              innerHTML: History
-            -
-              type: widget
-              data:
-                plugin: wf/table
-                method: render_many
-                data:
-                  field:
-                    version: Version
-                    date: Date
-                    description: Description
-                  rs: rs:history
-    -
-      type: div
-      attribute:
-        class: col-md-6
-      innerHTML:
-        -
-          type: div
-          attribute:
-            class: well
-          innerHTML:
-            -
-              type: h2
-              innerHTML: Links
-            -
-              type: widget
+              type: div
               settings:
-                enabled: rs:has_links
-              data:
-                plugin: wf/table
-                method: render_many
-                data:
-                  rs: rs:links
+                disabled: rs:plugins
+              attribute:
+                style: 'font-style:italic'
+              innerHTML: Has no plugin
+    -
+      type: div
+      attribute:
+        id: tab_readme
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: div
+          innerHTML: rs:readme
+    -
+      type: div
+      attribute:
+        id: tab_git
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Has
+            -
+              type: span
+              innerHTML: git:has
+        -
+          type: pre
+          settings:
+            enabled: git:status
+          innerHTML: git:status
+        -
+          type: a
+          settings:
+            enabled: git:status
+          attribute:
+            data-id: rs:url_id
+            onclick: PluginPluginAnalysis.git(this)
+          innerHTML: More
+    -
+      type: div
+      attribute:
+        id: tab_theme_usage
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: widget
+          settings:
+            enabled: rs:theme_has_usage
+          data:
+            plugin: wf/table
+            method: render_many
+            data:
+              field:
+                name: Name
+                plugin: Widget
+                plugin_module: Page
+                event: Event
+              rs: rs:theme_usage
+    -
+      type: div
+      attribute:
+        id: tab_plugin_usage
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: widget
+          settings:
+            enabled: rs:has_usage
+          data:
+            plugin: wf/table
+            method: render_many
+            data:
+              rs: rs:usage
+              field:
+                icon_path: Icon
+                name: Name
+              element:
+                icon_path:
+                  -
+                    type: widget
+                    data:
+                      plugin: image/element
+                      method: render
+                      data:
+                        path: wf_table:icon_path
+                        style: 'width:30px'
+    -
+      type: div
+      attribute:
+        id: tab_history
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: widget
+          data:
+            plugin: wf/table
+            method: render_many
+            data:
+              field:
+                version: Version
+                date: Date
+                description: Description
+              rs: rs:history
+    -
+      type: div
+      attribute:
+        id: tab_links
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: widget
+          settings:
+            enabled: rs:has_links
+          data:
+            plugin: wf/table
+            method: render_many
+            data:
+              rs: rs:links
+-
+  type: script
+  innerHTML: "PluginBootstrapNavtabs_v1.nav_init({ul: 'my_navtabs', content: 'my_content', click: 0});"
 -
   type: div
   attribute:

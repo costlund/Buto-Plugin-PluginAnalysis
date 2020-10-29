@@ -16,7 +16,7 @@ function PluginPluginAnalysis(){
   this.plugin = function(id){
     $('#modal_plugin').modal('hide');
     id = id.replace('.', '_A_DOT_');
-    PluginWfBootstrapjs.modal({id: 'modal_plugin', label: 'Plugin', url: '/plugin_analysis/plugin/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close', size: 'lg'});
+    PluginWfBootstrapjs.modal({id: 'modal_plugin', label: 'Plugin', url: '/plugin_analysis/plugin/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close', size: 'xl'});
   }
   this.plugin_clear_cache = function(id){
     $('#modal_plugin').modal('hide');
