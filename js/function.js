@@ -11,7 +11,7 @@ function PluginPluginAnalysis(){
     }
   }
   this.theme_analys = function(btn){
-    PluginWfBootstrapjs.modal({id: 'modal_plugin', label: btn.innerHTML, url: '/plugin_analysis/theme_analys', resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close', size: 'sm'});
+    PluginWfBootstrapjs.modal({id: 'modal_plugin', label: btn.innerHTML, url: '/plugin_analysis/theme_analys', size: 'sm'});
   }
   this.plugin = function(id){
     $('#modal_plugin').modal('hide');
@@ -48,7 +48,7 @@ function PluginPluginAnalysis(){
     PluginWfBootstrapjs.modal({id: 'modal_public_create', label: 'Public update', url: '/plugin_analysis/public_create/id/'+id+'?update=1', resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
   }
   this.plugin_create = function(){
-    PluginWfBootstrapjs.modal({id: 'modal_plugin_create', label: 'Plugin create', url: '/plugin_analysis/plugin_create', resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_create', label: 'Plugin create', url: '/plugin_analysis/plugin_create'});
   }
   this.plugin_create_run = function(name){
     $.getJSON( "/plugin_analysis/plugin_create_run?name="+name, function( data ) {

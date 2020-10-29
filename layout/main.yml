@@ -9,12 +9,8 @@ content:
     innerHTML: Plugin analysis
   -
     type: div
-    attribute:
-      class: 'container-fluid'
     innerHTML: yml:/plugin/plugin/analysis/element/navbar.yml
   -
     type: div
-    attribute:
-      class: 'container-fluid'
     innerHTML:
       

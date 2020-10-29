@@ -1,17 +1,35 @@
 -
-  type: h1
-  innerHTML: Create plugin
--
-  type: input
+  type: div
   attribute:
-    type: text
-    placeholder: xxx/yyy
-    onchange: |
-      this.value = this.value.toLowerCase();
-      this.value = this.value.replace(' ', '');
+    class: form-group
+  innerHTML:
+    -
+      type: label
+      attribute:
+        for: plugin_name
+      innerHTML: 'Name'
+    -
+      type: input
+      attribute:
+        type: text
+        placeholder: xxx/yyy
+        onchange: |
+          this.value = this.value.toLowerCase();
+          this.value = this.value.replace(' ', '');
+        class: form-control
+        id: plugin_name
+        aria-describedby: textHelp
+    -
+      type: small
+      attribute:
+        id: textHelp
+        class: 'form-text text-muted'
+      innerHTML: 'Enter xxx/yyy as plugin name. Must not exist.'
 -
   type: button
   attribute:
+    class: btn btn-primary
     onclick: |
-      PluginPluginAnalysis.plugin_create_run(this.previousSibling.value);
-  innerHTML: Next
+      #PluginPluginAnalysis.plugin_create_run(this.previousSibling.value);
+      PluginPluginAnalysis.plugin_create_run(document.getElementById('plugin_name').value);
+  innerHTML: Create

@@ -18,14 +18,9 @@ class PluginPluginAnalysis{
       /**
        * Enable.
        */
-      wfPlugin::enable('datatable/datatable_1_10_16');
+      wfPlugin::enable('theme/include');
+      wfPlugin::enable('datatable/datatable_1_10_18');
       wfPlugin::enable('wf/table');
-      wfPlugin::enable('twitter/bootstrap335v');
-      wfPlugin::enable('wf/ajax');
-      wfPlugin::enable('wf/bootstrapjs');
-      wfPlugin::enable('wf/callbackjson');
-      wfPlugin::enable('wf/dom');
-      wfPlugin::enable('wf/embed');
       wfPlugin::enable('image/element');
       /**
        * Only webmaster.

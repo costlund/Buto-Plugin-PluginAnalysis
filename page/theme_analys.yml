@@ -1,8 +1,19 @@
 -
-  type: select
+  type: div
   attribute:
-    id: theme_analys_select
-  innerHTML: rs:option
+    class: form-group
+  innerHTML:
+    -
+      type: label
+      attribute:
+        for: plugin_name
+      innerHTML: 'Name'
+    -
+      type: select
+      attribute:
+        id: theme_analys_select
+        class: form-control
+      innerHTML: rs:option
 -
   type: button
   attribute:

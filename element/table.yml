@@ -1,5 +1,7 @@
 -
   type: div
+  settings:
+    enabled: rs:theme
   attribute:
     class: alert alert-info
   innerHTML:
@@ -54,7 +56,7 @@
     -
       type: widget
       data:
-        plugin: datatable/datatable_1_10_16
+        plugin: datatable/datatable_1_10_18
         method: run
         data:
 
@@ -70,7 +72,7 @@
                 - 1
                 - asc
             language:
-              url: /plugin/datatable/datatable_1_10_16/i18n/Swedish.json
+              url: /plugin/datatable/datatable_1_10_18/i18n/Swedish.json
               _url: //cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json    
   
 

@@ -18,33 +18,12 @@ content:
           -
             type: widget
             data:
-              plugin: 'twitter/bootstrap335v'
-              method: all
-          -
-            type: widget
-            data:
-              plugin: 'wf/ajax'
+              plugin: 'theme/include'
               method: include
-          -
-            type: widget
-            data:
-              plugin: 'wf/bootstrapjs'
-              method: include
-          -
-            type: widget
-            data:
-              plugin: 'wf/callbackjson'
-              method: include
-          -
-            type: widget
-            data:
-              plugin: 'wf/dom'
-              method: include
-          -
-            type: widget
-            data:
-              plugin: 'datatable/datatable_1_10_16'
-              method: include
+              data:
+                bootswatch:
+                  theme: Cerulean
+                icon: /plugin/plugin/analysis/icon/icon.png
           -
             type: widget
             data:
@@ -52,12 +31,6 @@ content:
               method: js
               data:
                 file: /plugin/plugin/analysis/js/function.js
-          -
-            type: link
-            attribute:
-              rel: icon
-              type: image/x-icon
-              href: '/plugin/plugin/analysis/icon/icon.png?x=1'
       body:
         type: body
         innerHTML: 'body...'
