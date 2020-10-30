@@ -25,6 +25,9 @@ content:
                   theme: Cerulean
                 icon: /plugin/plugin/analysis/icon/icon.png
           -
+            type: style
+            innerHTML: pre{background:lightgrey}
+          -
             type: widget
             data:
               plugin: 'wf/embed'

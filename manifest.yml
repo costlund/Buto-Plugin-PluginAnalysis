@@ -1,5 +1,9 @@
-version: 1.29.0
+version: 1.29.1
 history:
+  1.29.1:
+    date: '2020-10-30'
+    title: 'Pre element'
+    description: 'The pre element has no background which make it hard to separate code from text. So we made it light gray.'
   1.29.0:
     date: '2020-10-29'
     title: 'Tabs'
