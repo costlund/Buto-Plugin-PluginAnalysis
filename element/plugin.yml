@@ -349,6 +349,8 @@
                 method: render_many
                 data:
                   rs: rs:plugin
+                  datatable:
+                    disabled: false
                   field:
                     icon_path: Icon
                     name_click: Name
@@ -432,6 +434,8 @@
                 plugin_module: Page
                 event: Event
               rs: rs:theme_usage
+              datatable:
+                disabled: false
     -
       type: div
       attribute:
@@ -448,6 +452,8 @@
             method: render_many
             data:
               rs: rs:usage
+              datatable:
+                disabled: false
               field:
                 icon_path: Icon
                 name: Name
@@ -479,6 +485,8 @@
                 date: Date
                 description: Description
               rs: rs:history
+              datatable:
+                disabled: false
     -
       type: div
       attribute:
@@ -495,6 +503,8 @@
             method: render_many
             data:
               rs: rs:links
+              datatable:
+                disabled: false
 -
   type: script
   innerHTML: "PluginBootstrapNavtabs_v1.nav_init({ul: 'my_navtabs', content: 'my_content', click: 0});"

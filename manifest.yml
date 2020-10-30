@@ -1,5 +1,9 @@
-version: 1.29.1
+version: 1.29.2
 history:
+  1.29.2:
+    date: '2020-10-30'
+    title: 'Datatable'
+    description: 'Active Datatable for five tables in plugin view.'
   1.29.1:
     date: '2020-10-30'
     title: 'Pre element'
