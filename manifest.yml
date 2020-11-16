@@ -1,5 +1,9 @@
-version: 1.29.2
+version: 1.29.3
 history:
+  1.29.3:
+    date: '2020-11-16'
+    title: 'Clear cache'
+    description: 'Larger modal on Clear cache refresh.'
   1.29.2:
     date: '2020-10-30'
     title: 'Datatable'
