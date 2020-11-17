@@ -115,6 +115,17 @@
           attribute:
             class: nav-link
           innerHTML: Links
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: Public
 -
   type: div
   attribute:
@@ -503,6 +514,26 @@
             method: render_many
             data:
               rs: rs:links
+              datatable:
+                disabled: false
+    -
+      type: div
+      attribute:
+        id: tab_public
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: widget
+          data:
+            plugin: wf/table
+            method: render_many
+            data:
+              field:
+                name: Name
+                exist: Exist
+                size_diff: Diff
+              rs: rs:public_folder_files
               datatable:
                 disabled: false
 -

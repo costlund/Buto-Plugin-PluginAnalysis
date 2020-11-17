@@ -417,6 +417,78 @@ class PluginPluginAnalysis{
     }
     $this->plugin = new PluginWfArray($this->plugins->get($id));
     /**
+     * public_folder_files
+     */
+    if($this->plugin->get('has_public_folder')){
+      $files_right = array();
+      if($this->plugin->get('has_public_folder_twin')){
+        $files_right = $this->scan_dir(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name'));
+      }
+      $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public');
+      /**
+       * Set right if exist on both.
+       */
+      foreach($files_left as $k => $v){
+        $files_left[$k]['left'] = true;
+        if(isset($files_right[$k])){
+          $files_left[$k]['right'] = true;
+          $files_left[$k]['size_right'] = $files_right[$k]['size'];
+        }
+      }
+      /**
+       * Set right if exist on right.
+       */
+      foreach($files_right as $k => $v){
+        if(!isset($files_left[$k])){
+          $files_left[$k]['size_right'] = $files_right[$k]['size'];
+          $files_left[$k]['right'] = true;
+        }
+      }
+      /**
+       * Set exist.
+       */
+      foreach($files_left as $k => $v){
+        $i = new PluginWfArray($v);
+        if($i->get('left') && $i->get('right')){
+          $files_left[$k]['exist'] = 'both';
+        }elseif($i->get('left')){
+          $files_left[$k]['exist'] = 'left';
+        }elseif($i->get('right')){
+          $files_left[$k]['exist'] = 'right';
+        }
+      }
+      /**
+       * Set size_diff.
+       */
+      foreach($files_left as $k => $v){
+        $i = new PluginWfArray($v);
+        if($i->get('left') && $i->get('right')){
+          if($i->get('size') == $i->get('size_right')){
+            $files_left[$k]['size_diff'] = 'No';
+          }else{
+            $files_left[$k]['size_diff'] = 'Yes';
+          }
+        }else{
+          $files_left[$k]['size_diff'] = '';
+        }
+      }
+      /**
+       * Set name.
+       */
+      foreach($files_left as $k => $v){
+        $files_left[$k]['name'] = $k;
+      }
+      /**
+       * Set data.
+       */
+      $this->plugin->set('public_folder_files', $files_left);
+    }else{
+      /**
+       * Set data.
+       */
+      $this->plugin->set('public_folder_files', array());
+    }
+    /**
      * 
      */
     if($this->plugin->get('has_manifest')=='Yes'){

@@ -1,5 +1,9 @@
-version: 1.29.3
+version: 1.30.0
 history:
+  1.30.0:
+    date: '2020-11-17'
+    title: 'Public files'
+    description: 'Show public files in a tab.'
   1.29.3:
     date: '2020-11-16'
     title: 'Clear cache'
