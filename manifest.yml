@@ -1,5 +1,9 @@
-version: 1.30.0
+version: 1.31.0
 history:
+  1.31.0:
+    date: '2020-11-18'
+    title: 'Update versions'
+    description: 'Add button in meny Update versions to update manifest.yml if plugin has conflict and clean git repo. 10 each time. Plugin will be commited with message Versions.'
   1.30.0:
     date: '2020-11-17'
     title: 'Public files'

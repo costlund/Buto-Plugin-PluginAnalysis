@@ -158,18 +158,70 @@ class PluginPluginAnalysis{
     /**
      * 
      */
-    $manifest = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/manifest.yml');
-    foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
+    $manifest = $this->update_manifest_versions(wfRequest::get('id'));
+    /**
+     * 
+     */
+    exit('Versions was updated!');
+  }
+  public function page_versions_update_all(){
+    /**
+     * Set plugins.
+     */
+    $this->setPlugins();
+    /**
+     * Update manifest.yml for each plugin.
+     */
+    $i = 0;
+    foreach($this->plugins->get() as $k => $v){
+      /**
+       * Must have conflict.
+       */
+      if($this->plugins->get("$k/conflict")!='Yes'){
+        continue;
+      }
+      /**
+       * Must have clean repo.
+       */
+      if($this->plugins->get("$k/git/has")!='Yes'){
+        continue;
+      }
+      /**
+       * 
+       */
+      $i++;
+      /**
+       * 
+       */
+      $manifest = $this->update_manifest_versions($k);
+      $this->git_run($k);
+      wfHelp::yml_dump($k);
+      if($i==10){
+        exit("Update versions done ($i)!");
+      }
+    }
+    /**
+     * 
+     */
+    exit('Update versions done!');
+  }
+  private function git_run($plugins_key){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash($plugins_key));
+    $git->add();
+    $git->commit('Versions');
+    return null;
+  }
+  private function update_manifest_versions($plugins_key){
+    $manifest = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$plugins_key/name").'/manifest.yml');
+    foreach($this->plugins->get("$plugins_key/manifest/plugin") as $key => $value) {
       $i = new PluginWfArray($value);
       $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');
       $manifest->set("plugin/$key/name", $i->get('name'));
       $manifest->set("plugin/$key/version", $version);
     }
     $manifest->save();
-    /**
-     * 
-     */
-    exit('Versions was updated!');
+    return $manifest;
   }
   public function page_js_include_method(){
     $this->setPlugin();
@@ -872,6 +924,8 @@ class PluginPluginAnalysis{
     wfDocument::renderElement(array($element));
   }
   private function replace_a_dot_to_slash($str){
-    return str_replace('_A_DOT_', "/", $str);
+    $str = str_replace('_A_DOT_', "/", $str);
+    $str = str_replace('.', "/", $str);
+    return $str;
   }
 }

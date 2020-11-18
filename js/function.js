@@ -100,5 +100,11 @@ function PluginPluginAnalysis(){
     var plugin = btn.getAttribute('data-id');
     PluginWfBootstrapjs.modal({id: 'modal_versions_update', label: 'Update versions', url: '/plugin_analysis/versions_update?id='+plugin});
   }
+  this.versions_update_all = function(btn){
+    if(!confirm(btn.innerHTML+'?')){
+      return null;
+    }
+    PluginWfBootstrapjs.modal({id: 'modal_versions_update_all', label: 'Update versions', url: '/plugin_analysis/versions_update_all'});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

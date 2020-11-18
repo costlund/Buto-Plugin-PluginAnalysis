@@ -29,6 +29,11 @@
               -
                 text: Create
                 onclick: "PluginPluginAnalysis.plugin_create();"
+              -
+                type: divider
+              -
+                text: Update versions
+                onclick: "PluginPluginAnalysis.versions_update_all(this);"
           -
             text: Theme
             onclick: "PluginPluginAnalysis.theme_analys(this);"
