@@ -14,7 +14,7 @@ history:
     description: 'Larger modal on Clear cache refresh.'
   1.29.2:
     date: '2020-10-30'
-    title: 'Datatable'
+    title: Datatable
     description: 'Active Datatable for five tables in plugin view.'
   1.29.1:
     date: '2020-10-30'
@@ -22,7 +22,7 @@ history:
     description: 'The pre element has no background which make it hard to separate code from text. So we made it light gray.'
   1.29.0:
     date: '2020-10-29'
-    title: 'Tabs'
+    title: Tabs
     description: 'Add tabs to plugin view.'
   1.28.0:
     date: '2020-10-29'
@@ -169,7 +169,7 @@ plugin:
     version: 1.4.2
   -
     name: wf/table
-    version: 1.19.1
+    version: 1.20.0
   -
     name: image/element
     version: '1.2'
