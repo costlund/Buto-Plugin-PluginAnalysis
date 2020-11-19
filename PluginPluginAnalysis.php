@@ -692,6 +692,37 @@ class PluginPluginAnalysis{
     }
     return $plugin;
   }
+  /**
+   * Compare part one and two in versions like 1.2 or 1.2.3.
+   * 1.2 -> 1.2 = true
+   * 1.3 -> 1.2 = false
+   * 1.2.0 -> 1.2.0 = true
+   * 1.2.1 -> 1.2.0 = true
+   * 1.3.0 -> 1.2.0 = false
+   */
+  private function version_compare($v1, $v2){
+    wfPlugin::includeonce('string/array');
+    $obj = new PluginStringArray();
+    /**
+     * 
+     */
+    $v1_a = ($obj->from_char(str_replace('.', ':', $v1), ':'));
+    $v2_a = ($obj->from_char(str_replace('.', ':', $v2), ':'));
+    $match = false;
+    /**
+     * Versions should have like 1.2 or 1.2.3 to be compared.
+     */
+    if(sizeof($v1_a)>=2 && sizeof($v2_a)>=2){
+      if($v1_a[0]==$v2_a[0] && $v1_a[1]==$v2_a[1]){
+        $match = true;
+      }
+    }else{
+      if($v1 == $v2){
+        $match = true;
+      }
+    }
+    return $match;
+  }
   public function setPlugins($cache = false){
     /**
      * Cache filename
@@ -822,20 +853,32 @@ class PluginPluginAnalysis{
      * Manage data...
      */
     foreach ($this->plugins->get() as $key => $value) {
+      /**
+       * 
+       */
       $item = new PluginWfArray($value);
+      /**
+       * Set to null and later to a string with plugins (wf/array(1.2.0), wf/yml(1.2.2), ).
+       */
       $this->plugins->set("$key/plugins", null);
+      /**
+       * conflict, plugins, id, url_id
+       */
       $conflict = null;
       if($item->get('manifest/plugin')){
         $str = null;
         foreach ($item->get('manifest/plugin') as $key2 => $value2) {
           $plugin = new PluginWfArray($value2);
-          $version = $this->plugins->get(str_replace('/', '.', $plugin->get('name'))."/version_manifest");
+          /**
+           * version_manifest
+           */
+          $version_manifest = $this->plugins->get(str_replace('/', '.', $plugin->get('name'))."/version_manifest");
           $star = null;
-          if($version != $plugin->get('version')){
+          if(!$this->version_compare($version_manifest, $plugin->get('version'))){
             $star = '*';
             $conflict = 'Yes';
           }
-          $this->plugins->set("$key/manifest/plugin/$key2/version_manifest", $version);
+          $this->plugins->set("$key/manifest/plugin/$key2/version_manifest", $version_manifest);
           $str .= $plugin->get('name').'('.$plugin->get('version').$star.'), ';
         }
         $this->plugins->set("$key/plugins", $str);
@@ -844,6 +887,7 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/id", $key);
       $this->plugins->set("$key/url_id", str_replace('.', '_A_DOT_', $key));
     }
+    //wfHelp::yml_dump($this->plugins->get(), true);
     /**
      * Cache save
      */

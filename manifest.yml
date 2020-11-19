@@ -1,5 +1,9 @@
-version: 1.31.0
+version: 1.32.0
 history:
+  1.32.0:
+    date: '2020-11-19'
+    title: 'Version conflict check'
+    description: 'Compare only part one and two in version to detect if there is an conflict. Part three is just for minor changes like typo or readme.'
   1.31.0:
     date: '2020-11-18'
     title: 'Update versions'
