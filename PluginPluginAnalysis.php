@@ -111,7 +111,7 @@ class PluginPluginAnalysis{
     if($this->plugin->get('manifest/history')){
       foreach ($this->plugin->get('manifest/history') as $key => $value) {
         $item = new PluginWfArray($value);
-        $history[] = array('version' => $key, 'date' => $item->get('date'), 'description' => $item->get('description'));
+        $history[] = array('version' => $key, 'date' => $item->get('date'), 'title' => $item->get('title'), 'description' => $item->get('description'), 'webmaster' => $item->get('webmaster') );
       }
     }
     return $history;

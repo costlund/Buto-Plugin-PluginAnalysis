@@ -1,5 +1,9 @@
-version: 1.32.0
+version: 1.33.0
 history:
+  1.33.0:
+    date: '2020-11-23'
+    title: 'History'
+    description: 'Add Title and Webmaster kolumns to history tab list.'
   1.32.0:
     date: '2020-11-19'
     title: 'Version conflict check'

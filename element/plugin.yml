@@ -492,9 +492,11 @@
             method: render_many
             data:
               field:
-                version: Version
                 date: Date
+                version: Version
+                title: Title
                 description: Description
+                webmaster: Webmaster
               rs: rs:history
               datatable:
                 disabled: false
