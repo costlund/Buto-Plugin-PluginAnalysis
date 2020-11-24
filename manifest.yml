@@ -1,5 +1,9 @@
-version: 1.34.0
+version: 1.34.1
 history:
+  1.34.1:
+    date: '2020-11-24'
+    title: 'List click'
+    description: 'Add return false to Git button to prevent list to scroll up.'
   1.34.0:
     date: '2020-11-24'
     title: 'List click'

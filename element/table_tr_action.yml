@@ -36,7 +36,7 @@
               attribute:
                 href: '#'
                 data-id: rs:id
-                onclick: PluginPluginAnalysis.git(this)
+                onclick: "PluginPluginAnalysis.git(this); return false;"
                 style:
                   margin: 10px
               innerHTML: Git
