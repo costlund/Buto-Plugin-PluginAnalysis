@@ -1,0 +1,42 @@
+-
+  type: div
+  attribute:
+    class: btn-group btn-group-sm
+  innerHTML:
+    -
+      type: button
+      attribute:
+        type: button
+        class: 'btn btn-primary'
+        data-id: rs:id
+        onclick: PluginPluginAnalysis.plugin(this.getAttribute('data-id'))
+      innerHTML: View
+    -
+      type: button
+      attribute:
+        type: button
+        class: 'btn btn-primary dropdown-toggle'
+        data-toggle: dropdown
+      innerHTML:
+        -
+          type: span
+          attribute:
+            class: caret
+    -
+      type: ul
+      attribute:
+        class: dropdown-menu
+        role: menu
+      innerHTML:
+        -
+          type: li
+          innerHTML:
+            -
+              type: a
+              attribute:
+                href: '#'
+                data-id: rs:id
+                onclick: PluginPluginAnalysis.git(this)
+                style:
+                  margin: 10px
+              innerHTML: Git

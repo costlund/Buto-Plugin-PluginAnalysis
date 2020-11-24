@@ -50,6 +50,9 @@
             -
               type: th
               innerHTML: Branch
+            -
+              type: th
+              innerHTML: Action
     -
       type: tbody
       innerHTML: rs:trs

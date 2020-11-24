@@ -1,7 +1,4 @@
 type: tr
-attribute:
-  data-id: rs:id
-  onclick: PluginPluginAnalysis.plugin(this.getAttribute('data-id'))
 innerHTML:
   -
     type: td
@@ -38,5 +35,6 @@ innerHTML:
   -
     type: td
     innerHTML: git:active_branch
-   
-   
+  -
+    type: td
+    innerHTML: rs:table_tr_action

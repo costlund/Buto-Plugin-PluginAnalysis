@@ -89,11 +89,17 @@ function PluginPluginAnalysis(){
   this.git_commit = function(btn){
     var plugin = btn.getAttribute('data-id');
     var message = prompt("Commit message", "");
+    if(!message){
+      return null;
+    }
     PluginWfBootstrapjs.modal({id: 'modal_plugin_git_commit', label: 'GIT commit', url: '/plugin_analysis/git_commit?plugin='+plugin+'&message='+message});
   }
   this.git_diff = function(btn){
     var plugin = btn.getAttribute('data-id');
     var filename = prompt("File name", "");
+    if(!filename){
+      return null;
+    }
     PluginWfBootstrapjs.modal({id: 'modal_plugin_git_diff', label: 'GIT diff', url: '/plugin_analysis/git_diff?plugin='+plugin+'&filename='+filename});
   }
   this.versions_update = function(btn){

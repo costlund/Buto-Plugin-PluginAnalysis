@@ -1,5 +1,9 @@
-version: 1.33.0
+version: 1.34.0
 history:
+  1.34.0:
+    date: '2020-11-24'
+    title: 'List click'
+    description: 'Add button group instead of click on hole tr element. Buttons View and Git are there.'
   1.33.0:
     date: '2020-11-23'
     title: 'History'

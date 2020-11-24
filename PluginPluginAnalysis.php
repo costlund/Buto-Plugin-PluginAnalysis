@@ -447,6 +447,17 @@ class PluginPluginAnalysis{
   public function page_analys(){
     $this->setPlugins();
     $element = new PluginWfYml('/plugin/plugin/analysis/element/table.yml');
+    /**
+     * Buttons
+     */
+    foreach ($this->plugins->get() as $key => $value) {
+      $action = new PluginWfYml('/plugin/plugin/analysis/element/table_tr_action.yml');
+      $action->setByTag($value);
+      $this->plugins->set("$key/table_tr_action", $action->get());
+    }
+    /**
+     * 
+     */
     $trs = array();
     foreach ($this->plugins->get() as $key => $value) {
       $item = new PluginWfArray($value);
@@ -956,6 +967,9 @@ class PluginPluginAnalysis{
     exit('Fetch...');
   }
   public function page_git_commit(){
+    if(!wfRequest::get('message') || wfRequest::get('message')=='null'){
+      exit('Commit message missing...');
+    }
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
     $git->commit(wfRequest::get('message'));
