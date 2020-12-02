@@ -62,9 +62,15 @@ function PluginPluginAnalysis(){
   /**
    * Git
    */
-  this.git = function(btn){
+  this.git = function(btn, action){
     var plugin = btn.getAttribute('data-id');
-    PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin});
+    if(action==''){
+      PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin});
+    }else if(action=='pull'){
+      this.git_pull(btn);
+    }else if(action=='push'){
+      this.git_push(btn);
+    }
   }
   this.git_add = function(btn){
     var plugin = btn.getAttribute('data-id');
@@ -77,10 +83,6 @@ function PluginPluginAnalysis(){
   this.git_pull = function(btn){
     var plugin = btn.getAttribute('data-id');
     PluginWfBootstrapjs.modal({id: 'modal_plugin_git_pull', label: 'GIT pull', url: '/plugin_analysis/git_pull?plugin='+plugin});
-  }
-  this.git_fetch = function(btn){
-    var plugin = btn.getAttribute('data-id');
-    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_fetch', label: 'GIT fetch', url: '/plugin_analysis/git_fetch?plugin='+plugin});
   }
   this.git_fetch = function(btn){
     var plugin = btn.getAttribute('data-id');

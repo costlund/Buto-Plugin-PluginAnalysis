@@ -1,5 +1,9 @@
-version: 1.34.1
+version: 1.34.2
 history:
+  1.34.2:
+    date: '2020-12-02'
+    title: 'Group button'
+    description: 'Add Get pull and Git push as group button links.'
   1.34.1:
     date: '2020-11-24'
     title: 'List click'

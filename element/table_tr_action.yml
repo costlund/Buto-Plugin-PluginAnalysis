@@ -36,7 +36,31 @@
               attribute:
                 href: '#'
                 data-id: rs:id
-                onclick: "PluginPluginAnalysis.git(this); return false;"
+                onclick: "PluginPluginAnalysis.git(this, ''); return false;"
                 style:
                   margin: 10px
               innerHTML: Git
+        -
+          type: li
+          innerHTML:
+            -
+              type: a
+              attribute:
+                href: '#'
+                data-id: rs:id
+                onclick: "PluginPluginAnalysis.git(this, 'pull'); return false;"
+                style:
+                  margin: 10px
+              innerHTML: Git - Pull
+        -
+          type: li
+          innerHTML:
+            -
+              type: a
+              attribute:
+                href: '#'
+                data-id: rs:id
+                onclick: "PluginPluginAnalysis.git(this, 'push'); return false;"
+                style:
+                  margin: 10px
+              innerHTML: Git - Push
