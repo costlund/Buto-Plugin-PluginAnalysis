@@ -34,6 +34,12 @@
               -
                 text: Update versions
                 onclick: "PluginPluginAnalysis.versions_update_all(this);"
+              -
+                text: Git Push (ahead)
+                onclick: "PluginPluginAnalysis.git_push_ahead(this);"
+              -
+                text: Git Push (ahead) (command)
+                onclick: "PluginPluginAnalysis.git_push_ahead(this, 'command');"
           -
             text: Theme
             onclick: "PluginPluginAnalysis.theme_analys(this);"

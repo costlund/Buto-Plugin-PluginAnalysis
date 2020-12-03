@@ -114,5 +114,20 @@ function PluginPluginAnalysis(){
     }
     PluginWfBootstrapjs.modal({id: 'modal_versions_update_all', label: 'Update versions', url: '/plugin_analysis/versions_update_all'});
   }
+  this.git_push_ahead = function(btn, action){
+    /**
+     * 
+     */
+    if(typeof action == 'undefined'){
+      action = '';
+    }
+    /**
+     * 
+     */
+    if(!confirm(btn.innerHTML+'?')){
+      return null;
+    }
+    PluginWfBootstrapjs.modal({id: 'modal_git_push_ahead', label: btn.innerHTML, url: '/plugin_analysis/git_push_ahead?action='+action});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

@@ -164,6 +164,62 @@ class PluginPluginAnalysis{
      */
     exit('Versions was updated!');
   }
+  public function page_git_push_ahead(){
+    /**
+     * action
+     * If empty string we try to run git push commands.
+     * If value "command" we output command script.
+     */
+    $action = wfRequest::get('action');
+    /**
+     * Set plugins.
+     */
+    $this->setPlugins();
+    /**
+     * 
+     */
+    $i = 0;
+    $command = '';
+    foreach($this->plugins->get() as $k => $v){
+      /**
+       * Must have git Yes (ahead)
+       */
+      if($this->plugins->get("$k/git/has")!='Yes (ahead)'){
+        continue;
+      }
+      /**
+       * 
+       */
+      $i++;
+      /**
+       * 
+       */
+      if($action==''){
+        $this->git_push($k);
+      }else{
+        $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && git push';
+      }
+      /**
+       * 
+       */
+      if($i==10){
+        break;
+      }
+    }
+    /**
+     * 
+     */
+    if($command){
+      $command = substr($command, 3);
+    }
+    /**
+     * 
+     */
+    if($action=='command'){
+      wfHelp::textarea_dump($command);
+    }
+    exit("Git push done ($i)!");
+  }
   public function page_versions_update_all(){
     /**
      * Set plugins.
@@ -197,19 +253,25 @@ class PluginPluginAnalysis{
       $this->git_run($k);
       wfHelp::yml_dump($k);
       if($i==10){
-        exit("Update versions done ($i)!");
+        break;
       }
     }
     /**
      * 
      */
-    exit('Update versions done!');
+    exit("Update versions done ($i)!");
   }
   private function git_run($plugins_key){
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash($plugins_key));
     $git->add();
     $git->commit('Versions');
+    return null;
+  }
+  private function git_push($plugins_key){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash($plugins_key));
+    $git->push();
     return null;
   }
   private function update_manifest_versions($plugins_key){
