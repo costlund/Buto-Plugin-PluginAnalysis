@@ -534,7 +534,12 @@
               field:
                 name: Name
                 exist: Exist
+                size: LSize
+                size_right: RSize
                 size_diff: Diff
+                left_time_text: LTime
+                right_time_text: RTime
+                left_is_newer: LNewer
               rs: rs:public_folder_files
               datatable:
                 disabled: false

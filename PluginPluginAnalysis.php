@@ -342,9 +342,12 @@ class PluginPluginAnalysis{
   }
   public function page_public_create(){
     /**
-     * 
+     * Request param update could be empty or have value 1.
      */
     $this->setPlugin();
+    /**
+     * 
+     */
     if($this->plugin->get('has_public_folder_twin') && !wfRequest::get('update')){
       exit('Has already public folder.');
     }
@@ -548,8 +551,18 @@ class PluginPluginAnalysis{
       $files_right = array();
       if($this->plugin->get('has_public_folder_twin')){
         $files_right = $this->scan_dir(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name'));
+        foreach($files_right as $k => $v){
+          $files_right[$k]['right_time'] = wfFilesystem::fileTime(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name').$k);
+        }
       }
       $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public');
+      foreach($files_left as $k => $v){
+        $files_left[$k]['left_time'] = wfFilesystem::fileTime(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public'.$k);
+        $files_left[$k]['left_time_text'] = null;
+        $files_left[$k]['right_time'] = null;
+        $files_left[$k]['right_time_text'] = null;
+        $files_left[$k]['left_is_newer'] = null;
+      }
       /**
        * Set right if exist on both.
        */
@@ -558,6 +571,7 @@ class PluginPluginAnalysis{
         if(isset($files_right[$k])){
           $files_left[$k]['right'] = true;
           $files_left[$k]['size_right'] = $files_right[$k]['size'];
+          $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
         }
       }
       /**
@@ -566,6 +580,7 @@ class PluginPluginAnalysis{
       foreach($files_right as $k => $v){
         if(!isset($files_left[$k])){
           $files_left[$k]['size_right'] = $files_right[$k]['size'];
+          $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
           $files_left[$k]['right'] = true;
         }
       }
@@ -603,6 +618,24 @@ class PluginPluginAnalysis{
       foreach($files_left as $k => $v){
         $files_left[$k]['name'] = $k;
       }
+      /**
+       * Set time.
+       */
+      foreach($files_left as $k => $v){
+        if($files_left[$k]['left_time']){
+          $files_left[$k]['left_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['left_time']);
+        }
+        if($files_left[$k]['right_time']){
+          $files_left[$k]['right_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['right_time']);
+        }
+        if(
+          $files_left[$k]['left_time'] && 
+          $files_left[$k]['right_time'] && 
+          $files_left[$k]['left_time']>$files_left[$k]['right_time']){
+          $files_left[$k]['left_is_newer'] = 'Yes';
+        }
+      }
+      //wfHelp::yml_dump($files_left, true);
       /**
        * Set data.
        */
