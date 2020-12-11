@@ -22,6 +22,7 @@
       type: a
       attribute:
         data-id: rs:plugin
+        data-version_manifest: get:version_manifest
         onclick: PluginPluginAnalysis.git_commit(this)
       innerHTML: Commit
     -

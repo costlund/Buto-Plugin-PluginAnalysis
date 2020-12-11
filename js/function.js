@@ -64,8 +64,9 @@ function PluginPluginAnalysis(){
    */
   this.git = function(btn, action){
     var plugin = btn.getAttribute('data-id');
+    var version_manifest = btn.getAttribute('data-version_manifest');
     if(action==''){
-      PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin});
+      PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin+'&version_manifest='+version_manifest});
     }else if(action=='pull'){
       this.git_pull(btn);
     }else if(action=='push'){
@@ -90,7 +91,7 @@ function PluginPluginAnalysis(){
   }
   this.git_commit = function(btn){
     var plugin = btn.getAttribute('data-id');
-    var message = prompt("Commit message", "");
+    var message = prompt("Commit message", btn.getAttribute('data-version_manifest'));
     if(!message){
       return null;
     }

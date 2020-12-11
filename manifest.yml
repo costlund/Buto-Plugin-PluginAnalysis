@@ -1,5 +1,9 @@
-version: 1.35.0
+version: 1.35.1
 history:
+  1.35.1:
+    date: '2020-12-11'
+    title: 'Git'
+    description: 'Add version as pre value when git commit.'
   1.35.0:
     date: '2020-12-10'
     title: 'Public folder'

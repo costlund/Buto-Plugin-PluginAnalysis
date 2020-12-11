@@ -36,6 +36,7 @@
               attribute:
                 href: '#'
                 data-id: rs:id
+                data-version_manifest: rs:version_manifest
                 onclick: "PluginPluginAnalysis.git(this, ''); return false;"
                 style:
                   margin: 10px

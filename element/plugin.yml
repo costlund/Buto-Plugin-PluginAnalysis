@@ -422,7 +422,8 @@
             enabled: git:status
           attribute:
             data-id: rs:url_id
-            onclick: PluginPluginAnalysis.git(this)
+            data-version_manifest: rs:version_manifest
+            onclick: PluginPluginAnalysis.git(this, '')
           innerHTML: More
     -
       type: div
