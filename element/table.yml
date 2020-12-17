@@ -107,70 +107,75 @@
       type: span
       innerHTML: rs:theme
 -
-  type: table
+  type: div
   attribute:
-    class: 'table table-striped table-responsive table-hover table-condensed'
-    id: my_table
+    class: table-responsive
   innerHTML:
     -
-      type: thead
+      type: table
+      attribute:
+        class: 'table table-striped table-hover table-condensed'
+        id: my_table
       innerHTML:
         -
-          type: tr
+          type: thead
           innerHTML:
             -
-              type: th
-              innerHTML: '&nbsp;'
-            -
-              type: th
-              innerHTML: Name
-            -
-              type: th
-              innerHTML: Manifest
-            -
-              type: th
-              innerHTML: Version
-            -
-              type: th
-              innerHTML: Conflict
-            -
-              type: th
-              innerHTML: Public folder
-            -
-              type: th
-              innerHTML: GIT
-            -
-              type: th
-              innerHTML: GIT date
-            -
-              type: th
-              innerHTML: Branch
-            -
-              type: th
-              innerHTML: Action
-    -
-      type: tbody
-      innerHTML: rs:trs
-    -
-      type: widget
-      data:
-        plugin: datatable/datatable_1_10_18
-        method: run
-        data:
+              type: tr
+              innerHTML:
+                -
+                  type: th
+                  innerHTML: '&nbsp;'
+                -
+                  type: th
+                  innerHTML: Name
+                -
+                  type: th
+                  innerHTML: Manifest
+                -
+                  type: th
+                  innerHTML: Version
+                -
+                  type: th
+                  innerHTML: Conflict
+                -
+                  type: th
+                  innerHTML: Public folder
+                -
+                  type: th
+                  innerHTML: GIT
+                -
+                  type: th
+                  innerHTML: GIT date
+                -
+                  type: th
+                  innerHTML: Branch
+                -
+                  type: th
+                  innerHTML: Action
+        -
+          type: tbody
+          innerHTML: rs:trs
+        -
+          type: widget
+          data:
+            plugin: datatable/datatable_1_10_18
+            method: run
+            data:
 
-          id: my_table
-          json:
-            paging: true
-            iDisplayLength : 10
-            ordering: true
-            info: true
-            searching: true
-            order:
-              -
-                - 1
-                - asc
-            language:
-              url: /plugin/datatable/datatable_1_10_18/i18n/Swedish.json
-              _url: //cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json    
+              id: my_table
+              json:
+                paging: true
+                iDisplayLength : 10
+                ordering: true
+                info: true
+                searching: true
+                order:
+                  -
+                    - 1
+                    - asc
+                language:
+                  url: /plugin/datatable/datatable_1_10_18/i18n/Swedish.json
+                  _url: //cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json    
   
 

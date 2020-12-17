@@ -1,5 +1,9 @@
-version: 1.35.3
+version: 1.35.4
 history:
+  1.35.4:
+    date: '2020-12-17'
+    title: 'Table'
+    description: 'Table was not responsive. Wrap a responsive div around it.'
   1.35.3:
     date: '2020-12-17'
     title: 'Git push'
