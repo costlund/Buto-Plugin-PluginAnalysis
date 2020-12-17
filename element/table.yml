@@ -1,5 +1,82 @@
 -
   type: div
+  attribute:
+    class: row
+  innerHTML:
+    -
+      type: div
+      settings:
+        enabled: stat:conflict
+      attribute:
+        class: col-md-3
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: alert alert-info
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Conflict
+            -
+              type: span
+              innerHTML: stat:conflict
+    -
+      type: div
+      settings:
+        enabled: stat:has_public_folder_text_yes_star
+      attribute:
+        class: col-md-3
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: alert alert-warning
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Public folder warning
+            -
+              type: span
+              innerHTML: stat:has_public_folder_text_yes_star
+    -
+      type: div
+      settings:
+        enabled: 'stat:git_has_Yes (changes)'
+      attribute:
+        class: col-md-3
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: alert alert-success
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Git (changes)
+            -
+              type: span
+              innerHTML: 'stat:git_has_Yes (changes)'
+    -
+      type: div
+      settings:
+        enabled: 'stat:git_has_Yes (behind)'
+      attribute:
+        class: col-md-3
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: alert alert-success
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Git (behind)
+            -
+              type: span
+              innerHTML: 'stat:git_has_Yes (behind)'
+-
+  type: div
   settings:
     enabled: rs:theme
   attribute:

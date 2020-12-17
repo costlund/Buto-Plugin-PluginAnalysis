@@ -1,5 +1,9 @@
-version: 1.35.1
+version: 1.35.2
 history:
+  1.35.2:
+    date: '2020-12-17'
+    title: 'Warnings'
+    description: 'Warnings about conflict, public folder, git above table.'
   1.35.1:
     date: '2020-12-11'
     title: 'Git'

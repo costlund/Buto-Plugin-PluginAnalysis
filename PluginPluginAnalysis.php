@@ -1,7 +1,4 @@
 <?php
-/**
- * Plugin to analyse plugins for a theme including plugins used of other plugins via theme settings file and plugin manifest file.
- */
 class PluginPluginAnalysis{
   private $settings = null;
   public $plugins = null;
@@ -509,9 +506,41 @@ class PluginPluginAnalysis{
       }
     }
   }
+  private function stat(){
+    $stat = new PluginWfArray();
+    $stat->set('conflict', 0);
+    $stat->set('has_public_folder_text_yes_star', 0);
+    foreach($this->plugins->get() as $k => $v){
+      $i = new PluginWfArray($v);
+      /**
+       * conflict
+       */
+      if($i->get('conflict')=='Yes'){
+        $stat->set('conflict', $stat->get('conflict')+1);
+      }
+      /**
+       * public folder
+       */
+      if($i->get('has_public_folder_text')=='Yes*'){
+        $stat->set('has_public_folder_text_yes_star', $stat->get('has_public_folder_text_yes_star')+1);
+      }
+      /**
+       * Git
+       */
+      if($i->get('git/has')){
+        if($stat->get('git_has_'.$i->get('git/has'))){
+          $stat->set('git_has_'.$i->get('git/has'), $stat->get('git_has_'.$i->get('git/has'))+1);
+        }else{
+          $stat->set('git_has_'.$i->get('git/has'), 1);
+        }
+      }
+    }
+    return $stat;
+  }
   public function page_analys(){
     $this->setPlugins();
     $element = new PluginWfYml('/plugin/plugin/analysis/element/table.yml');
+    $element->setByTag($this->stat()->get(), 'stat', true);
     /**
      * Buttons
      */
