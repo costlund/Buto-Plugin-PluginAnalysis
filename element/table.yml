@@ -75,6 +75,24 @@
             -
               type: span
               innerHTML: 'stat:git_has_Yes (behind)'
+    -
+      type: div
+      settings:
+        enabled: 'stat:git_has_Yes (ahead)'
+      attribute:
+        class: col-md-3
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: alert alert-success
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Git (ahead)
+            -
+              type: span
+              innerHTML: 'stat:git_has_Yes (ahead)'
 -
   type: div
   settings:
