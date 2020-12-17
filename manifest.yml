@@ -1,5 +1,9 @@
-version: 1.35.2
+version: 1.35.3
 history:
+  1.35.3:
+    date: '2020-12-17'
+    title: 'Git push'
+    description: 'Remove limit of 10 when render push commands for ahead repos.'
   1.35.2:
     date: '2020-12-17'
     title: 'Warnings'

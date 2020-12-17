@@ -196,12 +196,6 @@ class PluginPluginAnalysis{
       }else{
         $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && git push';
       }
-      /**
-       * 
-       */
-      if($i==10){
-        break;
-      }
     }
     /**
      * 
