@@ -1,5 +1,9 @@
-version: 1.35.4
+version: 1.35.5
 history:
+  1.35.5:
+    date: '2020-12-18'
+    title: 'Git pull'
+    description: 'Add git pull command in navbar along with git push.'
   1.35.4:
     date: '2020-12-17'
     title: 'Table'

@@ -168,6 +168,10 @@ class PluginPluginAnalysis{
      * If value "command" we output command script.
      */
     $action = wfRequest::get('action');
+    $type = 'ahead';
+    if(wfRequest::get('type')){
+      $type = wfRequest::get('type');
+    }
     /**
      * Set plugins.
      */
@@ -179,9 +183,9 @@ class PluginPluginAnalysis{
     $command = '';
     foreach($this->plugins->get() as $k => $v){
       /**
-       * Must have git Yes (ahead)
+       * Must have git Yes ($type)
        */
-      if($this->plugins->get("$k/git/has")!='Yes (ahead)'){
+      if($this->plugins->get("$k/git/has")!="Yes ($type)"){
         continue;
       }
       /**
@@ -192,9 +196,17 @@ class PluginPluginAnalysis{
        * 
        */
       if($action==''){
-        $this->git_push($k);
+        if($type=='ahead'){
+          $this->git_push($k);
+        }elseif($type=='behind'){
+          $this->git_pull($k);
+        }
       }else{
-        $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && git push';
+        if($type=='ahead'){
+          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && git push ';
+        }elseif($type=='behind'){
+          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && git pull ';
+        }
       }
     }
     /**
@@ -209,7 +221,7 @@ class PluginPluginAnalysis{
     if($action=='command'){
       wfHelp::textarea_dump($command);
     }
-    exit("Git push done ($i)!");
+    exit("Git $type done ($i)!");
   }
   public function page_versions_update_all(){
     /**
@@ -263,6 +275,12 @@ class PluginPluginAnalysis{
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash($plugins_key));
     $git->push();
+    return null;
+  }
+  private function git_pull($plugins_key){
+    $git = new PluginGitKbjr();
+    $git->set_repo($this->replace_a_dot_to_slash($plugins_key));
+    $git->pull();
     return null;
   }
   private function update_manifest_versions($plugins_key){

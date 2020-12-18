@@ -40,6 +40,12 @@
               -
                 text: Git Push (ahead) (command)
                 onclick: "PluginPluginAnalysis.git_push_ahead(this, 'command');"
+              -
+                text: Git Pull (behind)
+                onclick: "PluginPluginAnalysis.git_pull_behind(this);"
+              -
+                text: Git Pull (behind) (command)
+                onclick: "PluginPluginAnalysis.git_pull_behind(this, 'command');"
           -
             text: Theme
             onclick: "PluginPluginAnalysis.theme_analys(this);"

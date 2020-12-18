@@ -130,5 +130,20 @@ function PluginPluginAnalysis(){
     }
     PluginWfBootstrapjs.modal({id: 'modal_git_push_ahead', label: btn.innerHTML, url: '/plugin_analysis/git_push_ahead?action='+action});
   }
+  this.git_pull_behind = function(btn, action){
+    /**
+     * 
+     */
+    if(typeof action == 'undefined'){
+      action = '';
+    }
+    /**
+     * 
+     */
+    if(!confirm(btn.innerHTML+'?')){
+      return null;
+    }
+    PluginWfBootstrapjs.modal({id: 'modal_git_pull_behind', label: btn.innerHTML, url: '/plugin_analysis/git_push_ahead?type=behind&action='+action});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();
