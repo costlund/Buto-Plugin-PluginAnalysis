@@ -255,9 +255,6 @@ class PluginPluginAnalysis{
       $manifest = $this->update_manifest_versions($k);
       $this->git_run($k);
       wfHelp::yml_dump($k);
-      if($i==10){
-        break;
-      }
     }
     /**
      * 

@@ -1,5 +1,9 @@
-version: 1.35.5
+version: 1.35.6
 history:
+  1.35.6:
+    date: '2020-12-23'
+    title: 'Update versions'
+    description: 'Remove limit of 10 when Update versions.'
   1.35.5:
     date: '2020-12-18'
     title: 'Git pull'
