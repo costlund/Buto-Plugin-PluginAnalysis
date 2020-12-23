@@ -10,7 +10,7 @@ history:
     description: 'Add git pull command in navbar along with git push.'
   1.35.4:
     date: '2020-12-17'
-    title: 'Table'
+    title: Table
     description: 'Table was not responsive. Wrap a responsive div around it.'
   1.35.3:
     date: '2020-12-17'
@@ -18,11 +18,11 @@ history:
     description: 'Remove limit of 10 when render push commands for ahead repos.'
   1.35.2:
     date: '2020-12-17'
-    title: 'Warnings'
+    title: Warnings
     description: 'Warnings about conflict, public folder, git above table.'
   1.35.1:
     date: '2020-12-11'
-    title: 'Git'
+    title: Git
     description: 'Add version as pre value when git commit.'
   1.35.0:
     date: '2020-12-10'
@@ -46,7 +46,7 @@ history:
     description: 'Add button group instead of click on hole tr element. Buttons View and Git are there.'
   1.33.0:
     date: '2020-11-23'
-    title: 'History'
+    title: History
     description: 'Add Title and Webmaster kolumns to history tab list.'
   1.32.0:
     date: '2020-11-19'
@@ -203,7 +203,7 @@ plugin:
     version: 1.2.0
   -
     name: wf/yml
-    version: 1.2.2
+    version: 1.3.0
   -
     name: git/kbjr
     version: 1.5.0
