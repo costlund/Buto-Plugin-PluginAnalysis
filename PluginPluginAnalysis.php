@@ -924,6 +924,8 @@ class PluginPluginAnalysis{
             $plugin->set($value_dot.'/git/has', 'Yes (ahead)');
           }elseif(strstr($git->status(), 'but the upstream is gone')){
             $plugin->set($value_dot.'/git/has', 'Yes (upstream)');
+          }elseif(strstr($git->status(), 'have diverged')){
+            $plugin->set($value_dot.'/git/has', 'Yes (diverged)');
           }elseif(strstr($git->status(), 'nothing to commit, working tree clean')){
             $plugin->set($value_dot.'/git/has', 'Yes');
           }else{

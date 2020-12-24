@@ -93,6 +93,24 @@
             -
               type: span
               innerHTML: 'stat:git_has_Yes (ahead)'
+    -
+      type: div
+      settings:
+        enabled: 'stat:git_has_Yes (diverged)'
+      attribute:
+        class: col-md-3
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: alert alert-warning
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Git (diverged)
+            -
+              type: span
+              innerHTML: 'stat:git_has_Yes (diverged)'
 -
   type: div
   settings:

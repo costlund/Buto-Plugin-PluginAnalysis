@@ -1,5 +1,9 @@
-version: 1.35.6
+version: 1.35.7
 history:
+  1.35.7:
+    date: '2020-12-24'
+    title: 'Diverged'
+    description: 'Add Git (diverged) as value.'
   1.35.6:
     date: '2020-12-23'
     title: 'Update versions'
