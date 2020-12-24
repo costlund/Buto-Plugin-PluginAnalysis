@@ -1,5 +1,9 @@
-version: 1.35.7
+version: 1.35.8
 history:
+  1.35.8:
+    date: '2020-12-24'
+    title: 'Export to excel'
+    description: 'Add buttons to export to excel and pdf.'
   1.35.7:
     date: '2020-12-24'
     title: 'Diverged'
