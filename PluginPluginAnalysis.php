@@ -620,6 +620,7 @@ class PluginPluginAnalysis{
           $files_left[$k]['size_right'] = $files_right[$k]['size'];
           $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
           $files_left[$k]['right'] = true;
+          $files_left[$k]['left_time'] = null;
         }
       }
       /**
