@@ -1,5 +1,9 @@
-version: 1.35.10
+version: 1.35.11
 history:
+  1.35.11:
+    date: '2021-01-11'
+    title: 'Plugin version'
+    description: 'Add PV in plugin view where usage is in code only.'
   1.35.10:
     date: '2021-01-11'
     title: 'Git command'

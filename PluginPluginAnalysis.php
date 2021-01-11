@@ -719,7 +719,8 @@ class PluginPluginAnalysis{
             }
           }
           if($manifest == 'No'){
-            $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => null, 'find' => 'C'));
+            $version_manifest = $this->plugins->get($this->replace_slash_to_dot($v[3]).'/manifest/version');
+            $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => $version_manifest, 'find' => 'C'));
           }
         }
       }
@@ -1121,6 +1122,10 @@ class PluginPluginAnalysis{
   private function replace_a_dot_to_slash($str){
     $str = str_replace('_A_DOT_', "/", $str);
     $str = str_replace('.', "/", $str);
+    return $str;
+  }
+  private function replace_slash_to_dot($str){
+    $str = str_replace('/', ".", $str);
     return $str;
   }
 }
