@@ -203,9 +203,9 @@ class PluginPluginAnalysis{
         }
       }else{
         if($type=='ahead'){
-          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && git push ';
+          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd && git push ';
         }elseif($type=='behind'){
-          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && git pull ';
+          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd && git pull ';
         }
       }
     }
