@@ -1,5 +1,9 @@
-version: 1.35.11
+version: 1.36.0
 history:
+  1.36.0:
+    date: '2021-01-19'
+    title: 'Public'
+    description: 'Handle array keys with slash.'
   1.35.11:
     date: '2021-01-11'
     title: 'Plugin version'

@@ -61,17 +61,12 @@ class PluginPluginAnalysis{
   public function page_theme_analys(){
     wfPlugin::includeonce('wf/yml');
     $page = new PluginWfYml(__DIR__.'/page/theme_analys.yml');
-    
-    
     $theme = $this->getTheme();
     $option = array();
     foreach ($theme as $key => $value) {
       $option[] = wfDocument::createHtmlElement('option', $value, array('value' => $value));
     }
-    //wfHelp::dump($option);
-    
     $page->setByTag(array('option' => $option));
-    
     wfDocument::renderElement($page->get());
   }
   public function page_start(){
@@ -125,6 +120,14 @@ class PluginPluginAnalysis{
   public function page_plugin(){
     $element = new PluginWfYml(__DIR__.'/element/plugin.yml');
     $this->setPlugin();
+    /**
+     * Fix bug when '/' is part of array key.
+     */
+    wfPlugin::includeonce('wf/table');
+    $this->plugin->set('public_folder_files', PluginWfTable::handle_array_keys($this->plugin->get('public_folder_files')));
+    /**
+     * 
+     */
     $element->setByTag($this->plugin->get());
     $element->setByTag(array('plugin' => $this->plugin->get('manifest/plugin')));
     /**
@@ -674,7 +677,6 @@ class PluginPluginAnalysis{
           $files_left[$k]['left_is_newer'] = 'Yes';
         }
       }
-      //wfHelp::yml_dump($files_left, true);
       /**
        * Set data.
        */
@@ -1035,7 +1037,6 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/id", $key);
       $this->plugins->set("$key/url_id", str_replace('.', '_A_DOT_', $key));
     }
-    //wfHelp::yml_dump($this->plugins->get(), true);
     /**
      * Cache save
      */
