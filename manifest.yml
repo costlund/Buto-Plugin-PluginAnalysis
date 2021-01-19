@@ -2,7 +2,7 @@ version: 1.36.0
 history:
   1.36.0:
     date: '2021-01-19'
-    title: 'Public'
+    title: Public
     description: 'Handle array keys with slash.'
   1.35.11:
     date: '2021-01-11'
@@ -22,7 +22,7 @@ history:
     description: 'Add buttons to export to excel and pdf.'
   1.35.7:
     date: '2020-12-24'
-    title: 'Diverged'
+    title: Diverged
     description: 'Add Git (diverged) as value.'
   1.35.6:
     date: '2020-12-23'
@@ -245,7 +245,7 @@ plugin:
     version: 1.4.2
   -
     name: wf/table
-    version: 1.20.0
+    version: 1.21.0
   -
     name: image/element
     version: '1.2'
