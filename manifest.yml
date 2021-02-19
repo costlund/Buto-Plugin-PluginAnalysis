@@ -1,5 +1,9 @@
-version: 1.36.0
+version: 1.37.0
 history:
+  1.37.0:
+    date: '2021-02-19'
+    title: 'Update versions'
+    description: 'Improvement when Update version from plugin view. All not registred plugins are added to manifest.'
   1.36.0:
     date: '2021-01-19'
     title: Public

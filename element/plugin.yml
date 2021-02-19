@@ -340,13 +340,10 @@
             -
               type: div
               settings:
-                enabled: rs:conflict
+                enabled: true
               attribute:
                 class: alert alert-warning
               innerHTML:
-                -
-                  type: strong
-                  innerHTML: Has conflict
                 -
                   type: a
                   attribute:

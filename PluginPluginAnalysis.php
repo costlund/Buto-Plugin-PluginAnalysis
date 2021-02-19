@@ -285,14 +285,28 @@ class PluginPluginAnalysis{
   }
   private function update_manifest_versions($plugins_key){
     $manifest = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$plugins_key/name").'/manifest.yml');
-    foreach($this->plugins->get("$plugins_key/manifest/plugin") as $key => $value) {
-      $i = new PluginWfArray($value);
-      $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');
-      $manifest->set("plugin/$key/name", $i->get('name'));
-      $manifest->set("plugin/$key/version", $version);
+    /**
+     * 
+     */
+    if(!wfRequest::get('id')){
+      foreach($this->plugins->get("$plugins_key/manifest/plugin") as $key => $value) {
+        $i = new PluginWfArray($value);
+        $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');
+        $manifest->set("plugin/$key/name", $i->get('name'));
+        $manifest->set("plugin/$key/version", $version);
+      }
+      $manifest->save();
+      return $manifest;
+    }else{
+      foreach($this->plugin->get('manifest/plugin') as $key => $value) {
+        $i = new PluginWfArray($value);
+        $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');
+        $manifest->set("plugin/$key/name", $i->get('name'));
+        $manifest->set("plugin/$key/version", $version);
+      }
+      $manifest->save();
+      return null;
     }
-    $manifest->save();
-    return $manifest;
   }
   public function page_js_include_method(){
     $this->setPlugin();
