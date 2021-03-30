@@ -1,5 +1,9 @@
-version: 1.37.0
+version: 1.37.1
 history:
+  1.37.1:
+    date: '2021-03-30'
+    title: 'Alerts'
+    description: 'Remove some unnecessary alerts.'
   1.37.0:
     date: '2021-02-19'
     title: 'Update versions'
