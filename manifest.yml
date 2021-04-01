@@ -1,5 +1,9 @@
-version: 1.37.1
+version: 1.37.2
 history:
+  1.37.2:
+    date: '2021-04-01'
+    title: 'Data'
+    description: 'Default data changes.'
   1.37.1:
     date: '2021-03-30'
     title: 'Alerts'
