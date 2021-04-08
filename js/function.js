@@ -109,6 +109,9 @@ function PluginPluginAnalysis(){
     var plugin = btn.getAttribute('data-id');
     PluginWfBootstrapjs.modal({id: 'modal_versions_update', label: 'Update versions', url: '/plugin_analysis/versions_update?id='+plugin});
   }
+  this.versions_update_done = function(){
+    $('#modal_versions_update').modal('hide');
+  }
   this.versions_update_all = function(btn){
     PluginWfBootstrapjs.modal({id: 'modal_versions_update_all', label: 'Update versions', url: '/plugin_analysis/versions_update_all'});
   }

@@ -169,7 +169,9 @@ class PluginPluginAnalysis{
     /**
      * 
      */
-    exit('Versions was updated!');
+    $element = new PluginWfYml(__DIR__.'/element/versions_update.yml');
+    $element->setByTag($this->plugin->get());
+    wfDocument::renderElement($element->get());
   }
   public function page_git_push_ahead(){
     /**
@@ -718,6 +720,9 @@ class PluginPluginAnalysis{
       if($this->plugin->get('has_manifest')=='Yes'){
         $this->set_search_plugin($this->plugin->get('name'));
         if($this->plugin->get('manifest/plugin')){
+          /*
+           *
+           */
           foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
             $v['id_dot'] = str_replace('/', '.', $v['name']);
             $this->plugin->set("manifest/plugin/$k/find", 'M');
@@ -749,6 +754,16 @@ class PluginPluginAnalysis{
               $version_manifest = $this->plugins->get($this->replace_slash_to_dot($v[3]).'/manifest/version');
               $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => $version_manifest, 'find' => 'C'));
             }
+          }
+          /*
+           * diff
+           */
+          foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
+            $version_diff = null;
+            if($this->plugin->get("manifest/plugin/$k/version")!=$this->plugin->get("manifest/plugin/$k/version_manifest")){
+              $version_diff = 'Yes';
+            }
+            $this->plugin->set("manifest/plugin/$k/version_diff", $version_diff);
           }
         }
       }

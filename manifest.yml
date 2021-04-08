@@ -1,5 +1,9 @@
-version: 1.38.0
+version: 1.38.1
 history:
+  1.38.1:
+    date: '2021-04-07'
+    title: 'Version update'
+    description: 'Better flow when using Versions update. Add param Diff for better analysing changes.'
   1.38.0:
     date: '2021-04-07'
     title: 'Theme usage'

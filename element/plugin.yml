@@ -360,10 +360,11 @@
                   datatable:
                     disabled: false
                   field:
+                    name_click: Plugin
                     icon_path: Icon
-                    name_click: Name
-                    version: MV
-                    version_manifest: PV
+                    version_manifest: Version
+                    version: Using
+                    version_diff: Diff
                     find: Find
                   element:
                     icon_path:
