@@ -428,23 +428,8 @@
         id: tab_theme_usage
         class: plugin_bootstrap_navtabs_content
         style: 'display:none'
+        data-url: rs:theme_usage_url
       innerHTML:
-        -
-          type: widget
-          settings:
-            enabled: rs:theme_has_usage
-          data:
-            plugin: wf/table
-            method: render_many
-            data:
-              field:
-                name: Name
-                plugin: Widget
-                plugin_module: Page
-                event: Event
-              rs: rs:theme_usage
-              datatable:
-                disabled: false
     -
       type: div
       attribute:

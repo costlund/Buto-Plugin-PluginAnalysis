@@ -148,6 +148,13 @@ class PluginPluginAnalysis{
     $element->setByTag($this->plugin->get('manifest'), 'manifest', true);
     $links = $this->getLinks();
     $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
+    $element->setByTag(array('theme_usage_url' => '/plugin_analysis/plugin_theme_usage/id/'.wfRequest::get('id')));
+    wfDocument::renderElement($element->get());
+  }
+  public function page_plugin_theme_usage(){
+    $this->setPlugin(array('theme_usage' => true));
+    $element = new PluginWfYml(__DIR__.'/element/plugin_theme_usage.yml');
+    $element->setByTag($this->plugin->get());
     wfDocument::renderElement($element->get());
   }
   public function page_versions_update(){
@@ -590,7 +597,8 @@ class PluginPluginAnalysis{
     $element->setByTag(wfRequest::getAll(), 'rs', true);
     wfDocument::renderElement($element->get());
   }
-  private function setPlugin(){
+  private function setPlugin($data = array('has_public_folder' => true, 'has_manifest' => true, 'manifest_plugin' => true, 'theme_usage' => false, 'readme' => true, 'js' => true)){
+    $data = new PluginWfArray($data);
     $id = wfRequest::get('id');
     $id = str_replace('_A_DOT_', '.', $id);
     if(!wfRequest::get('cc')){
@@ -600,202 +608,216 @@ class PluginPluginAnalysis{
     }
     $this->plugin = new PluginWfArray($this->plugins->get($id));
     /**
-     * public_folder_files
+     * 1. has_public_folder
      */
-    if($this->plugin->get('has_public_folder')){
-      $files_right = array();
-      if($this->plugin->get('has_public_folder_twin')){
-        $files_right = $this->scan_dir(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name'));
+    if($data->get('has_public_folder')){
+      if($this->plugin->get('has_public_folder')){
+        $files_right = array();
+        if($this->plugin->get('has_public_folder_twin')){
+          $files_right = $this->scan_dir(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name'));
+          foreach($files_right as $k => $v){
+            $files_right[$k]['right_time'] = wfFilesystem::fileTime(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name').$k);
+          }
+        }
+        $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public');
+        foreach($files_left as $k => $v){
+          $files_left[$k]['left_time'] = wfFilesystem::fileTime(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public'.$k);
+          $files_left[$k]['left_time_text'] = null;
+          $files_left[$k]['right_time'] = null;
+          $files_left[$k]['right_time_text'] = null;
+          $files_left[$k]['left_is_newer'] = null;
+        }
+        /**
+         * Set right if exist on both.
+         */
+        foreach($files_left as $k => $v){
+          $files_left[$k]['left'] = true;
+          if(isset($files_right[$k])){
+            $files_left[$k]['right'] = true;
+            $files_left[$k]['size_right'] = $files_right[$k]['size'];
+            $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
+          }
+        }
+        /**
+         * Set right if exist on right.
+         */
         foreach($files_right as $k => $v){
-          $files_right[$k]['right_time'] = wfFilesystem::fileTime(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name').$k);
+          if(!isset($files_left[$k])){
+            $files_left[$k]['size_right'] = $files_right[$k]['size'];
+            $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
+            $files_left[$k]['right'] = true;
+            $files_left[$k]['left_time'] = null;
+          }
         }
-      }
-      $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public');
-      foreach($files_left as $k => $v){
-        $files_left[$k]['left_time'] = wfFilesystem::fileTime(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public'.$k);
-        $files_left[$k]['left_time_text'] = null;
-        $files_left[$k]['right_time'] = null;
-        $files_left[$k]['right_time_text'] = null;
-        $files_left[$k]['left_is_newer'] = null;
-      }
-      /**
-       * Set right if exist on both.
-       */
-      foreach($files_left as $k => $v){
-        $files_left[$k]['left'] = true;
-        if(isset($files_right[$k])){
-          $files_left[$k]['right'] = true;
-          $files_left[$k]['size_right'] = $files_right[$k]['size'];
-          $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
+        /**
+         * Set exist.
+         */
+        foreach($files_left as $k => $v){
+          $i = new PluginWfArray($v);
+          if($i->get('left') && $i->get('right')){
+            $files_left[$k]['exist'] = 'both';
+          }elseif($i->get('left')){
+            $files_left[$k]['exist'] = 'left';
+          }elseif($i->get('right')){
+            $files_left[$k]['exist'] = 'right';
+          }
         }
-      }
-      /**
-       * Set right if exist on right.
-       */
-      foreach($files_right as $k => $v){
-        if(!isset($files_left[$k])){
-          $files_left[$k]['size_right'] = $files_right[$k]['size'];
-          $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
-          $files_left[$k]['right'] = true;
-          $files_left[$k]['left_time'] = null;
-        }
-      }
-      /**
-       * Set exist.
-       */
-      foreach($files_left as $k => $v){
-        $i = new PluginWfArray($v);
-        if($i->get('left') && $i->get('right')){
-          $files_left[$k]['exist'] = 'both';
-        }elseif($i->get('left')){
-          $files_left[$k]['exist'] = 'left';
-        }elseif($i->get('right')){
-          $files_left[$k]['exist'] = 'right';
-        }
-      }
-      /**
-       * Set size_diff.
-       */
-      foreach($files_left as $k => $v){
-        $i = new PluginWfArray($v);
-        if($i->get('left') && $i->get('right')){
-          if($i->get('size') == $i->get('size_right')){
-            $files_left[$k]['size_diff'] = 'No';
+        /**
+         * Set size_diff.
+         */
+        foreach($files_left as $k => $v){
+          $i = new PluginWfArray($v);
+          if($i->get('left') && $i->get('right')){
+            if($i->get('size') == $i->get('size_right')){
+              $files_left[$k]['size_diff'] = 'No';
+            }else{
+              $files_left[$k]['size_diff'] = 'Yes';
+            }
           }else{
-            $files_left[$k]['size_diff'] = 'Yes';
+            $files_left[$k]['size_diff'] = '';
           }
-        }else{
-          $files_left[$k]['size_diff'] = '';
         }
+        /**
+         * Set name.
+         */
+        foreach($files_left as $k => $v){
+          $files_left[$k]['name'] = $k;
+        }
+        /**
+         * Set time.
+         */
+        foreach($files_left as $k => $v){
+          if($files_left[$k]['left_time']){
+            $files_left[$k]['left_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['left_time']);
+          }
+          if($files_left[$k]['right_time']){
+            $files_left[$k]['right_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['right_time']);
+          }
+          if(
+            $files_left[$k]['left_time'] && 
+            $files_left[$k]['right_time'] && 
+            $files_left[$k]['left_time']>$files_left[$k]['right_time']){
+            $files_left[$k]['left_is_newer'] = 'Yes';
+          }
+        }
+        /**
+         * Set data.
+         */
+        $this->plugin->set('public_folder_files', $files_left);
+      }else{
+        /**
+         * Set data.
+         */
+        $this->plugin->set('public_folder_files', array());
       }
-      /**
-       * Set name.
-       */
-      foreach($files_left as $k => $v){
-        $files_left[$k]['name'] = $k;
-      }
-      /**
-       * Set time.
-       */
-      foreach($files_left as $k => $v){
-        if($files_left[$k]['left_time']){
-          $files_left[$k]['left_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['left_time']);
-        }
-        if($files_left[$k]['right_time']){
-          $files_left[$k]['right_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['right_time']);
-        }
-        if(
-          $files_left[$k]['left_time'] && 
-          $files_left[$k]['right_time'] && 
-          $files_left[$k]['left_time']>$files_left[$k]['right_time']){
-          $files_left[$k]['left_is_newer'] = 'Yes';
-        }
-      }
-      /**
-       * Set data.
-       */
-      $this->plugin->set('public_folder_files', $files_left);
-    }else{
-      /**
-       * Set data.
-       */
-      $this->plugin->set('public_folder_files', array());
     }
     /**
-     * 
+     * 2. has_manifest
      */
-    if($this->plugin->get('has_manifest')=='Yes'){
-      $this->set_search_plugin($this->plugin->get('name'));
-      if($this->plugin->get('manifest/plugin')){
-        foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
-          $v['id_dot'] = str_replace('/', '.', $v['name']);
-          $this->plugin->set("manifest/plugin/$k/find", 'M');
-          $this->plugin->set("manifest/plugin/$k/icon_path", $this->plugins->get($v['id_dot']."/icon_path"));
-        }
-        /**
-         * Check if plugin in code exist in manifest.
-         */
-        foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
-          foreach ($this->plugin_search as $v2) {
-            if($v2[3]== $this->plugin->get("manifest/plugin/$k/name")){
-              $this->plugin->set("manifest/plugin/$k/find", 'MC');
-              break;
+    if($data->get('has_manifest')){
+      if($this->plugin->get('has_manifest')=='Yes'){
+        $this->set_search_plugin($this->plugin->get('name'));
+        if($this->plugin->get('manifest/plugin')){
+          foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
+            $v['id_dot'] = str_replace('/', '.', $v['name']);
+            $this->plugin->set("manifest/plugin/$k/find", 'M');
+            $this->plugin->set("manifest/plugin/$k/icon_path", $this->plugins->get($v['id_dot']."/icon_path"));
+          }
+          /**
+           * Check if plugin in code exist in manifest.
+           */
+          foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
+            foreach ($this->plugin_search as $v2) {
+              if($v2[3]== $this->plugin->get("manifest/plugin/$k/name")){
+                $this->plugin->set("manifest/plugin/$k/find", 'MC');
+                break;
+              }
             }
           }
-        }
-        /**
-         * Check if plugin in manifest exist in code.
-         */
-        foreach ($this->plugin_search as $v) {
-          $manifest = 'No';
-          foreach ($this->plugin->get('manifest/plugin') as $k2 => $v2){
-            if($v[3]== $v2['name']){
-              $manifest = null;
-              break;
+          /**
+           * Check if plugin in manifest exist in code.
+           */
+          foreach ($this->plugin_search as $v) {
+            $manifest = 'No';
+            foreach ($this->plugin->get('manifest/plugin') as $k2 => $v2){
+              if($v[3]== $v2['name']){
+                $manifest = null;
+                break;
+              }
             }
-          }
-          if($manifest == 'No'){
-            $version_manifest = $this->plugins->get($this->replace_slash_to_dot($v[3]).'/manifest/version');
-            $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => $version_manifest, 'find' => 'C'));
+            if($manifest == 'No'){
+              $version_manifest = $this->plugins->get($this->replace_slash_to_dot($v[3]).'/manifest/version');
+              $this->plugin->set("manifest/plugin/", array('name' => $v[3], 'version' => null, 'version_manifest' => $version_manifest, 'find' => 'C'));
+            }
           }
         }
       }
     }
-    if($this->plugin->get('manifest/plugin')){
-      foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
-        $item = new PluginWfArray($value);
-        /**
-         * Click on name in cell
-         */
-        $this->plugin->set("manifest/plugin/$key/name_click", "<a href=\"#\" onclick=\"PluginPluginAnalysis.plugin('".str_replace("/", '.', $item->get('name'))."')\">".$item->get('name')."</a>");
-      }
-    }
-    $theme_usage_temp = $this->getThemesUsingPlugin($id);
-    $theme_usage = array();
-    foreach ($theme_usage_temp as $key => $value) {
-      $theme_usage[] = $value;
-    }
-    $this->plugin->set('theme_usage', $theme_usage);
     /**
+     * 3. manifest_plugin
+     */
+    if($data->get('manifest_plugin')){
+      if($this->plugin->get('manifest/plugin')){
+        foreach ($this->plugin->get('manifest/plugin') as $key => $value) {
+          $item = new PluginWfArray($value);
+          /**
+           * Click on name in cell
+           */
+          $this->plugin->set("manifest/plugin/$key/name_click", "<a href=\"#\" onclick=\"PluginPluginAnalysis.plugin('".str_replace("/", '.', $item->get('name'))."')\">".$item->get('name')."</a>");
+        }
+      }
+    }
+    /**
+     * 4. theme_usage
+     */
+    if($data->get('theme_usage')){
+      $theme_usage_temp = $this->getThemesUsingPlugin($id);
+      //$theme_usage_temp = array();
+      $theme_usage = array();
+      foreach ($theme_usage_temp as $key => $value) {
+        $theme_usage[] = $value;
+      }
+      $this->plugin->set('theme_usage', $theme_usage);
+    }
+    /**
+     * 5. readme
      * Get README.md content.
      */
-    $readme = null;
-    $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/readme.md';
-    $exist = wfFilesystem::fileExist($file);
-    /**
-     * 
-     */
-    if(!$exist){
-      $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/README.md';
+    if($data->get('readme')){
+      $readme = null;
+      $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/readme.md';
       $exist = wfFilesystem::fileExist($file);
+      if(!$exist){
+        $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/README.md';
+        $exist = wfFilesystem::fileExist($file);
+      }
+      if($exist){
+        $readme = file_get_contents($file);
+        wfPlugin::includeonce('readme/parser');
+        $parser = new PluginReadmeParser();
+        $readme = $parser->parse_text($readme);
+        $this->plugin->set('readme', $readme);
+        $this->plugin->set('has_readme', 'Yes');
+      }else{
+        $this->plugin->set('readme', $readme);
+        $this->plugin->set('has_readme', 'No');
+      }
     }
     /**
-     * 
-     */
-    if($exist){
-      $readme = file_get_contents($file);
-      wfPlugin::includeonce('readme/parser');
-      $parser = new PluginReadmeParser();
-      $readme = $parser->parse_text($readme);
-      $this->plugin->set('readme', $readme);
-      $this->plugin->set('has_readme', 'Yes');
-    }else{
-      $this->plugin->set('readme', $readme);
-      $this->plugin->set('has_readme', 'No');
-    }
-    /**
+     * 6. js
      * Get Js.
      */
-    $js = null;
-    $this->plugin->set('js_name', 'Plugin'.wfPlugin::to_camel_case($this->plugin->get('name')).'.js');
-    $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public/'.$this->plugin->get('js_name');
-    $exist = wfFilesystem::fileExist($file);
-    if($exist){
-      $this->plugin->set('has_js', true);
-      $this->plugin->set('has_js_text', 'Yes');
-    }else{
-      $this->plugin->set('has_js', false);
-      $this->plugin->set('has_js_text', 'No');
+    if($data->get('js')){
+      $this->plugin->set('js_name', 'Plugin'.wfPlugin::to_camel_case($this->plugin->get('name')).'.js');
+      $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public/'.$this->plugin->get('js_name');
+      $exist = wfFilesystem::fileExist($file);
+      if($exist){
+        $this->plugin->set('has_js', true);
+        $this->plugin->set('has_js_text', 'Yes');
+      }else{
+        $this->plugin->set('has_js', false);
+        $this->plugin->set('has_js_text', 'No');
+      }
     }
     /**
      * 

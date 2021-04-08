@@ -1,5 +1,9 @@
-version: 1.37.2
+version: 1.38.0
 history:
+  1.38.0:
+    date: '2021-04-07'
+    title: 'Theme usage'
+    description: 'Loading theme usage data in own process for better performance.'
   1.37.2:
     date: '2021-04-01'
     title: 'Data'
