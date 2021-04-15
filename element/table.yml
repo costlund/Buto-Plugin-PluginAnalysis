@@ -132,7 +132,7 @@
     -
       type: table
       attribute:
-        class: 'table table-striped table-hover table-condensed'
+        class: 'table table-striped table-hover table-condensed table-sm'
         id: my_table
       innerHTML:
         -
@@ -164,10 +164,10 @@
                   innerHTML: GIT
                 -
                   type: th
-                  innerHTML: GIT date
+                  innerHTML: Date
                 -
                   type: th
-                  innerHTML: Branch
+                  innerHTML: Remote
                 -
                   type: th
                   innerHTML: Action

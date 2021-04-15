@@ -1,5 +1,9 @@
-version: 1.38.1
+version: 1.38.2
 history:
+  1.38.2:
+    date: '2021-04-16'
+    title: 'Remote'
+    description: 'Add remote_get_url_origin to plugins data.'
   1.38.1:
     date: '2021-04-07'
     title: 'Version update'

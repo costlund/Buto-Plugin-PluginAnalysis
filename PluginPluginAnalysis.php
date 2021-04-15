@@ -964,6 +964,7 @@ class PluginPluginAnalysis{
       $plugin->set($value_dot.'/git/has', null);
       $plugin->set($value_dot.'/git/log_date_last', null);
       $plugin->set($value_dot.'/git/active_branch', null);
+      $plugin->set($value_dot.'/git/remote_get_url_origin', null);
       if($git->exist()){
         try {
           /**
@@ -994,6 +995,7 @@ class PluginPluginAnalysis{
            * 
            */
           $plugin->set($value_dot.'/git/active_branch', $git->active_branch());
+          $plugin->set($value_dot.'/git/remote_get_url_origin', $git->remote_get_url_origin());
         } catch (Exception $exc) {
           $plugin->set($value_dot.'/git/has', 'Error ('.$exc->getMessage().')');
         }
@@ -1049,7 +1051,6 @@ class PluginPluginAnalysis{
     foreach ($this->plugins->get() as $key => $value) {
       $this->setManifest($key, $value);
     }
-    
     /**
      * Manage data...
      */

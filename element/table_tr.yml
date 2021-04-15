@@ -34,7 +34,7 @@ innerHTML:
     innerHTML: git:log_date_last
   -
     type: td
-    innerHTML: git:active_branch
+    innerHTML: git:remote_get_url_origin
   -
     type: td
     innerHTML: rs:table_tr_action
