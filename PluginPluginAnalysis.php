@@ -235,6 +235,15 @@ class PluginPluginAnalysis{
     }
     exit("Git $type done ($i)!");
   }
+  private function history_add_version($version, $history){
+    $new = array($version => array('date' => date('Y-m-d'), 'title' => 'Versions', 'description' => 'Versions update.'));
+    if($history){
+      $history = array_merge($new, $history);
+    }else{
+      $history = $new;
+    }
+    return $history;
+  }
   public function page_versions_update_all(){
     /**
      * Set plugins.
@@ -244,6 +253,7 @@ class PluginPluginAnalysis{
      * Update manifest.yml for each plugin.
      */
     $i = 0;
+    $command = '';
     foreach($this->plugins->get() as $k => $v){
       /**
        * Must have conflict.
@@ -265,19 +275,29 @@ class PluginPluginAnalysis{
        * 
        */
       $manifest = $this->update_manifest_versions($k);
-      $this->git_run($k);
-      wfHelp::yml_dump($k);
+      $this->git_run($k, $manifest->get('version'));
+      $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd && git push ';
     }
+    /**
+     * 
+     */
+    if($command){
+      $command = substr($command, 3);
+    }
+    /**
+     * 
+     */
+    wfHelp::textarea_dump($command);
     /**
      * 
      */
     exit("Update versions done ($i)!");
   }
-  private function git_run($plugins_key){
+  private function git_run($plugins_key, $m){
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash($plugins_key));
     $git->add();
-    $git->commit('Versions');
+    $git->commit($m);
     return null;
   }
   private function git_push($plugins_key){
@@ -292,12 +312,40 @@ class PluginPluginAnalysis{
     $git->pull();
     return null;
   }
+  private function version_upgrade($version){
+    wfPlugin::includeonce('string/array');
+    $obj = new PluginStringArray();
+    /**
+     * 
+     */
+    $version_a = ($obj->from_char(str_replace('.', ':', $version), ':'));
+    if(sizeof($version_a)==3){
+      $version_a[2]++;
+      $version_a[2] = (string)$version_a[2];
+    }elseif(sizeof($version_a)==2){
+      $version_a[2] = '1';
+    }elseif(sizeof($version_a)==1){
+      if(!strlen($version_a[0])){
+        $version_a[0] = '1';
+      }
+      $version_a[1] = '0';
+      $version_a[2] = '1';
+    }
+    $version = '';
+    foreach($version_a as $v){
+      $version .= '.'.$v;
+    }
+    $version = substr($version, 1);
+    return $version;
+  }
   private function update_manifest_versions($plugins_key){
     $manifest = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$plugins_key/name").'/manifest.yml');
     /**
      * 
      */
     if(!wfRequest::get('id')){
+      $manifest->set('version', $this->version_upgrade($manifest->get('version')));
+      $manifest->set('history', $this->history_add_version($manifest->get('version'), $manifest->get('history')));
       foreach($this->plugins->get("$plugins_key/manifest/plugin") as $key => $value) {
         $i = new PluginWfArray($value);
         $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');
@@ -314,7 +362,7 @@ class PluginPluginAnalysis{
         $manifest->set("plugin/$key/version", $version);
       }
       $manifest->save();
-      return null;
+      return $manifest;
     }
   }
   public function page_js_include_method(){

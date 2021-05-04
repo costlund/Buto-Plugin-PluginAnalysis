@@ -1,5 +1,9 @@
-version: 1.38.2
+version: 1.39.0
 history:
+  1.39.0:
+    date: '2021-05-04'
+    title: 'Versions update'
+    description: 'Change version and add history when running Versions update.'
   1.38.2:
     date: '2021-04-16'
     title: 'Remote'
