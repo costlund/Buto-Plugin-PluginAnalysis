@@ -470,6 +470,16 @@
         style: 'display:none'
       innerHTML:
         -
+          type: p
+          innerHTML:
+            -
+              type: a
+              attribute:
+                class: btn btn-primary
+                data-id: request:id
+                onclick: PluginPluginAnalysis.history_form(this.getAttribute('data-id'))
+              innerHTML: Add
+        -
           type: widget
           data:
             plugin: wf/table

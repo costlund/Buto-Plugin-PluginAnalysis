@@ -1,0 +1,62 @@
+elements_before:
+  -
+    type: p
+    settings:
+      enabled: rs:version
+    innerHTML:
+      -
+        type: strong
+        innerHTML: Version
+      -
+        type: strong
+        innerHTML: rs:version
+elements_below:
+  -
+    type: script
+    settings:
+      enabled: rs:version
+    innerHTML: document.getElementById('div_form_history_new_version').style.display='none'
+url: /plugin_analysis/history_capture
+ajax: true
+submit_value: Save
+id: form_history
+focus_first_element: true
+items:
+  id:
+    type: hidden
+    label: id
+    default: rs:id
+  version:
+    type: hidden
+    label: Version
+    default: rs:version
+  new_version:
+    type: varchar
+    label: New version
+    option: rs:option_new_version
+  date:
+    type: date
+    label: Date
+    default: rs:date
+    mandatory: true
+  title:
+    type: varchar
+    label: Title
+    default: rs:title
+    placeholder: 'Text (1-255)'
+    mandatory: true
+  description:
+    type: text
+    label: Description
+    default: rs:description
+    mandatory: true
+  webmaster:
+    type: text
+    label: Webmaster
+    default: rs:webmaster
+render:
+  plugin: plugin/analysis
+  method: form_history_render
+capture:
+  plugin: plugin/analysis
+  method: form_history_capture

@@ -1,12 +1,16 @@
-version: 1.39.0
+version: 1.40.0
 history:
+  1.40.0:
+    date: '2021-05-05'
+    title: History
+    description: 'Edit and add history.'
   1.39.0:
     date: '2021-05-04'
     title: 'Versions update'
     description: 'Change version and add history when running Versions update.'
   1.38.2:
     date: '2021-04-16'
-    title: 'Remote'
+    title: Remote
     description: 'Add remote_get_url_origin to plugins data.'
   1.38.1:
     date: '2021-04-07'
@@ -18,11 +22,11 @@ history:
     description: 'Loading theme usage data in own process for better performance.'
   1.37.2:
     date: '2021-04-01'
-    title: 'Data'
+    title: Data
     description: 'Default data changes.'
   1.37.1:
     date: '2021-03-30'
-    title: 'Alerts'
+    title: Alerts
     description: 'Remove some unnecessary alerts.'
   1.37.0:
     date: '2021-02-19'

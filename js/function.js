@@ -133,5 +133,11 @@ function PluginPluginAnalysis(){
     }
     PluginWfBootstrapjs.modal({id: 'modal_git_pull_behind', label: btn.innerHTML, url: '/plugin_analysis/git_push_ahead?type=behind&action='+action});
   }
+  this.history_form = function(id, version){
+    if(typeof version == 'undefined'){
+      version = '';
+    }
+    PluginWfBootstrapjs.modal({id: 'modal_history_form', label: 'History', url: '/plugin_analysis/history_form?id='+id+'&version='+version});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

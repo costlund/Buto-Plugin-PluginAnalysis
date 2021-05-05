@@ -98,15 +98,98 @@ class PluginPluginAnalysis{
     }
     return $usage;
   }
-  private function getHistory(){
-    $history = array();
-    if($this->plugin->get('manifest/history')){
-      foreach ($this->plugin->get('manifest/history') as $key => $value) {
-        $item = new PluginWfArray($value);
-        $history[] = array('version' => $key, 'date' => $item->get('date'), 'title' => $item->get('title'), 'description' => $item->get('description'), 'webmaster' => $item->get('webmaster') );
+  private function getHistory($version = null){
+    if(!$version){
+      $history = array();
+      if($this->plugin->get('manifest/history')){
+        foreach ($this->plugin->get('manifest/history') as $key => $value) {
+          $item = new PluginWfArray($value);
+          $history[] = array('version' => $key, 'date' => $item->get('date'), 'title' => $item->get('title'), 'description' => $item->get('description'), 'webmaster' => $item->get('webmaster'), 'row_click' => "PluginPluginAnalysis.history_form('".wfRequest::get('id')."', '$key')" );
+        }
       }
+      return $history;
+    }else{
+      $history = new PluginWfArray();
+      if($this->plugin->get('manifest/history')){
+        foreach ($this->plugin->get('manifest/history') as $key => $value) {
+          if($key==$version){
+            $history = new PluginWfArray($value);
+            $history->set('version', $key);
+            break;
+          }
+        }
+      }
+      return $history;
     }
-    return $history;
+  }
+  public function page_history_form(){
+    wfPlugin::enable('form/form_v1');
+    $element = new PluginWfYml(__DIR__.'/element/history_form.yml');
+    $element->setByTag(array('method' => 'render'));
+    wfDocument::renderElement($element->get());
+  }
+  public function form_history_render($form){
+    $form = new PluginWfArray($form);
+    $this->setPlugin();
+    if(wfRequest::get('version')){
+      $history = $this->getHistory(wfRequest::get('version'));
+    }else{
+      $history = new pluginwfarray();
+    }
+    $history->set('id', wfRequest::get('id'));
+    $version1 = $this->version_upgrade($this->plugin->get('manifest/version'));
+    $version2 = $this->version_upgrade($this->plugin->get('manifest/version'), true);
+    $option = array();
+    $option[$version1] = $version1;
+    $option[$version2] = $version2;
+    $form->setByTag(array('option_new_version' => $option));
+    $form->setByTag($history->get(), 'rs', true);
+    return $form->get();
+  }
+  public function page_history_capture(){
+    wfPlugin::enable('form/form_v1');
+    $element = new PluginWfYml(__DIR__.'/element/history_form.yml');
+    $element->setByTag(array('method' => 'capture'));
+    wfDocument::renderElement($element->get());
+  }
+  public function form_history_capture(){
+    /**
+     If version has a value we are updated, otherwise new history.
+     */
+    $id = wfRequest::get('id');
+    $id = $this->replace_a_dot_to_slash($id);
+    $version = wfRequest::get('version');
+    if(!$version){
+      $version = wfRequest::get('new_version');
+    }
+    $manifest = $this->yml_manifest($id);
+    $data = array('date' => wfRequest::get('date'), 'title' => wfRequest::get('title'), 'description' => wfRequest::get('description'));
+    if(wfRequest::get('webmaster')){
+      $data['webmaster'] = wfRequest::get('webmaster');
+    }
+    /**
+     * 
+     */
+    if(wfRequest::get('version')){
+      $manifest->set("history/$version", $data);
+    }else{
+      $history = $manifest->get('history');
+      $history = array_merge(array($version => $data), $history);
+      $manifest->set("version", $version);
+      $manifest->set("history", $history);
+    }
+    /**
+     * 
+     */
+    $manifest->save();
+    /**
+     * 
+     */
+    return array("$('#modal_history_form').modal('hide')");
+  }
+  private function yml_manifest($id){
+    $manifest = new PluginWfYml(wfGlobals::getAppDir()."/plugin/$id/manifest.yml");
+    return $manifest;
   }
   private function getLinks(){
     $links = array();
@@ -142,6 +225,7 @@ class PluginPluginAnalysis{
      * 
      */
     $element->setByTag($this->plugin->get('git'), 'git');
+    $element->setByTag(wfRequest::getAll(), 'request');
     $usage = $this->getUsage();
     $element->setByTag(array('usage' => $usage, 'has_usage' => sizeof($usage)));
     $element->setByTag(array('history' => $this->getHistory()));
@@ -312,25 +396,37 @@ class PluginPluginAnalysis{
     $git->pull();
     return null;
   }
-  private function version_upgrade($version){
+  private function version_upgrade($version, $major = false){
     wfPlugin::includeonce('string/array');
     $obj = new PluginStringArray();
     /**
      * 
      */
     $version_a = ($obj->from_char(str_replace('.', ':', $version), ':'));
-    if(sizeof($version_a)==3){
-      $version_a[2]++;
-      $version_a[2] = (string)$version_a[2];
-    }elseif(sizeof($version_a)==2){
-      $version_a[2] = '1';
-    }elseif(sizeof($version_a)==1){
-      if(!strlen($version_a[0])){
-        $version_a[0] = '1';
+    /**
+     * 
+     */
+    if(!$major){
+      if(sizeof($version_a)==3){
+        $version_a[2]++;
+        $version_a[2] = (string)$version_a[2];
+      }elseif(sizeof($version_a)==2){
+        $version_a[2] = '1';
+      }elseif(sizeof($version_a)==1){
+        if(!strlen($version_a[0])){
+          $version_a[0] = '1';
+        }
+        $version_a[1] = '0';
+        $version_a[2] = '1';
       }
-      $version_a[1] = '0';
-      $version_a[2] = '1';
+    }else{
+      $version_a[1]++;
+      $version_a[1] = (string)$version_a[1];
+      $version_a[2] = '0';
     }
+    /**
+     *
+     */
     $version = '';
     foreach($version_a as $v){
       $version .= '.'.$v;
