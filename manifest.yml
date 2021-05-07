@@ -1,5 +1,9 @@
-version: 1.41.0
+version: 1.42.0
 history:
+  1.42.0:
+    date: '2021-05-07'
+    title: 'Versions update'
+    description: 'Add git commit and render push command on Versions update for one plugin.'
   1.41.0:
     date: '2021-05-07'
     title: 'Versions update'

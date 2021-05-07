@@ -259,6 +259,8 @@ class PluginPluginAnalysis{
     }else{
       $data->set('clean_repo', true);
       $manifest = $this->update_manifest_versions(wfRequest::get('id'));
+      $this->git_run(wfRequest::get('id'), $manifest->get('version'));
+      $data->set('command', 'cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get(wfRequest::get('id')."/name").' && pwd && git push ');
     }
     /**
      * 

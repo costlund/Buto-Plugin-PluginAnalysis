@@ -1,8 +1,12 @@
 -
-  type: script
+  type: textarea
   settings:
     enabled: rs:clean_repo
-  innerHTML: PluginPluginAnalysis.versions_update_done()
+  attribute:
+    style:
+      width: '100%'
+      height: 200px
+  innerHTML: rs:command
 -
   type: div
   settings:
