@@ -1,3 +1,12 @@
 -
   type: script
+  settings:
+    enabled: rs:clean_repo
   innerHTML: PluginPluginAnalysis.versions_update_done()
+-
+  type: div
+  settings:
+    disabled: rs:clean_repo
+  attribute:
+    class: alert alert-warning
+  innerHTML: 'Must have clean repo to update versions.'

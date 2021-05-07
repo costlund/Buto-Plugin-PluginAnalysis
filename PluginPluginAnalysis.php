@@ -134,7 +134,8 @@ class PluginPluginAnalysis{
     if(wfRequest::get('version')){
       $history = $this->getHistory(wfRequest::get('version'));
     }else{
-      $history = new pluginwfarray();
+      $history = new PluginWfArray();
+      $history->set('date', date('Y-m-d'));
     }
     $history->set('id', wfRequest::get('id'));
     $version1 = $this->version_upgrade($this->plugin->get('manifest/version'));
@@ -245,16 +246,25 @@ class PluginPluginAnalysis{
     /**
      * 
      */
-    $this->setPlugin();
+    $data = new PluginWfArray();
     /**
      * 
      */
-    $manifest = $this->update_manifest_versions(wfRequest::get('id'));
+    $this->setPlugin();
+    /**
+     * Must have clean repo.
+     */
+    if($this->plugins->get(wfRequest::get('id')."/git/has")!='Yes'){
+      $data->set('clean_repo', false);
+    }else{
+      $data->set('clean_repo', true);
+      $manifest = $this->update_manifest_versions(wfRequest::get('id'));
+    }
     /**
      * 
      */
     $element = new PluginWfYml(__DIR__.'/element/versions_update.yml');
-    $element->setByTag($this->plugin->get());
+    $element->setByTag($data->get());
     wfDocument::renderElement($element->get());
   }
   public function page_git_push_ahead(){
@@ -435,11 +445,17 @@ class PluginPluginAnalysis{
     return $version;
   }
   private function update_manifest_versions($plugins_key){
+    /**
+     * Get plugin manifest.
+     */
     $manifest = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$plugins_key/name").'/manifest.yml');
     /**
      * 
      */
     if(!wfRequest::get('id')){
+      /**
+       * All plugin.
+       */
       $manifest->set('version', $this->version_upgrade($manifest->get('version')));
       $manifest->set('history', $this->history_add_version($manifest->get('version'), $manifest->get('history')));
       foreach($this->plugins->get("$plugins_key/manifest/plugin") as $key => $value) {
@@ -451,6 +467,11 @@ class PluginPluginAnalysis{
       $manifest->save();
       return $manifest;
     }else{
+      /**
+       * One plugin.
+       */
+      $manifest->set('version', $this->version_upgrade($manifest->get('version')));
+      $manifest->set('history', $this->history_add_version($manifest->get('version'), $manifest->get('history')));
       foreach($this->plugin->get('manifest/plugin') as $key => $value) {
         $i = new PluginWfArray($value);
         $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');

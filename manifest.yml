@@ -1,5 +1,9 @@
-version: 1.40.1
+version: 1.41.0
 history:
+  1.41.0:
+    date: '2021-05-07'
+    title: 'Versions update'
+    description: 'Upgrade version and add history when update version within a plugin.'
   1.40.1:
     date: '2021-05-05'
     title: Versions
