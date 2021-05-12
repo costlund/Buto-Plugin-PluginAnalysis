@@ -1,5 +1,9 @@
-version: 1.42.1
+version: 1.42.2
 history:
+  1.42.2:
+    date: '2021-05-12'
+    title: Git
+    description: 'Auto close when using git pull/push.'
   1.42.1:
     date: '2021-05-12'
     title: Versions

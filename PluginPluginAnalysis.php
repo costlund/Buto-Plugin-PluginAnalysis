@@ -1310,13 +1310,13 @@ class PluginPluginAnalysis{
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
     $git->push();
-    exit('Push...');
+    wfDocument::renderElementFromFolder(__DIR__, __FUNCTION__);
   }
   public function page_git_pull(){
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
     $git->pull();
-    exit('Pull...');
+    wfDocument::renderElementFromFolder(__DIR__, __FUNCTION__);
   }
   public function page_git_fetch(){
     $git = new PluginGitKbjr();
