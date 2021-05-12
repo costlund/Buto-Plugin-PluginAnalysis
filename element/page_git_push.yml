@@ -1,0 +1,3 @@
+-
+  type: script
+  innerHTML: $('#modal_plugin_git_push').modal('hide')
