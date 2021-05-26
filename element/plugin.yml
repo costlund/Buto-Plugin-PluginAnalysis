@@ -325,6 +325,16 @@
                 data-url_id: rs:url_id
                 onclick: PluginPluginAnalysis.js_include_method(this)
               innerHTML: Include method
+        -
+          type: div
+          attribute:
+            class: row
+          innerHTML:
+            -
+              type: div
+              attribute:
+                class: col-md-12
+              innerHTML: webmaster:element
     -
       type: div
       attribute:
@@ -540,14 +550,4 @@
 -
   type: script
   innerHTML: "PluginBootstrapNavtabs_v1.nav_init({ul: 'my_navtabs', content: 'my_content', click: 0});"
--
-  type: div
-  attribute:
-    class: row
-  innerHTML:
-    -
-      type: div
-      attribute:
-        class: col-md-12
-      innerHTML: webmaster:element
       
