@@ -1,0 +1,7 @@
+-
+  type: textarea
+  attribute:
+    style:
+      width: '100%'
+      height: '300px'
+  innerHTML: rs:command

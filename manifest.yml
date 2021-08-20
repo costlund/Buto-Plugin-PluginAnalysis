@@ -1,5 +1,9 @@
-version: 1.42.4
+version: 1.43.0
 history:
+  1.43.0:
+    date: '2021-08-20'
+    title: Git fetch
+    description: 'Add git fetch all command helper.'
   1.42.4:
     date: '2021-06-16'
     title: Versions

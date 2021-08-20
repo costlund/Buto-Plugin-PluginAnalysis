@@ -130,6 +130,12 @@ function PluginPluginAnalysis(){
     }
     PluginWfBootstrapjs.modal({id: 'modal_git_pull_behind', label: btn.innerHTML, url: '/plugin_analysis/git_push_ahead?type=behind&action='+action});
   }
+  this.git_fetch_all = function(btn, action){
+    /**
+     * 
+     */
+    PluginWfBootstrapjs.modal({id: 'modal_git_fetch_all', label: btn.innerHTML, url: '/plugin_analysis/git_fetch_all'});
+  }
   this.history_form = function(id, version){
     if(typeof version == 'undefined'){
       version = '';

@@ -46,6 +46,9 @@
               -
                 text: Git Pull (behind) (command)
                 onclick: "PluginPluginAnalysis.git_pull_behind(this, 'command');"
+              -
+                text: Git Fetch (all) (command)
+                onclick: "PluginPluginAnalysis.git_fetch_all(this);"
           -
             text: Theme
             onclick: "PluginPluginAnalysis.theme_analys(this);"

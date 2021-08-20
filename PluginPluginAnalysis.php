@@ -331,6 +331,16 @@ class PluginPluginAnalysis{
     }
     exit("Git $type done ($i)!");
   }
+  public function page_git_fetch_all(){
+    $element = new PluginWfYml(__DIR__.'/element/'.__FUNCTION__.'.yml');
+    $command = <<<STRING
+cd [app_dir]/plugin
+find . -maxdepth 2 -mindepth 2 -type d -exec sh -c '(echo "" && echo "[plugin]" && echo {} && cd {} && git fetch && echo)' \;
+STRING;
+    $command = str_replace('[app_dir]', wfGlobals::getAppDir(), $command);
+    $element->setByTag(array('command' => $command));
+    wfDocument::renderElement($element);
+  }
   private function history_add_version($version, $history){
     $new = array($version => array('date' => date('Y-m-d'), 'title' => 'Versions', 'description' => 'Versions update.'));
     if($history){
