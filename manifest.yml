@@ -1,5 +1,9 @@
-version: 1.43.0
+version: 1.44.0
 history:
+  1.44.0:
+    date: '2021-08-20'
+    title: Git fetch
+    description: 'Improvements in command string.'
   1.43.0:
     date: '2021-08-20'
     title: Git fetch

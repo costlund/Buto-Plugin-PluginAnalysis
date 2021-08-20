@@ -332,13 +332,29 @@ class PluginPluginAnalysis{
     exit("Git $type done ($i)!");
   }
   public function page_git_fetch_all(){
+    /**
+     * Set plugins.
+     */
+    $this->setPlugins();
+    /**
+     * 
+     */
+    $i = 0;
+    $command = '';
+    foreach($this->plugins->get() as $k => $v){
+      if($this->plugins->get("$k/git/has")=="Yes" && $this->plugins->get("$k/git/remote_get_url_origin")){
+        $i++;
+        $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd && git fetch ';
+      }
+    }
+    /**
+     * 
+     */
+    if($command){
+      $command = substr($command, 3);
+    }
     $element = new PluginWfYml(__DIR__.'/element/'.__FUNCTION__.'.yml');
-    $command = <<<STRING
-cd [app_dir]/plugin
-find . -maxdepth 2 -mindepth 2 -type d -exec sh -c '(echo "" && echo "[plugin]" && echo {} && cd {} && git fetch && echo)' \;
-STRING;
-    $command = str_replace('[app_dir]', wfGlobals::getAppDir(), $command);
-    $element->setByTag(array('command' => $command));
+    $element->setByTag(array('command' => $command, 'count' => $i));
     wfDocument::renderElement($element);
   }
   private function history_add_version($version, $history){
