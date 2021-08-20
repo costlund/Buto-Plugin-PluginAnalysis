@@ -66,7 +66,7 @@ function PluginPluginAnalysis(){
     var plugin = btn.getAttribute('data-id');
     var version_manifest = btn.getAttribute('data-version_manifest');
     if(action==''){
-      PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin+'&version_manifest='+version_manifest});
+      PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin+'&version_manifest='+version_manifest, btn_reload: true});
     }else if(action=='pull'){
       this.git_pull(btn);
     }else if(action=='push'){
