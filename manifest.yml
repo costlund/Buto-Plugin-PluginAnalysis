@@ -1,5 +1,9 @@
-version: 1.44.1
+version: 1.45.0
 history:
+  1.45.0:
+    date: '2021-08-25'
+    title: I18N
+    description: 'Add tab I18N with list of all translations, language, key, value. Items are added if language/key is empty in any language.'
   1.44.1:
     date: '2021-08-20'
     title: Git

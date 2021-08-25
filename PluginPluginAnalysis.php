@@ -234,12 +234,53 @@ class PluginPluginAnalysis{
     $links = $this->getLinks();
     $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
     $element->setByTag(array('theme_usage_url' => '/plugin_analysis/plugin_theme_usage/id/'.wfRequest::get('id')));
+    $element->setByTag(array('i18n_url' => '/plugin_analysis/i18n/id/'.wfRequest::get('id')));
     wfDocument::renderElement($element->get());
   }
   public function page_plugin_theme_usage(){
     $this->setPlugin(array('theme_usage' => true));
     $element = new PluginWfYml(__DIR__.'/element/plugin_theme_usage.yml');
     $element->setByTag($this->plugin->get());
+    wfDocument::renderElement($element->get());
+  }
+  public function page_i18n(){
+    $id = wfRequest::get('id');
+    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    $i18n_folder = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/i18n';
+    $folder_exist = wfFilesystem::fileExist($i18n_folder);
+    $result = new PluginWfArray();
+    if($folder_exist){
+      $i18n_files = wfFilesystem::getScandir($i18n_folder);
+      /*
+       * Add data.
+       */
+      foreach($i18n_files as $v){
+        $data = new PluginWfYml($i18n_folder.'/'.$v);
+        foreach($data->get() as $k2 => $v2){
+          $result->set(str_replace('.yml', '', $v).'_'.$k2, array('la' => str_replace('.yml', '', $v), 'key' => $k2, 'value' => $v2));
+        }
+      }
+      /*
+       * Add empty rows.
+       */
+      foreach($result->get() as $v){
+        foreach($i18n_files as $v2){
+          $la = str_replace('.yml', '', $v2);
+          if( !$result->get($la."_".$v['key']) ){
+            $result->set($la."_".$v['key'], array('la' => $la, 'key' => $v['key'], 'value' => ''));
+          }
+        }
+      }
+      $temp = array();
+      foreach($result->get() as $v){
+        $temp[] = $v;
+      }
+      $result = new PluginWfArray($temp);
+      unset($temp);
+    }
+    $element = new PluginWfYml(__DIR__.'/element/'.__FUNCTION__.'.yml');
+    $element->setByTag(array('data' => $result->get()));
+    $element->setByTag(array('title' => 'i18n_'.$id));
     wfDocument::renderElement($element->get());
   }
   public function page_versions_update(){

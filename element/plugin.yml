@@ -126,6 +126,17 @@
           attribute:
             class: nav-link
           innerHTML: Public
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+          innerHTML: I18N
 -
   type: div
   attribute:
@@ -547,6 +558,14 @@
               rs: rs:public_folder_files
               datatable:
                 disabled: false
+    -
+      type: div
+      attribute:
+        id: tab_i18n
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+        data-url: rs:i18n_url
+      innerHTML:
 -
   type: script
   innerHTML: "PluginBootstrapNavtabs_v1.nav_init({ul: 'my_navtabs', content: 'my_content', click: 0});"
