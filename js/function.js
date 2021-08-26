@@ -142,5 +142,8 @@ function PluginPluginAnalysis(){
     }
     PluginWfBootstrapjs.modal({id: 'modal_history_form', label: 'History', url: '/plugin_analysis/history_form?id='+id+'&version='+version});
   }
+  this.i18n_form = function(btn){
+    PluginWfBootstrapjs.modal({id: 'modal_i18n_form', label: btn.innerHTML, url: '/plugin_analysis/i18n_form?id='+btn.getAttribute('data-id'), size: 'xl'});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

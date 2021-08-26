@@ -1,5 +1,9 @@
-version: 1.45.0
+version: 1.46.0
 history:
+  1.46.0:
+    date: '2021-08-26'
+    title: I18N
+    description: 'Add button Translate to translate from excel data.'
   1.45.0:
     date: '2021-08-25'
     title: I18N

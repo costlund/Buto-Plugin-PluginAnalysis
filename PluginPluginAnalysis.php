@@ -147,11 +147,41 @@ class PluginPluginAnalysis{
     $form->setByTag($history->get(), 'rs', true);
     return $form->get();
   }
+  public function form_i18n_render($form){
+    $form = new PluginWfArray($form);
+    $form->setByTag(array('id' => wfRequest::get('id')));
+    return $form->get();
+  }
   public function page_history_capture(){
     wfPlugin::enable('form/form_v1');
     $element = new PluginWfYml(__DIR__.'/element/history_form.yml');
     $element->setByTag(array('method' => 'capture'));
     wfDocument::renderElement($element->get());
+  }
+  public function page_i18n_capture(){
+    wfPlugin::enable('form/form_v1');
+    $element = new PluginWfYml(__DIR__.'/element/page_i18n_form.yml');
+    $element->setByTag(array('method' => 'capture'));
+    wfDocument::renderElement($element->get());
+  }
+  public function form_i18n_capture(){
+    wfPlugin::includeonce('string/array');
+    $sa = new PluginStringArray();
+    $excel_data = $sa->from_excel_data(wfRequest::get('excel_data'));
+    if($excel_data['columns']!=3){
+      return array("alert('There should be 3 columns and not ".$excel_data['columns'].".')");
+    }
+    $id = wfRequest::get('id');
+    $id = $this->replace_a_dot_to_slash($id);
+    foreach($excel_data['data'] as $v){
+      $la = $v[0];
+      $key = $v[1];
+      $value = $v[2];
+      $i18n_yml = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$id.'/i18n/'.$la.'.yml');
+      $i18n_yml->set($key, $value);
+      $i18n_yml->save();
+    }
+    return array("$('#modal_i18n_form').modal('hide')");
   }
   public function form_history_capture(){
     /**
@@ -281,6 +311,13 @@ class PluginPluginAnalysis{
     $element = new PluginWfYml(__DIR__.'/element/'.__FUNCTION__.'.yml');
     $element->setByTag(array('data' => $result->get()));
     $element->setByTag(array('title' => 'i18n_'.$id));
+    $element->setByTag(array('id' => $id));
+    wfDocument::renderElement($element->get());
+  }
+  public function page_i18n_form(){
+    wfPlugin::enable('form/form_v1');
+    $element = new PluginWfYml(__DIR__.'/element/'.__FUNCTION__.'.yml');
+    $element->setByTag(array('method' => 'render'));
     wfDocument::renderElement($element->get());
   }
   public function page_versions_update(){

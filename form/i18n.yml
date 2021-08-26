@@ -1,0 +1,27 @@
+url: /plugin_analysis/i18n_capture
+ajax: true
+submit_value: Save
+id: form_i18n
+focus_first_element: true
+items:
+  id:
+    type: hidden
+    default: rs:id
+  excel_data:
+    type: text
+    label: Excel data
+    attribute:
+      style:
+        min-height: 300px
+render:
+  plugin: plugin/analysis
+  method: form_i18n_render
+capture:
+  plugin: plugin/analysis
+  method: form_i18n_capture
+elements_before:
+  -
+    type: div
+    attribute:
+      class: alert alert-info
+    innerHTML: 'Insert rows from excel. Three columns la, key, value.'

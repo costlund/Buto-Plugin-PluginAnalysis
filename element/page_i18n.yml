@@ -1,4 +1,14 @@
 -
+  type: p
+  innerHTML:
+    -
+      type: a
+      attribute:
+        class: btn btn-primary
+        onclick: PluginPluginAnalysis.i18n_form(this)
+        data-id: rs:id
+      innerHTML: Translate
+-
   type: widget
   data:
     plugin: wf/table

@@ -1,0 +1,6 @@
+-
+  type: widget
+  data:
+    plugin: form/form_v1
+    method: rs:method
+    data: yml:/plugin/plugin/analysis/form/i18n.yml
