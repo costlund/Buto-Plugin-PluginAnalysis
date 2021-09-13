@@ -1,5 +1,9 @@
-version: 1.46.1
+version: 1.46.2
 history:
+  1.46.2:
+    date: '2021-09-13'
+    title: I18N
+    description: 'Add empty rows from log also.'
   1.46.1:
     date: '2021-08-26'
     title: Versions
