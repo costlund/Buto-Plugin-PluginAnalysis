@@ -1,5 +1,9 @@
-version: 1.46.2
+version: 1.46.3
 history:
+  1.46.3:
+    date: '2021-09-27'
+    title: Versions
+    description: 'Versions update.'
   1.46.2:
     date: '2021-09-13'
     title: I18N
@@ -315,7 +319,7 @@ plugin:
     version: 1.2.2
   -
     name: wf/yml
-    version: 1.3.0
+    version: 1.3.1
   -
     name: git/kbjr
     version: 1.5.0
@@ -333,13 +337,13 @@ plugin:
     version: 1.4.5
   -
     name: wf/table
-    version: 1.24.1
+    version: 1.25.0
   -
     name: image/element
     version: '1.2'
   -
     name: form/form_v1
-    version: 1.51.2
+    version: 1.51.7
 sys:
   -
     name: mercury
