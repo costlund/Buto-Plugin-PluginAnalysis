@@ -70,17 +70,6 @@
           type: a
           attribute:
             class: nav-link
-          innerHTML: Git
-    -
-      type: li
-      attribute:
-        class: nav-item
-        role: presentation
-      innerHTML:
-        -
-          type: a
-          attribute:
-            class: nav-link
           innerHTML: Theme usage
     -
       type: li
@@ -170,6 +159,21 @@
             -
               type: span
               innerHTML: rs:version_manifest
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Git
+            -
+              type: a
+              settings:
+                enabled: git:status
+              attribute:
+                data-id: rs:url_id
+                data-version_manifest: rs:version_manifest
+                onclick: PluginPluginAnalysis.git(this, '')
+              innerHTML: git:has
         -
           type: div
           innerHTML:
@@ -414,36 +418,6 @@
         -
           type: div
           innerHTML: rs:readme
-    -
-      type: div
-      attribute:
-        id: tab_git
-        class: plugin_bootstrap_navtabs_content
-        style: 'display:none'
-      innerHTML:
-        -
-          type: div
-          innerHTML:
-            -
-              type: strong
-              innerHTML: Has
-            -
-              type: span
-              innerHTML: git:has
-        -
-          type: pre
-          settings:
-            enabled: git:status
-          innerHTML: git:status
-        -
-          type: a
-          settings:
-            enabled: git:status
-          attribute:
-            data-id: rs:url_id
-            data-version_manifest: rs:version_manifest
-            onclick: PluginPluginAnalysis.git(this, '')
-          innerHTML: More
     -
       type: div
       attribute:

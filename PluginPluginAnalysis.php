@@ -1395,7 +1395,25 @@ class PluginPluginAnalysis{
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
     $data = new PluginWfArray();
-    $data->set('status', $git->status());
+    /**
+     * 
+     */
+    wfPlugin::includeonce('string/array');
+    $sa = new PluginStringArray();
+    $status = $git->status();
+    $status2 = $sa->from_br($status);
+    $status3 = null;
+    foreach($status2 as $v){
+      if(substr($v, 1, 12)=='modified:   '){
+        $status3 .= '<a href="#" onclick="PluginPluginAnalysis.git_diff(this)" data-file="'.substr($v, 13).'" data-id="'.wfRequest::get('plugin').'">'.$v."</a>\n";
+      }else{
+        $status3 .= $v."\n";
+      }
+    }
+    /**
+     * 
+     */
+    $data->set('status', $status3);
     $data->set('log', $git->log());
     $data->set('remote_get_url_origin', $git->remote_get_url_origin());
     $element = new PluginWfYml(__DIR__.'/element/git.yml');
@@ -1438,9 +1456,23 @@ class PluginPluginAnalysis{
     exit('Commit...');
   }
   public function page_git_diff(){
+    wfPlugin::includeonce('string/array');
+    $sa = new PluginStringArray();
     $git = new PluginGitKbjr();
     $git->set_repo($this->replace_a_dot_to_slash(wfRequest::get('plugin')));
-    $element = wfDocument::createHtmlElement('pre', $git->diff(wfRequest::get('filename')));
+    $diff = $git->diff(wfRequest::get('filename'));
+    $diff2 = $sa->from_br($diff);
+    $diff3 = null;
+    foreach($diff2 as $v){
+      if(substr($v, 0, 1)=='+'){
+        $diff3 .= '<span style="color:green">'.$v."</span>\n";
+      }elseif(substr($v, 0, 1)=='-'){
+        $diff3 .= '<span style="color:red">'.$v."</span>\n";
+      }else{
+        $diff3 .= $v."\n";
+      }
+    }
+    $element = wfDocument::createHtmlElement('pre', $diff3);
     wfDocument::renderElement(array($element));
   }
   private function replace_a_dot_to_slash($str){

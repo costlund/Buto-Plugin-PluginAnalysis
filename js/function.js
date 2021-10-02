@@ -66,7 +66,7 @@ function PluginPluginAnalysis(){
     var plugin = btn.getAttribute('data-id');
     var version_manifest = btn.getAttribute('data-version_manifest');
     if(action==''){
-      PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin+'&version_manifest='+version_manifest, btn_reload: true});
+      PluginWfBootstrapjs.modal({id: 'modal_plugin_git', label: 'GIT', url: '/plugin_analysis/git?plugin='+plugin+'&version_manifest='+version_manifest, btn_reload: true, size: 'xl'});
     }else if(action=='pull'){
       this.git_pull(btn);
     }else if(action=='push'){
@@ -99,11 +99,14 @@ function PluginPluginAnalysis(){
   }
   this.git_diff = function(btn){
     var plugin = btn.getAttribute('data-id');
-    var filename = prompt("File name", "");
+    var filename = btn.getAttribute('data-file');
+    if(!filename){
+      filename = prompt("File name", "");
+    }
     if(!filename){
       return null;
     }
-    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_diff', label: 'GIT diff', url: '/plugin_analysis/git_diff?plugin='+plugin+'&filename='+filename});
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_git_diff', label: 'GIT diff', url: '/plugin_analysis/git_diff?plugin='+plugin+'&filename='+filename, size: 'xl'});
   }
   this.versions_update = function(btn){
     var plugin = btn.getAttribute('data-id');

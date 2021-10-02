@@ -1,5 +1,9 @@
-version: 1.46.3
+version: 1.47.0
 history:
+  1.47.0:
+    date: '2021-10-02'
+    title: Git
+    description: 'Remove Git tab. Add Git link in General tab. Created diff links on changed files. In Diff add color red for removed rows and color green for added rows.'
   1.46.3:
     date: '2021-09-27'
     title: Versions
