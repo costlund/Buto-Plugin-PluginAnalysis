@@ -815,6 +815,7 @@ class PluginPluginAnalysis{
   private function stat(){
     $stat = new PluginWfArray();
     $stat->set('conflict', 0);
+    $stat->set('not_exist', 0);
     $stat->set('has_public_folder_text_yes_star', 0);
     foreach($this->plugins->get() as $k => $v){
       $i = new PluginWfArray($v);
@@ -840,6 +841,13 @@ class PluginPluginAnalysis{
           $stat->set('git_has_'.$i->get('git/has'), 1);
         }
       }
+      /**
+       * not exist
+       */
+      if(!$i->get('exist')){
+        $stat->set('not_exist', $stat->get('not_exist')+1);
+        $this->plugins->set("$k/name", $this->plugins->get("$k/name").' (not_exist)');
+      }
     }
     return $stat;
   }
@@ -863,7 +871,7 @@ class PluginPluginAnalysis{
       $item = new PluginWfArray($value);
       $tr = new PluginWfYml('/plugin/plugin/analysis/element/table_tr.yml');
       $tr->setByTag($item->get());
-      $tr->setByTag($item->get('git'), 'git');
+      $tr->setByTag($item->get('git'), 'git', true);
       $trs[] = $tr->get();
     }
     $element->setByTag(array('trs' => $trs));
@@ -1227,6 +1235,7 @@ class PluginPluginAnalysis{
     foreach ($plugin_array as $key => $value) {
       $value_dot = str_replace('/', '.', $value);
       $plugin->set($value_dot.'/name', $value);
+      $plugin->set($value_dot.'/exist', true);
       /**
        * Git
        */

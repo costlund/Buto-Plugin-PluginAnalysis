@@ -111,6 +111,24 @@
             -
               type: span
               innerHTML: 'stat:git_has_Yes (diverged)'
+    -
+      type: div
+      settings:
+        enabled: 'stat:not_exist'
+      attribute:
+        class: col-md-3
+      innerHTML:
+        -
+          type: div
+          attribute:
+            class: alert alert-warning
+          innerHTML:
+            -
+              type: strong
+              innerHTML: Not exist
+            -
+              type: span
+              innerHTML: 'stat:not_exist'
 -
   type: div
   settings:

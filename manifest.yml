@@ -1,5 +1,9 @@
-version: 1.47.0
+version: 1.48.0
 history:
+  1.48.0:
+    date: '2021-10-26'
+    title: Not exist
+    description: 'Alert if a plugin not exist.'
   1.47.0:
     date: '2021-10-02'
     title: Git
