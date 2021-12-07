@@ -759,7 +759,7 @@ class PluginPluginAnalysis{
        * Create manifest.
        */
       $manifest = new PluginWfYml('/plugin/'.$plugin_name.'/manifest.yml');
-      $manifest->set('manifest', $data->get('manifest'));
+      $manifest->set('', $data->get('manifest'));
       wfHelp::print($manifest);
       $manifest->save();
     }
