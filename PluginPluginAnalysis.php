@@ -752,14 +752,16 @@ class PluginPluginAnalysis{
       $data = new PluginWfYml(__DIR__.'/data/data.yml');
       $data->set('manifest/plugin', $plugin);
       $data->set('manifest/history/1.0.0/date', date('Y-m-d'));
+      $data->set('manifest/sys/0/name', wfGlobals::getVersion());
+      $data->set('manifest/sys/0/version/0', wfGlobals::get('sys/version'));
+      $data->set('manifest/php/version/0', wfGlobals::get('php/version'));
       /**
        * Create manifest.
        */
-      $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/manifest.yml';
-      if(!wfFilesystem::fileExist($filename)){
-        wfHelp::yml_dump($filename);
-        file_put_contents($filename, wfHelp::getYmlDump($data->get('manifest')));
-      }
+      $manifest = new PluginWfYml('/plugin/'.$plugin_name.'/manifest.yml');
+      $manifest->set('manifest', $data->get('manifest'));
+      wfHelp::print($manifest);
+      $manifest->save();
     }
   }
   /**
