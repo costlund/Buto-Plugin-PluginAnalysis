@@ -1,5 +1,9 @@
-version: 1.49.1
+version: 1.49.2
 history:
+  1.49.2:
+    date: '2021-12-14'
+    title: Versions
+    description: 'Versions update.'
   1.49.1:
     date: '2021-12-07'
     title: Versions
@@ -357,7 +361,7 @@ plugin:
     version: 1.4.6
   -
     name: wf/table
-    version: 1.26.0
+    version: 1.27.0
   -
     name: image/element
     version: '1.2'
