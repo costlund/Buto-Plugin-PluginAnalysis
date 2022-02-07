@@ -1088,15 +1088,37 @@ class PluginPluginAnalysis{
         $exist = wfFilesystem::fileExist($file);
       }
       if($exist){
+        /**
+         * 
+         */
         $readme = file_get_contents($file);
+        $readme2 = null;
+        /**
+         * 
+         */
+        wfPlugin::includeonce('string/array');
+        $string_array = new PluginStringArray();
+        $readme_links = null;
+        foreach($string_array->from_br($readme) as $k => $v){
+          if(substr($v, 0, 1)=='#'){
+            $readme_links .= '<a href="#anchor_'.$k.'">'.str_replace('#', '&nbsp;', $v).'</a><br>';
+            $v .= '<a id="anchor_'.$k.'"></a>';
+          }
+          $readme2 .= $v."\n";
+        }
+        /**
+         * 
+         */
         wfPlugin::includeonce('readme/parser');
         $parser = new PluginReadmeParser();
-        $readme = $parser->parse_text($readme);
-        $this->plugin->set('readme', $readme);
+        $readme2 = $parser->parse_text($readme2);
+        $this->plugin->set('readme', $readme2);
         $this->plugin->set('has_readme', 'Yes');
+        $this->plugin->set('readme_links', $readme_links);
       }else{
         $this->plugin->set('readme', $readme);
         $this->plugin->set('has_readme', 'No');
+        $this->plugin->set('readme_links', null);
       }
     }
     /**

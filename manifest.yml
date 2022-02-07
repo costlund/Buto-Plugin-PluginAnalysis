@@ -1,5 +1,9 @@
-version: 1.49.3
+version: 1.50.0
 history:
+  1.50.0:
+    date: '2022-02-07'
+    title: Tree
+    description: 'Add links in tree layout to navigate in readme content.'
   1.49.3:
     date: '2022-01-03'
     title: Versions

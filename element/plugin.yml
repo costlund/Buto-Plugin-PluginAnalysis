@@ -416,6 +416,33 @@
         style: 'display:none'
       innerHTML:
         -
+          type: p
+          innerHTML:
+            -
+              type: a
+              attribute:
+                classzzz: 'btn btn-secondary btn-sm'
+                style:
+                  float: right
+                data-toggle: collapse
+                data-target: '#collapse_tree'
+                aria-expanded: 'false'
+                aria-controls: collapse_tree
+              innerHTML: 'Tree'
+        -
+          type: div
+          attribute:
+            class: collapse
+            id: collapse_tree
+          innerHTML:
+            -
+              type: div
+              attribute:
+                style:
+                  font-family: courier new
+                  font-size: smaller
+              innerHTML: rs:readme_links
+        -
           type: div
           innerHTML: rs:readme
     -
