@@ -1,5 +1,9 @@
-version: 1.50.3
+version: 1.50.4
 history:
+  1.50.4:
+    date: '2022-04-07'
+    title: Button
+    description: 'Made button of plugin name in table.'
   1.50.3:
     date: '2022-03-31'
     title: Versions

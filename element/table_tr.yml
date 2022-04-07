@@ -13,7 +13,13 @@ innerHTML:
             style: 'width:30px'
   -
     type: td
-    innerHTML: rs:name
+    innerHTML: 
+      -
+        type: a
+        attribute: 
+          data-id: rs:id
+          onclick: PluginPluginAnalysis.plugin(this.getAttribute('data-id'))
+        innerHTML: rs:name
   -
     type: td
     innerHTML: rs:has_manifest
