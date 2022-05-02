@@ -1,5 +1,9 @@
-version: 1.50.4
+version: 1.50.5
 history:
+  1.50.5:
+    date: '2022-05-02'
+    title: Versions
+    description: 'Versions update.'
   1.50.4:
     date: '2022-04-07'
     title: Button
@@ -361,7 +365,7 @@ history:
 plugin:
   -
     name: theme/include
-    version: 1.9.1
+    version: 1.10.0
   -
     name: wf/array
     version: 1.2.3
@@ -385,13 +389,13 @@ plugin:
     version: 1.4.7
   -
     name: wf/table
-    version: 1.28.2
+    version: 1.30.0
   -
     name: image/element
     version: '1.2'
   -
     name: form/form_v1
-    version: 1.52.0
+    version: 1.52.1
 sys:
   -
     name: mercury
