@@ -347,6 +347,48 @@ class PluginPluginAnalysis{
     $element->setByTag($data->get());
     wfDocument::renderElement($element->get());
   }
+  public function page_git_add_commit_push(){
+    /**
+     * Set plugins.
+     */
+    $this->setPlugins();
+    /**
+     * 
+     */
+    $i = 0;
+    $command = '';
+    foreach($this->plugins->get() as $k => $v){
+      /**
+       * Must have git Yes ($type)
+       */
+      if($this->plugins->get("$k/git/has")!="Yes (changes)"){
+        continue;
+      }
+      /**
+       * 
+       */
+      $i++;
+      /**
+       * 
+       */
+      $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' ';
+      $command .= '&& pwd ';
+      $command .= '&& git add . ';
+      $command .= '&& git commit -m "'.$v['version_manifest'].'" ';
+      $command .= '&& git push ';
+    }
+    /**
+     * 
+     */
+    if($command){
+      $command = substr($command, 3);
+    }
+    /**
+     * 
+     */
+    wfHelp::textarea_dump($command);
+    exit("Git (changed) done ($i)!");
+  }
   public function page_git_push_ahead(){
     /**
      * action

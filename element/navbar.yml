@@ -49,6 +49,9 @@
               -
                 text: Git Fetch (all) (command)
                 onclick: "PluginPluginAnalysis.git_fetch_all(this);"
+              -
+                text: Git Add-Commit-Push (command)
+                onclick: "PluginPluginAnalysis.git_add_commit_push(this);"
           -
             text: Theme
             onclick: "PluginPluginAnalysis.theme_analys(this);"

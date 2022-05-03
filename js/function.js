@@ -148,5 +148,14 @@ function PluginPluginAnalysis(){
   this.i18n_form = function(btn){
     PluginWfBootstrapjs.modal({id: 'modal_i18n_form', label: btn.innerHTML, url: '/plugin_analysis/i18n_form?id='+btn.getAttribute('data-id'), size: 'xl'});
   }
+  this.git_add_commit_push = function(btn){
+    /**
+     * 
+     */
+    if(typeof action == 'undefined'){
+      action = '';
+    }
+    PluginWfBootstrapjs.modal({id: 'modal_git_add_commit_push', label: btn.innerHTML, url: '/plugin_analysis/git_add_commit_push?action='+action});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();
