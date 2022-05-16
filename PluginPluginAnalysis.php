@@ -347,11 +347,7 @@ class PluginPluginAnalysis{
     $element->setByTag($data->get());
     wfDocument::renderElement($element->get());
   }
-  public function page_git_add_commit_push(){
-    /**
-     * Set plugins.
-     */
-    $this->setPlugins();
+  private function get_git_add_commit_push(){
     /**
      * 
      */
@@ -386,24 +382,21 @@ class PluginPluginAnalysis{
     /**
      * 
      */
-    wfHelp::textarea_dump($command);
-    exit("Git (changed) done ($i)!");
+    return new PluginWfArray(array('command' => $command, 'count' => $i));
   }
-  public function page_git_push_ahead(){
-    /**
-     * action
-     * If empty string we try to run git push commands.
-     * If value "command" we output command script.
-     */
-    $action = wfRequest::get('action');
-    $type = 'ahead';
-    if(wfRequest::get('type')){
-      $type = wfRequest::get('type');
-    }
+  public function page_git_add_commit_push(){
     /**
      * Set plugins.
      */
     $this->setPlugins();
+    $result = $this->get_git_add_commit_push();
+    /**
+     * 
+     */
+    wfHelp::textarea_dump($result->get('command'));
+    exit("Git (changed) done (".$result->get('count').")!");
+  }
+  private function get_git_push_ahead($type, $action = 'command'){
     /**
      * 
      */
@@ -443,19 +436,36 @@ class PluginPluginAnalysis{
     if($command){
       $command = substr($command, 3);
     }
-    /**
-     * 
-     */
-    if($action=='command'){
-      wfHelp::textarea_dump($command);
-    }
-    exit("Git $type done ($i)!");
+    return new PluginWfArray(array('command' => $command, 'count' => $i));
   }
-  public function page_git_fetch_all(){
+  public function page_git_push_ahead(){
+    /**
+     * action
+     * If empty string we try to run git push commands.
+     * If value "command" we output command script.
+     */
+    $action = wfRequest::get('action');
+    $type = 'ahead';
+    if(wfRequest::get('type')){
+      $type = wfRequest::get('type');
+    }
     /**
      * Set plugins.
      */
     $this->setPlugins();
+    /**
+     * 
+     */
+    $result = $this->get_git_push_ahead($type, $action);
+    /**
+     * 
+     */
+    if($action=='command'){
+      wfHelp::textarea_dump($result->get('command'));
+    }
+    exit("Git $type done (".$result->get('count').")!");
+  }
+  private function get_git_fetch_all(){
     /**
      * 
      */
@@ -473,8 +483,19 @@ class PluginPluginAnalysis{
     if($command){
       $command = substr($command, 3);
     }
+    return new PluginWfArray(array('command' => $command, 'count' => $i));
+  }
+  public function page_git_fetch_all(){
+    /**
+     * Set plugins.
+     */
+    $this->setPlugins();
+    /**
+     * 
+     */
+    $result = $this->get_git_fetch_all();
     $element = new PluginWfYml(__DIR__.'/element/'.__FUNCTION__.'.yml');
-    $element->setByTag(array('command' => $command, 'count' => $i));
+    $element->setByTag(array('command' => $result->get('command'), 'count' => $result->get('count')));
     wfDocument::renderElement($element);
   }
   private function history_add_version($version, $history){
@@ -899,6 +920,17 @@ class PluginPluginAnalysis{
     $this->setPlugins();
     $element = new PluginWfYml('/plugin/plugin/analysis/element/table.yml');
     $element->setByTag($this->stat()->get(), 'stat', true);
+    /**
+     * 
+     */
+    $git_add_commit_push = $this->get_git_add_commit_push();
+    $element->setByTag($git_add_commit_push->get(), 'git_add_commit_push');
+    $git_fetch_all = $this->get_git_fetch_all();
+    $element->setByTag($git_fetch_all->get(), 'git_fetch_all');
+    $git_push_ahead = $this->get_git_push_ahead('ahead', 'command');
+    $element->setByTag($git_push_ahead->get(), 'git_push_ahead');
+    $git_pull_behind = $this->get_git_push_ahead('behind', 'command');
+    $element->setByTag($git_pull_behind->get(), 'git_pull_behind');
     /**
      * Buttons
      */

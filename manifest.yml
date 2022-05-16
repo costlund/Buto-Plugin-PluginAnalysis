@@ -1,5 +1,9 @@
-version: 1.51.0
+version: 1.52.0
 history:
+  1.52.0:
+    date: '2022-05-16'
+    title: 'Git command'
+    description: 'Add git commands in own tab when load all plugins.'
   1.51.0:
     date: '2022-05-03'
     title: Git
