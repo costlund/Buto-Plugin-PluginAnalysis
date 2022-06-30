@@ -10,7 +10,7 @@ elements_before:
       -
         type: strong
         innerHTML: rs:version
-elements_below:
+elements_after:
   -
     type: script
     settings:

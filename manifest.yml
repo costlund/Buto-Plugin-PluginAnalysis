@@ -1,5 +1,9 @@
-version: 1.52.3
+version: 1.52.4
 history:
+  1.52.4:
+    date: '2022-06-30'
+    title: Form
+    description: 'Put elements after.'
   1.52.3:
     date: '2022-06-09'
     title: I18n
