@@ -4,7 +4,16 @@ class PluginPluginAnalysis{
   public $plugins = null;
   private $plugin = null;
   private $plugin_search = array();
+  private $history = array();
+  private $limit = 999; //Set to lower when developing if needed.
   function __construct($buto = false) {
+    /**
+     * Time limit.
+     */
+    set_time_limit(60*5);
+    /**
+     * 
+     */
     if($buto){
       /**¨
        * ¨Include.
@@ -916,6 +925,18 @@ class PluginPluginAnalysis{
     }
     return $stat;
   }
+  public function page_history_data(){
+    wfPlugin::includeonce('datatable/datatable_1_10_18');
+    $datatable = new PluginDatatableDatatable_1_10_18();
+    /**
+     * Data
+     */    
+    if(wfRequest::get('load_history')=='yes'){
+      $this->setPlugins();
+    }
+    $data = $this->history;
+    exit($datatable->set_table_data($data));    
+  }
   public function page_analys(){
     $this->setPlugins();
     $element = new PluginWfYml('/plugin/plugin/analysis/element/table.yml');
@@ -1256,6 +1277,15 @@ class PluginPluginAnalysis{
     $data = wfFilesystem::getScandir($dir);
     $plugin = array();
     foreach ($data as $key => $value) {
+      /**
+       * Limit temporary if developer need it.
+       */
+      if($this->limit <= sizeof($plugin)){
+        break;
+      }
+      /**
+       * 
+       */
       if(is_dir($dir.'/'.$value)){
         $dir2 = $dir.'/'.$value;
         $data2 = wfFilesystem::getScandir($dir2);
@@ -1300,6 +1330,7 @@ class PluginPluginAnalysis{
     return $match;
   }
   public function setPlugins($cache = false){
+    $this->history = array();
     /**
      * Cache filename
      */
@@ -1490,6 +1521,29 @@ class PluginPluginAnalysis{
         foreach ($manifest->get('plugin') as $key2 => $value2) {
           $item = new PluginWfArray($value2);
           $this->plugins->set(str_replace('/', '.', $value2['name']).'/name', $value2['name']);
+        }
+      }
+      /**
+       * history
+       */
+      if(wfRequest::get('load_history')=='yes'){
+        if($manifest->get('history')){
+          foreach($manifest->get('history') as $k => $v){
+            $i = new PluginWfArray($v);
+            $i->set('plugin', $this->plugins->get($key.'/name'));
+            $i->set('version', $k);
+            $i->set('dot_plugin', $key);
+            if(!$i->is_set('date')){
+              $i->set('date', '');
+            }
+            if(!$i->is_set('title')){
+              $i->set('title', '');
+            }
+            if(!$i->is_set('description')){
+              $i->set('description', '');
+            }
+            $this->history[] = $i->get();
+          }
         }
       }
     }else{

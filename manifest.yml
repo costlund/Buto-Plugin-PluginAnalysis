@@ -1,5 +1,9 @@
-version: 1.52.6
+version: 1.53.0
 history:
+  1.53.0:
+    date: '2022-08-08'
+    title: History
+    description: 'Add history tab.'
   1.52.6:
     date: '2022-08-08'
     title: Versions

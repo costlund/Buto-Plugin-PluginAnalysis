@@ -160,6 +160,19 @@
             class: nav-link
             href: '#'
           innerHTML: Git
+    -
+      type: li
+      attribute:
+        class: nav-item
+        role: presentation
+      innerHTML:
+        -
+          type: a
+          attribute:
+            class: nav-link
+            href: '#'
+            onclick: "$('#dt_history').DataTable().ajax.url('/plugin_analysis/history_data?load_history=yes').load()"
+          innerHTML: History
 -
   type: div
   attribute:
@@ -334,6 +347,44 @@
                       width: '100%'
                       height: 300px
                   innerHTML: git_fetch_all:command
+    -
+      type: div
+      attribute:
+        id: tab_history
+        class: plugin_bootstrap_navtabs_content
+        style: 'display:none'
+      innerHTML:
+        -
+          type: widget
+          data:
+            plugin: wf/table
+            method: render_many
+            data:
+              id: dt_history
+              i18n: false
+              field:
+                date: Date
+                plugin: Plugin
+                version: Version
+                title: Title
+                description: Description
+              datatable:
+                ajax: /plugin_analysis/history_data
+                disabled: false
+                export:
+                  disabled: false
+                  title: My custom title.
+                searching:
+                order:
+                  -
+                    - 0
+                    - desc
+        -
+          type: script
+          innerHTML: |
+            $('#dt_history tbody').on( 'click', 'tr', function () {
+                PluginPluginAnalysis.plugin(datatable_dt_history.row( this ).data().dot_plugin);
+            });
 -
   type: script
   innerHTML: "PluginBootstrapNavtabs_v1.nav_init({ul: 'navtabs_analys', content: 'navtabs_analys_content', click: 0});"
