@@ -1,5 +1,9 @@
-version: 1.53.2
+version: 1.53.3
 history:
+  1.53.3:
+    date: '2022-08-11'
+    title: Versions
+    description: 'Versions update.'
   1.53.2:
     date: '2022-08-10'
     title: Versions
@@ -409,7 +413,7 @@ history:
 plugin:
   -
     name: theme/include
-    version: 1.10.8
+    version: 1.11.0
   -
     name: wf/array
     version: 1.2.3
