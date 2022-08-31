@@ -1,5 +1,9 @@
-version: 1.53.3
+version: 1.53.4
 history:
+  1.53.4:
+    date: '2022-08-31'
+    title: Versions
+    description: 'Versions update.'
   1.53.3:
     date: '2022-08-11'
     title: Versions
@@ -413,13 +417,13 @@ history:
 plugin:
   -
     name: theme/include
-    version: 1.11.0
+    version: 1.13.0
   -
     name: wf/array
-    version: 1.2.3
+    version: 1.2.4
   -
     name: wf/yml
-    version: 1.4.0
+    version: 1.4.1
   -
     name: git/kbjr
     version: 1.6.0
