@@ -1,5 +1,9 @@
-version: 1.54.0
+version: 1.54.1
 history:
+  1.54.1:
+    date: '2022-09-13'
+    title: Layout
+    description: 'Move plugin name upp. Move icon from tab General to left of plugin name.'
   1.54.0:
     date: '2022-09-13'
     title: Conflict

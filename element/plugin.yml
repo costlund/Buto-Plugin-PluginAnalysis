@@ -1,17 +1,25 @@
 -
-  type: p
+  type: a
   attribute:
-    class: text-right
-  innerHTML:
-    -
-      type: a
-      attribute:
-        data-id: rs:id
-        onclick: PluginPluginAnalysis.plugin_clear_cache(this.getAttribute('data-id'))
-      innerHTML: Clear cache
+    data-id: rs:id
+    onclick: PluginPluginAnalysis.plugin_clear_cache(this.getAttribute('data-id'))
+    style:
+      float: right
+  innerHTML: Clear cache
 -
   type: h1
-  innerHTML: rs:name
+  innerHTML: 
+    -
+      type: widget
+      data:
+        plugin: image/element
+        method: render
+        data:
+          path: rs:icon_path
+          style: 'height:30px'
+    -
+      type: span
+      innerHTML: rs:name
 -
   type: ul
   attribute:
@@ -139,17 +147,6 @@
         class: plugin_bootstrap_navtabs_content
         style: 'display:none'
       innerHTML:
-        -
-          type: div
-          innerHTML:
-            -
-              type: widget
-              data:
-                plugin: image/element
-                method: render
-                data:
-                  path: rs:icon_path
-                  style: 'width:40px'
         -
           type: div
           innerHTML:
