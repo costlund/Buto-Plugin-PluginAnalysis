@@ -1,5 +1,9 @@
-version: 1.53.6
+version: 1.54.0
 history:
+  1.54.0:
+    date: '2022-09-13'
+    title: Conflict
+    description: 'Add value conflict to plugin used in tab Plugin.'
   1.53.6:
     date: '2022-09-07'
     title: Versions

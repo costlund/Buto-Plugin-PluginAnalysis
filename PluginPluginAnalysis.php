@@ -1135,11 +1135,22 @@ class PluginPluginAnalysis{
            * diff
            */
           foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
+            /**
+             * version_diff
+             */
             $version_diff = null;
             if($this->plugin->get("manifest/plugin/$k/version")!=$this->plugin->get("manifest/plugin/$k/version_manifest")){
               $version_diff = 'Yes';
             }
             $this->plugin->set("manifest/plugin/$k/version_diff", $version_diff);
+            /**
+             * conflict
+             */
+            $conflict = null;
+            if(!$this->version_compare($this->plugin->get("manifest/plugin/$k/version"), $this->plugin->get("manifest/plugin/$k/version_manifest"))){
+              $conflict = 'Yes';
+            }
+            $this->plugin->set("manifest/plugin/$k/conflict", $conflict);
           }
         }
       }

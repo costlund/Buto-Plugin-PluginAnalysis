@@ -390,6 +390,7 @@
                     version_manifest: Version
                     version: Using
                     version_diff: Diff
+                    conflict: Conflict
                     find: Find
                   element:
                     icon_path:
