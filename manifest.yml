@@ -1,5 +1,9 @@
-version: 1.54.1
+version: 1.54.2
 history:
+  1.54.2:
+    date: '2022-09-27'
+    title: Versions
+    description: 'Versions update.'
   1.54.1:
     date: '2022-09-13'
     title: Layout
@@ -433,13 +437,13 @@ history:
 plugin:
   -
     name: theme/include
-    version: 1.14.0
+    version: 1.14.1
   -
     name: wf/array
     version: 1.2.4
   -
     name: wf/yml
-    version: 1.4.1
+    version: 1.5.0
   -
     name: git/kbjr
     version: 1.6.0
@@ -457,13 +461,13 @@ plugin:
     version: 1.5.1
   -
     name: wf/table
-    version: 1.31.1
+    version: 1.31.3
   -
     name: image/element
     version: '1.2'
   -
     name: form/form_v1
-    version: 1.54.0
+    version: 1.54.2
 sys:
   -
     name: mercury
