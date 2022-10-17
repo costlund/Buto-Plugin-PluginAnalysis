@@ -1,5 +1,9 @@
-version: 1.54.3
+version: 1.55.0
 history:
+  1.55.0:
+    date: '2022-10-17'
+    title: Public files
+    description: 'One can now click in table and copy to left/right or delete.'
   1.54.3:
     date: '2022-10-13'
     title: Versions
@@ -366,77 +370,111 @@ history:
     description: 'Replace param icon_element with icon_path and use PluginImageElement to render image.'
   1.22.0:
     date: '2019-10-09'
+    title: 'Variables'
     description: 'Declare variables as public.'
   1.21.0:
     date: '2019-10-09'
+    title: 'Labels'
     description: 'Labels improvements.'
   1.20.0:
     date: '2019-09-27'
+    title: 'Widget'
     description: 'Search for wfDocument::createWidget on manifest create.'
   1.19.0:
     date: '2019-09-17'
+    title: 'Icons'
     description: 'Add icons to table.'
   1.18.0:
     date: '2019-09-10'
+    title: 'Manifest'
     description: 'Support webmaster/element from manifest.yml.'
   1.17.0:
     date: '2019-06-17'
+    title: 'GIT'
     description: 'Improved GIT support.'
   1.15.0:
     date: '2019-06-14'
+    title: 'GIT'
     description: 'Add more GIT support.'
   1.14.0:
     date: '2019-06-13'
+    title: 'GIT'
     description: 'Add GIT support.'
   1.13.0:
     date: '2019-06-08'
+    title: 'Public folder'
     description: 'Public folder update button.'
   1.12.0:
     date: '2019-02-21'
+    title: 'Public folder'
     description: 'Hide public folder items if not needed.'
   1.11.0:
     date: '2019-02-14'
+    title: 'Manifest'
     description: 'Better support for manifest plugins changes.'
   1.10.0:
     date: '2019-02-05'
+    title: 'Create'
     description: 'Add support for create a plugin.'
   1.9.0:
     date: '2019-02-04'
+    title: 'Public folder'
     description: 'Add support for copy public folder to web dir.'
   1.8.0:
     date: '2019-02-01'
+    title: 'Js-file'
     description: 'Add support for creating js-file.'
   1.7.0:
     date: '2019-01-30'
+    title: 'Readme'
     description: 'Add support for creating README.md.'
   1.6.0:
     date: '2019-01-09'
+    title: 'Data'
     description: 'Add more data to table Theme usage.'
   1.5.0:
     date: '2019-01-09'
+    title: 'Readme'
     description: 'Parse README.md file in view.'
   1.4.0:
     date: '2019-01-09'
+    title: 'Usage'
     description: 'Get themes used by a plugin in view.'
   1.3.0:
     date: '2019-01-09'
+    title: 'Exist'
     description: 'Warning when plugin not exist.'
   1.2.0:
     date: '2019-01-09'
+    title: 'Filter'
     description: 'Now it is possible to filter plugins by theme.'
   1.1.0:
+    date: '2019-01-01'
+    title: 'Deprecated'
     description: 'Add params deprecated and deprecated_description to data.yml.'
   1.0.5:
+    date: '2019-01-01'
+    title: 'History'
     description: 'Add date to history.'
   1.0.4:
+    date: '2019-01-01'
+    title: 'Links'
     description: 'Show links in plugin view.'
   1.0.3:
+    date: '2019-01-01'
+    title: 'History'
     description: 'Show history in plugin view.'
   1.0.2:
+    date: '2019-01-01'
+    title: 'Conflict'
     description: 'Alert conflict in plugin view.'
   1.0.1:
+    date: '2019-01-01'
+    title: 'Merge'
     description: 'Merge two columns.'
   1.0.0:
+    date: '2019-01-01'
+    title: 'First'
     description: 'First version.'
 plugin:
   -

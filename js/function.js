@@ -157,5 +157,76 @@ function PluginPluginAnalysis(){
     }
     PluginWfBootstrapjs.modal({id: 'modal_git_add_commit_push', label: btn.innerHTML, url: '/plugin_analysis/git_add_commit_push?action='+action});
   }
+  this.dt_public_folder_files_data = {};
+  this.dt_public_folder_files_row_click = function(data){
+    /**
+     * 
+     */
+    this.dt_public_folder_files_data = data;
+    /**
+     * 
+     */
+    PluginWfBootstrapjs.modal({id: 'modal_public_folder_files_one', label: data.name, content: ''});
+    /**
+     * 
+     */
+    var element = [
+      {
+        type: 'a', 
+        attribute: {onclick: "PluginPluginAnalysis.dt_public_folder_files_row_click_left()", class: 'btn btn-primary'}, 
+        innerHTML: 'Copy to left'
+      },
+      {
+        type: 'a', 
+        attribute: {onclick: "PluginPluginAnalysis.dt_public_folder_files_row_click_delete()", class: 'btn btn-warning'}, 
+        innerHTML: 'Delete'
+      },
+      {
+        type: 'a', 
+        attribute: {onclick: "PluginPluginAnalysis.dt_public_folder_files_row_click_right()", class: 'btn btn-primary', style: 'float:right'}, 
+        innerHTML: 'Copy to right'
+      }
+    ];
+    /**
+     * 
+     */
+    PluginWfDom.render(element, document.getElementById('modal_public_folder_files_one_body'));
+  }
+  this.dt_public_folder_files_row_click_left = function(){
+    $.getJSON( "/plugin_analysis/public_folder_files_left?"+$.param(this.dt_public_folder_files_data), function( data ) {
+      if(data.success){
+        console.log(data);
+        $('#modal_public_folder_files_one').modal('hide');
+      }else{
+        alert(data.error);
+      }
+    });
+    return null;
+  }
+  this.dt_public_folder_files_row_click_delete = function(){
+    if(!confirm('Are you sure to DELETE?')){
+      return null;
+    }
+    $.getJSON( "/plugin_analysis/public_folder_files_delete?"+$.param(this.dt_public_folder_files_data), function( data ) {
+      if(data.success){
+        console.log(data);
+        $('#modal_public_folder_files_one').modal('hide');
+      }else{
+        alert(data.error);
+      }
+    });
+    return null;
+  }
+  this.dt_public_folder_files_row_click_right = function(){
+    $.getJSON( "/plugin_analysis/public_folder_files_right?"+$.param(this.dt_public_folder_files_data), function( data ) {
+      if(data.success){
+        console.log(data);
+        $('#modal_public_folder_files_one').modal('hide');
+      }else{
+        alert(data.error);
+      }
+    });
+    return null;
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

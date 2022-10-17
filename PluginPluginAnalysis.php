@@ -274,7 +274,48 @@ class PluginPluginAnalysis{
     $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
     $element->setByTag(array('theme_usage_url' => '/plugin_analysis/plugin_theme_usage/id/'.wfRequest::get('id')));
     $element->setByTag(array('i18n_url' => '/plugin_analysis/i18n/id/'.wfRequest::get('id')));
+    $element->setByTag(array('public_folder_files_url' => '/plugin_analysis/public_folder_files/id/'.wfRequest::get('id')));
     wfDocument::renderElement($element->get());
+  }
+  public function page_public_folder_files(){
+    $id = wfRequest::get('id');
+    $id = $this->replace_a_dot_to_slash($id);
+    $temp = $this->get_public_files($id);
+    $temp2 = array();
+    foreach($temp as $v){
+      $v['plugin'] = $id;
+      $temp2[] = $v;
+    }
+    wfPlugin::includeonce('datatable/datatable_1_10_18');
+    $datatable = new PluginDatatableDatatable_1_10_18();
+    exit($datatable->set_table_data($temp2));
+  }
+  public function page_public_folder_files_left(){
+    $data = new PluginWfArray();
+    $data->set('to', wfGlobals::getAppDir().'/plugin/'.wfRequest::get('plugin').'/public'.wfRequest::get('name'));
+    $data->set('from', wfGlobals::getWebDir().'/plugin/'.wfRequest::get('plugin').''.wfRequest::get('name'));
+    wfFilesystem::copyFile($data->get('from'), $data->get('to'));
+    exit('ok');
+  }
+  public function page_public_folder_files_delete(){
+    $data = new PluginWfArray();
+    $data->set('left', wfGlobals::getAppDir().'/plugin/'.wfRequest::get('plugin').'/public'.wfRequest::get('name'));
+    $data->set('right', wfGlobals::getWebDir().'/plugin/'.wfRequest::get('plugin').''.wfRequest::get('name'));
+    if(wfFilesystem::fileExist($data->get('left'))){
+      wfFilesystem::delete($data->get('left'));
+    }
+    if(wfFilesystem::fileExist($data->get('right'))){
+      wfFilesystem::delete($data->get('right'));
+    }
+    wfHelp::print($data);
+    exit('ok');
+  }
+  public function page_public_folder_files_right(){
+    $data = new PluginWfArray();
+    $data->set('from', wfGlobals::getAppDir().'/plugin/'.wfRequest::get('plugin').'/public'.wfRequest::get('name'));
+    $data->set('to', wfGlobals::getWebDir().'/plugin/'.wfRequest::get('plugin').''.wfRequest::get('name'));
+    wfFilesystem::copyFile($data->get('from'), $data->get('to'));
+    exit('ok');
   }
   public function page_plugin_theme_usage(){
     $this->setPlugin(array('theme_usage' => true));
@@ -990,96 +1031,10 @@ class PluginPluginAnalysis{
      */
     if($data->get('has_public_folder')){
       if($this->plugin->get('has_public_folder')){
-        $files_right = array();
-        if($this->plugin->get('has_public_folder_twin')){
-          $files_right = $this->scan_dir(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name'));
-          foreach($files_right as $k => $v){
-            $files_right[$k]['right_time'] = wfFilesystem::fileTime(wfGlobals::getWebDir().'/plugin/'.$this->plugin->get('name').$k);
-          }
-        }
-        $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public');
-        foreach($files_left as $k => $v){
-          $files_left[$k]['left_time'] = wfFilesystem::fileTime(wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/public'.$k);
-          $files_left[$k]['left_time_text'] = null;
-          $files_left[$k]['right_time'] = null;
-          $files_left[$k]['right_time_text'] = null;
-          $files_left[$k]['left_is_newer'] = null;
-        }
-        /**
-         * Set right if exist on both.
-         */
-        foreach($files_left as $k => $v){
-          $files_left[$k]['left'] = true;
-          if(isset($files_right[$k])){
-            $files_left[$k]['right'] = true;
-            $files_left[$k]['size_right'] = $files_right[$k]['size'];
-            $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
-          }
-        }
-        /**
-         * Set right if exist on right.
-         */
-        foreach($files_right as $k => $v){
-          if(!isset($files_left[$k])){
-            $files_left[$k]['size_right'] = $files_right[$k]['size'];
-            $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
-            $files_left[$k]['right'] = true;
-            $files_left[$k]['left_time'] = null;
-          }
-        }
-        /**
-         * Set exist.
-         */
-        foreach($files_left as $k => $v){
-          $i = new PluginWfArray($v);
-          if($i->get('left') && $i->get('right')){
-            $files_left[$k]['exist'] = 'both';
-          }elseif($i->get('left')){
-            $files_left[$k]['exist'] = 'left';
-          }elseif($i->get('right')){
-            $files_left[$k]['exist'] = 'right';
-          }
-        }
-        /**
-         * Set size_diff.
-         */
-        foreach($files_left as $k => $v){
-          $i = new PluginWfArray($v);
-          if($i->get('left') && $i->get('right')){
-            if($i->get('size') == $i->get('size_right')){
-              $files_left[$k]['size_diff'] = 'No';
-            }else{
-              $files_left[$k]['size_diff'] = 'Yes';
-            }
-          }else{
-            $files_left[$k]['size_diff'] = '';
-          }
-        }
-        /**
-         * Set name.
-         */
-        foreach($files_left as $k => $v){
-          $files_left[$k]['name'] = $k;
-        }
-        /**
-         * Set time.
-         */
-        foreach($files_left as $k => $v){
-          if($files_left[$k]['left_time']){
-            $files_left[$k]['left_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['left_time']);
-          }
-          if($files_left[$k]['right_time']){
-            $files_left[$k]['right_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['right_time']);
-          }
-          if(
-            $files_left[$k]['left_time'] && 
-            $files_left[$k]['right_time'] && 
-            $files_left[$k]['left_time']>$files_left[$k]['right_time']){
-            $files_left[$k]['left_is_newer'] = 'Yes';
-          }
-        }
+        $files_left = $this->get_public_files($this->plugin->get('name'));
         /**
          * Set data.
+         * (Does we need this any more due to loading data separate in datatable using ajax, 221017?)
          */
         $this->plugin->set('public_folder_files', $files_left);
       }else{
@@ -1247,6 +1202,105 @@ class PluginPluginAnalysis{
      * 
      */
     return null;
+  }
+  private function get_public_files($plugin_name){
+    $has_public_folder_twin = is_dir(wfGlobals::getWebDir().'/plugin/'.$plugin_name);
+    $files_right = array();
+    if($has_public_folder_twin){
+      $files_right = $this->scan_dir(wfGlobals::getWebDir().'/plugin/'.$plugin_name);
+      foreach($files_right as $k => $v){
+        $files_right[$k]['right_time'] = wfFilesystem::fileTime(wfGlobals::getWebDir().'/plugin/'.$plugin_name.$k);
+      }
+    }
+    $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public');
+    foreach($files_left as $k => $v){
+      $files_left[$k]['left_time'] = wfFilesystem::fileTime(wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public'.$k);
+      $files_left[$k]['left_time_text'] = null;
+      $files_left[$k]['right_time'] = null;
+      $files_left[$k]['right_time_text'] = null;
+      $files_left[$k]['left_is_newer'] = null;
+    }
+    /**
+     * Set right if exist on both.
+     */
+    foreach($files_left as $k => $v){
+      $files_left[$k]['left'] = true;
+      if(isset($files_right[$k])){
+        $files_left[$k]['right'] = true;
+        $files_left[$k]['size_right'] = $files_right[$k]['size'];
+        $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
+      }
+    }
+    /**
+     * Set right if exist on right.
+     */
+    foreach($files_right as $k => $v){
+      if(!isset($files_left[$k])){
+        $files_left[$k]['size_right'] = $files_right[$k]['size'];
+        $files_left[$k]['right_time'] = $files_right[$k]['right_time'];
+        $files_left[$k]['right'] = true;
+        $files_left[$k]['left_time'] = null;
+      }
+    }
+    /**
+     * Set exist.
+     */
+    foreach($files_left as $k => $v){
+      $i = new PluginWfArray($v);
+      if($i->get('left') && $i->get('right')){
+        $files_left[$k]['exist'] = 'both';
+      }elseif($i->get('left')){
+        $files_left[$k]['exist'] = 'left';
+        $files_left[$k]['size_right'] = null;
+      }elseif($i->get('right')){
+        $files_left[$k]['exist'] = 'right';
+        $files_left[$k]['size'] = null;
+        $files_left[$k]['left_time_text'] = null;
+        $files_left[$k]['left_is_newer'] = null;
+      }
+    }
+    /**
+     * Set size_diff.
+     */
+    foreach($files_left as $k => $v){
+      $i = new PluginWfArray($v);
+      if($i->get('left') && $i->get('right')){
+        if($i->get('size') == $i->get('size_right')){
+          $files_left[$k]['size_diff'] = 'No';
+        }else{
+          $files_left[$k]['size_diff'] = 'Yes';
+        }
+      }else{
+        $files_left[$k]['size_diff'] = '';
+      }
+    }
+    /**
+     * Set name.
+     */
+    foreach($files_left as $k => $v){
+      $files_left[$k]['name'] = $k;
+    }
+    /**
+     * Set time.
+     */
+    foreach($files_left as $k => $v){
+      if($files_left[$k]['left_time']){
+        $files_left[$k]['left_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['left_time']);
+      }
+      if($files_left[$k]['right_time']){
+        $files_left[$k]['right_time_text'] = date('Y-m-d H:i:s', $files_left[$k]['right_time']);
+      }
+      if(
+        $files_left[$k]['left_time'] && 
+        $files_left[$k]['right_time'] && 
+        $files_left[$k]['left_time']>$files_left[$k]['right_time']){
+        $files_left[$k]['left_is_newer'] = 'Yes';
+      }
+    }
+    /**
+     * 
+     */
+    return $files_left;
   }
   /**
    * Get themes used by a plugin.

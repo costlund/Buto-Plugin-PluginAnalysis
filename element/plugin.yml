@@ -545,6 +545,7 @@
             plugin: wf/table
             method: render_many
             data:
+              id: dt_public_folder_files
               field:
                 name: Name
                 exist: Exist
@@ -554,9 +555,15 @@
                 left_time_text: LTime
                 right_time_text: RTime
                 left_is_newer: LNewer
-              rs: rs:public_folder_files
               datatable:
                 disabled: false
+                ajax: rs:public_folder_files_url
+        -
+          type: script
+          innerHTML: |
+            $('#dt_public_folder_files tbody').on( 'click', 'tr', function () {
+                PluginPluginAnalysis.dt_public_folder_files_row_click( datatable_dt_public_folder_files.row( this ).data() );
+            } );
     -
       type: div
       attribute:
