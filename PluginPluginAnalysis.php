@@ -1212,7 +1212,10 @@ class PluginPluginAnalysis{
         $files_right[$k]['right_time'] = wfFilesystem::fileTime(wfGlobals::getWebDir().'/plugin/'.$plugin_name.$k);
       }
     }
-    $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public');
+    $files_left = array();
+    if(wfFilesystem::fileExist(wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public')){
+      $files_left = $this->scan_dir(wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public');
+    }
     foreach($files_left as $k => $v){
       $files_left[$k]['left_time'] = wfFilesystem::fileTime(wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public'.$k);
       $files_left[$k]['left_time_text'] = null;
