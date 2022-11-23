@@ -249,6 +249,11 @@ class PluginPluginAnalysis{
     wfPlugin::includeonce('wf/table');
     $this->plugin->set('public_folder_files', PluginWfTable::handle_array_keys($this->plugin->get('public_folder_files')));
     /**
+     * readme
+     * Replace in src to be able to display on github.
+     */
+    $this->plugin->set('readme', str_replace('src="public/', 'src="/plugin/'.$this->plugin->get('name').'/', $this->plugin->get('readme')));
+    /**
      * 
      */
     $element->setByTag($this->plugin->get());

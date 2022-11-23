@@ -51,3 +51,11 @@ wfRequest::set('theme', wfGlobals::getTheme());
 ## Cache
 
 Plugin data file (/../buto_data/theme/_theme_/plugin_analysis_plugins.yml) is created when plugin are listed. A button can be used to clear cache in plugin view.
+
+## Readme
+Images to be used in readme.md should be placed in public folder. This will work in this solution and also on Github.com.
+
+````
+![My image](public/image.png)
+````
+
