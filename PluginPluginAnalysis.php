@@ -358,6 +358,11 @@ class PluginPluginAnalysis{
       }
       $temp = array();
       foreach($result->get() as $v){
+        $search = '('.$v['la'].')';
+        if(!strlen($v['value'])){
+          $search .= '(empty)';
+        }
+        $v['search'] = $search;
         $temp[] = $v;
       }
       $result = new PluginWfArray($temp);

@@ -19,6 +19,7 @@
         la: Language
         key: Key
         value: Value
+        search: Search
       rs: rs:data
       datatable:
         disabled: false

@@ -1,9 +1,13 @@
-version: 1.56.0
+version: 1.57.0
 history:
+  1.57.0:
+    date: '2022-12-14'
+    title: I18N
+    description: 'Add search kolumn.'
   1.56.0:
     date: '2022-11-23'
     title: Image
-    description: 'Image support in readme'
+    description: 'Image support in readme.'
   1.55.0:
     date: '2022-10-17'
     title: Public files
