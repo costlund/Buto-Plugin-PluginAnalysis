@@ -1,5 +1,9 @@
-version: 1.58.0
+version: 1.58.1
 history:
+  1.58.1:
+    date: '2023-01-02'
+    title: Versions
+    description: 'Versions update.'
   1.58.0:
     date: '2023-01-02'
     title: Readme
@@ -14,7 +18,7 @@ history:
     description: 'Image support in readme.'
   1.55.0:
     date: '2022-10-17'
-    title: Public files
+    title: 'Public files'
     description: 'One can now click in table and copy to left/right or delete.'
   1.54.3:
     date: '2022-10-13'
@@ -382,35 +386,35 @@ history:
     description: 'Replace param icon_element with icon_path and use PluginImageElement to render image.'
   1.22.0:
     date: '2019-10-09'
-    title: 'Variables'
+    title: Variables
     description: 'Declare variables as public.'
   1.21.0:
     date: '2019-10-09'
-    title: 'Labels'
+    title: Labels
     description: 'Labels improvements.'
   1.20.0:
     date: '2019-09-27'
-    title: 'Widget'
+    title: Widget
     description: 'Search for wfDocument::createWidget on manifest create.'
   1.19.0:
     date: '2019-09-17'
-    title: 'Icons'
+    title: Icons
     description: 'Add icons to table.'
   1.18.0:
     date: '2019-09-10'
-    title: 'Manifest'
+    title: Manifest
     description: 'Support webmaster/element from manifest.yml.'
   1.17.0:
     date: '2019-06-17'
-    title: 'GIT'
+    title: GIT
     description: 'Improved GIT support.'
   1.15.0:
     date: '2019-06-14'
-    title: 'GIT'
+    title: GIT
     description: 'Add more GIT support.'
   1.14.0:
     date: '2019-06-13'
-    title: 'GIT'
+    title: GIT
     description: 'Add GIT support.'
   1.13.0:
     date: '2019-06-08'
@@ -422,11 +426,11 @@ history:
     description: 'Hide public folder items if not needed.'
   1.11.0:
     date: '2019-02-14'
-    title: 'Manifest'
+    title: Manifest
     description: 'Better support for manifest plugins changes.'
   1.10.0:
     date: '2019-02-05'
-    title: 'Create'
+    title: Create
     description: 'Add support for create a plugin.'
   1.9.0:
     date: '2019-02-04'
@@ -434,70 +438,70 @@ history:
     description: 'Add support for copy public folder to web dir.'
   1.8.0:
     date: '2019-02-01'
-    title: 'Js-file'
+    title: Js-file
     description: 'Add support for creating js-file.'
   1.7.0:
     date: '2019-01-30'
-    title: 'Readme'
+    title: Readme
     description: 'Add support for creating README.md.'
   1.6.0:
     date: '2019-01-09'
-    title: 'Data'
+    title: Data
     description: 'Add more data to table Theme usage.'
   1.5.0:
     date: '2019-01-09'
-    title: 'Readme'
+    title: Readme
     description: 'Parse README.md file in view.'
   1.4.0:
     date: '2019-01-09'
-    title: 'Usage'
+    title: Usage
     description: 'Get themes used by a plugin in view.'
   1.3.0:
     date: '2019-01-09'
-    title: 'Exist'
+    title: Exist
     description: 'Warning when plugin not exist.'
   1.2.0:
     date: '2019-01-09'
-    title: 'Filter'
+    title: Filter
     description: 'Now it is possible to filter plugins by theme.'
   1.1.0:
     date: '2019-01-01'
-    title: 'Deprecated'
+    title: Deprecated
     description: 'Add params deprecated and deprecated_description to data.yml.'
   1.0.5:
     date: '2019-01-01'
-    title: 'History'
+    title: History
     description: 'Add date to history.'
   1.0.4:
     date: '2019-01-01'
-    title: 'Links'
+    title: Links
     description: 'Show links in plugin view.'
   1.0.3:
     date: '2019-01-01'
-    title: 'History'
+    title: History
     description: 'Show history in plugin view.'
   1.0.2:
     date: '2019-01-01'
-    title: 'Conflict'
+    title: Conflict
     description: 'Alert conflict in plugin view.'
   1.0.1:
     date: '2019-01-01'
-    title: 'Merge'
+    title: Merge
     description: 'Merge two columns.'
   1.0.0:
     date: '2019-01-01'
-    title: 'First'
+    title: First
     description: 'First version.'
 plugin:
   -
     name: theme/include
-    version: 1.14.3
+    version: 1.16.0
   -
     name: wf/array
     version: 1.2.4
   -
     name: wf/yml
-    version: 1.5.0
+    version: 1.5.1
   -
     name: git/kbjr
     version: 1.6.0
@@ -512,16 +516,16 @@ plugin:
     version: 1.2.3
   -
     name: datatable/datatable_1_10_18
-    version: 1.5.2
+    version: 1.5.4
   -
     name: wf/table
-    version: 1.31.5
+    version: 1.32.1
   -
     name: image/element
     version: '1.2'
   -
     name: form/form_v1
-    version: 1.56.0
+    version: 1.57.1
 sys:
   -
     name: mercury
