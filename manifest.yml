@@ -1,5 +1,9 @@
-version: 1.57.0
+version: 1.58.0
 history:
+  1.58.0:
+    date: '2023-01-02'
+    title: Readme
+    description: 'Replace [version] and [version_date].'
   1.57.0:
     date: '2022-12-14'
     title: I18N

@@ -251,8 +251,11 @@ class PluginPluginAnalysis{
     /**
      * readme
      * Replace in src to be able to display on github.
+     * Replace [version]
      */
     $this->plugin->set('readme', str_replace('src="public/', 'src="/plugin/'.$this->plugin->get('name').'/', $this->plugin->get('readme')));
+    $this->plugin->set('readme', str_replace('[version]', $this->plugin->get('manifest/version'), $this->plugin->get('readme')));
+    $this->plugin->set('readme', str_replace('[version_date]', $this->plugin->get('manifest/history/'.$this->plugin->get('manifest/version').'/date'), $this->plugin->get('readme')));
     /**
      * 
      */
