@@ -1,5 +1,9 @@
-version: 1.59.0
+version: 1.59.1
 history:
+  1.59.1:
+    date: '2023-03-27'
+    title: Versions
+    description: 'Versions update.'
   1.59.0:
     date: '2023-03-27'
     title: Bootstrap
@@ -507,7 +511,7 @@ history:
 plugin:
   -
     name: theme/include
-    version: 1.17.0
+    version: 1.19.0
   -
     name: wf/array
     version: 1.2.4
