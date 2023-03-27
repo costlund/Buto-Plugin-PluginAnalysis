@@ -1,5 +1,9 @@
-version: 1.58.3
+version: 1.59.0
 history:
+  1.59.0:
+    date: '2023-03-27'
+    title: Bootstrap
+    description: 'Using version 5.'
   1.58.3:
     date: '2023-03-22'
     title: Versions

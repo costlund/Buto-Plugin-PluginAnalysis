@@ -24,6 +24,8 @@ content:
                 bootswatch:
                   theme: Cerulean
                 icon: /plugin/plugin/analysis/icon/icon.png
+                bootstrap:
+                  version: 5
           -
             type: style
             innerHTML: pre{background:lightgrey}
