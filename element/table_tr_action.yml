@@ -16,7 +16,7 @@
       attribute:
         type: button
         class: 'btn btn-primary dropdown-toggle'
-        data-toggle: dropdown
+        data-bs-toggle: dropdown
       innerHTML:
         -
           type: span
