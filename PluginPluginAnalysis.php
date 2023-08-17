@@ -37,7 +37,7 @@ class PluginPluginAnalysis{
       /**
        * Layout path.
        */
-      wfArray::set($GLOBALS, 'sys/layout_path', '/plugin/plugin/analysis/layout');
+      wfGlobals::setSys('layout_path', '/plugin/plugin/analysis/layout');
       /**
        * Settings.
        */
@@ -100,7 +100,7 @@ class PluginPluginAnalysis{
         foreach ($item->get('manifest/plugin') as $key2 => $value2) {
           $item2 = new PluginWfArray($value2);
           if($this->plugin->get('name')==$item2->get('name')){
-            $usage[] = array('name' => $item->get('name'), 'icon_path' => $item->get('icon_path'), 'row_click' => "PluginPluginAnalysis.plugin('". str_replace("/", '.', $item->get('name'))."')");
+            $usage[] = array('name' => $item->get('name'), 'icon_path' => $item->get('icon_path'), 'row_click' => "PluginPluginAnalysis.plugin('". wfPhpfunc::str_replace("/", '.', $item->get('name'))."')");
           }
         }
       }
@@ -253,9 +253,9 @@ class PluginPluginAnalysis{
      * Replace in src to be able to display on github.
      * Replace [version]
      */
-    $this->plugin->set('readme', str_replace('src="public/', 'src="/plugin/'.$this->plugin->get('name').'/', $this->plugin->get('readme')));
-    $this->plugin->set('readme', str_replace('[version]', $this->plugin->get('manifest/version'), $this->plugin->get('readme')));
-    $this->plugin->set('readme', str_replace('[version_date]', $this->plugin->get('manifest/history/'.$this->plugin->get('manifest/version').'/date'), $this->plugin->get('readme')));
+    $this->plugin->set('readme', wfPhpfunc::str_replace('src="public/', 'src="/plugin/'.$this->plugin->get('name').'/', $this->plugin->get('readme')));
+    $this->plugin->set('readme', wfPhpfunc::str_replace('[version]', $this->plugin->get('manifest/version'), $this->plugin->get('readme')));
+    $this->plugin->set('readme', wfPhpfunc::str_replace('[version_date]', $this->plugin->get('manifest/history/'.$this->plugin->get('manifest/version').'/date'), $this->plugin->get('readme')));
     /**
      * 
      */
@@ -333,7 +333,7 @@ class PluginPluginAnalysis{
   }
   public function page_i18n(){
     $id = wfRequest::get('id');
-    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
     $i18n_folder = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/i18n';
     $folder_exist = wfFilesystem::fileExist($i18n_folder);
     $result = new PluginWfArray();
@@ -345,7 +345,7 @@ class PluginPluginAnalysis{
       foreach($i18n_files as $v){
         $data = new PluginWfYml($i18n_folder.'/'.$v);
         foreach($data->get() as $k2 => $v2){
-          $result->set(str_replace('.yml', '', $v).'_'.$k2, array('la' => str_replace('.yml', '', $v), 'key' => $k2, 'value' => $v2));
+          $result->set(wfPhpfunc::str_replace('.yml', '', $v).'_'.$k2, array('la' => wfPhpfunc::str_replace('.yml', '', $v), 'key' => $k2, 'value' => $v2));
         }
       }
       /*
@@ -353,8 +353,8 @@ class PluginPluginAnalysis{
        */
       foreach($result->get() as $v){
         foreach($i18n_files as $v2){
-          $la = str_replace('.yml', '', $v2);
-          if( !strstr($la, '_log') && !$result->get($la."_".$v['key']) ){
+          $la = wfPhpfunc::str_replace('.yml', '', $v2);
+          if( !wfPhpfunc::strstr($la, '_log') && !$result->get($la."_".$v['key']) ){
             $result->set($la."_".$v['key'], array('la' => $la, 'key' => $v['key'], 'value' => ''));
           }
         }
@@ -362,7 +362,7 @@ class PluginPluginAnalysis{
       $temp = array();
       foreach($result->get() as $v){
         $search = '('.$v['la'].')';
-        if(!strlen($v['value'])){
+        if(!wfPhpfunc::strlen($v['value'])){
           $search .= '(empty)';
         }
         $v['search'] = $search;
@@ -440,7 +440,7 @@ class PluginPluginAnalysis{
      * 
      */
     if($command){
-      $command = substr($command, 3);
+      $command = wfPhpfunc::substr($command, 3);
     }
     /**
      * 
@@ -497,7 +497,7 @@ class PluginPluginAnalysis{
      * 
      */
     if($command){
-      $command = substr($command, 3);
+      $command = wfPhpfunc::substr($command, 3);
     }
     return new PluginWfArray(array('command' => $command, 'count' => $i));
   }
@@ -544,7 +544,7 @@ class PluginPluginAnalysis{
      * 
      */
     if($command){
-      $command = substr($command, 3);
+      $command = wfPhpfunc::substr($command, 3);
     }
     return new PluginWfArray(array('command' => $command, 'count' => $i));
   }
@@ -608,7 +608,7 @@ class PluginPluginAnalysis{
      * 
      */
     if($command){
-      $command = substr($command, 3);
+      $command = wfPhpfunc::substr($command, 3);
     }
     /**
      * 
@@ -644,7 +644,7 @@ class PluginPluginAnalysis{
     /**
      * 
      */
-    $version_a = ($obj->from_char(str_replace('.', ':', $version), ':'));
+    $version_a = ($obj->from_char(wfPhpfunc::str_replace('.', ':', $version), ':'));
     /**
      * 
      */
@@ -655,7 +655,7 @@ class PluginPluginAnalysis{
       }elseif(sizeof($version_a)==2){
         $version_a[2] = '1';
       }elseif(sizeof($version_a)==1){
-        if(!strlen($version_a[0])){
+        if(!wfPhpfunc::strlen($version_a[0])){
           $version_a[0] = '1';
         }
         $version_a[1] = '0';
@@ -673,7 +673,7 @@ class PluginPluginAnalysis{
     foreach($version_a as $v){
       $version .= '.'.$v;
     }
-    $version = substr($version, 1);
+    $version = wfPhpfunc::substr($version, 1);
     return $version;
   }
   private function update_manifest_versions($plugins_key){
@@ -692,7 +692,7 @@ class PluginPluginAnalysis{
       $manifest->set('history', $this->history_add_version($manifest->get('version'), $manifest->get('history')));
       foreach($this->plugins->get("$plugins_key/manifest/plugin") as $key => $value) {
         $i = new PluginWfArray($value);
-        $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');
+        $version = $this->plugins->get(wfPhpfunc::str_replace('/', '.', $i->get('name')).'/manifest/version');
         $manifest->set("plugin/$key/name", $i->get('name'));
         $manifest->set("plugin/$key/version", $version);
       }
@@ -706,7 +706,7 @@ class PluginPluginAnalysis{
       $manifest->set('history', $this->history_add_version($manifest->get('version'), $manifest->get('history')));
       foreach($this->plugin->get('manifest/plugin') as $key => $value) {
         $i = new PluginWfArray($value);
-        $version = $this->plugins->get(str_replace('/', '.', $i->get('name')).'/manifest/version');
+        $version = $this->plugins->get(wfPhpfunc::str_replace('/', '.', $i->get('name')).'/manifest/version');
         $manifest->set("plugin/$key/name", $i->get('name'));
         $manifest->set("plugin/$key/version", $version);
       }
@@ -717,7 +717,7 @@ class PluginPluginAnalysis{
   public function page_js_include_method(){
     $this->setPlugin();
     $contents = file_get_contents(__DIR__.'/data/js_include_method.php');
-    $contents = str_replace("PluginXxxYyy.js", $this->plugin->get('js_name'), $contents);
+    $contents = wfPhpfunc::str_replace("PluginXxxYyy.js", $this->plugin->get('js_name'), $contents);
     $element = array();
     $element[] = wfDocument::createHtmlElement('pre', $contents);
     wfDocument::renderElement($element);
@@ -754,7 +754,7 @@ class PluginPluginAnalysis{
      */
     if(!$error->get('error')){
       $contents = file_get_contents(__DIR__.'/data/PluginXxxYyy.php');
-      $contents = str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($name), $contents);
+      $contents = wfPhpfunc::str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($name), $contents);
       $filename = wfGlobals::getAppDir().'/plugin/'.$name.'/Plugin'.wfPlugin::to_camel_case($name).'.php';
       wfFilesystem::createFile($filename, $contents);
     }
@@ -784,13 +784,13 @@ class PluginPluginAnalysis{
      * 
      */
     $id = wfRequest::get('id');
-    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
     /**
      * Create copy array.
      */
     $copy = array();
     foreach ($this->plugin->get('files') as $key => $value) {
-      if(substr($key, 0, 8) != '/public/'){
+      if(wfPhpfunc::substr($key, 0, 8) != '/public/'){
         continue;
       }
       $copy[] = array('from' => wfGlobals::getAppDir().'/plugin/'.$plugin_name.$key, 'to' => wfGlobals::getWebDir().'/plugin/'.$plugin_name.substr($key, 7));
@@ -818,9 +818,9 @@ class PluginPluginAnalysis{
      * 
      */
     $id = wfRequest::get('id');
-    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
     $contents = file_get_contents(__DIR__.'/data/PluginXxxYyy.js');
-    $contents = str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($plugin_name), $contents);
+    $contents = wfPhpfunc::str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($plugin_name), $contents);
     $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/public/'.$this->plugin->get('js_name');
     $filename_web = wfGlobals::getWebDir().'/plugin/'.$plugin_name.'/'.$this->plugin->get('js_name');
     wfFilesystem::createFile($filename, $contents);
@@ -839,9 +839,9 @@ class PluginPluginAnalysis{
      * 
      */
     $id = wfRequest::get('id');
-    $plugin_name = str_replace('_A_DOT_', "/", $id);
+    $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
     $contents = file_get_contents(__DIR__.'/data/README.md');
-    $contents = str_replace("# Buto-Plugin-_", "# Buto-Plugin-".wfPlugin::to_camel_case($plugin_name), $contents);
+    $contents = wfPhpfunc::str_replace("# Buto-Plugin-_", "# Buto-Plugin-".wfPlugin::to_camel_case($plugin_name), $contents);
     $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/README.md';
     file_put_contents($filename, $contents);
     exit("File $filename was created!");
@@ -858,11 +858,11 @@ class PluginPluginAnalysis{
        * 
        */
       $id = wfRequest::get('id');
-      $plugin_name = str_replace('_A_DOT_', "/", $id);
+      $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
       $this->set_search_plugin($plugin_name);
       $temp = array();
       foreach ($this->plugin_search as $key => $value) {
-        $version = $this->plugins->get(str_replace("/", '.', $value[3]).'/version_manifest');
+        $version = $this->plugins->get(wfPhpfunc::str_replace("/", '.', $value[3]).'/version_manifest');
         if(is_null($version)){
           $version = '1.0.0';
         }
@@ -916,26 +916,26 @@ class PluginPluginAnalysis{
      */
     $pos1 = 0;
     $pos2 = 0;
-    $length = strlen($content);
+    $length = wfPhpfunc::strlen($content);
     for($i=0;$i<1000;$i++){
       $pos1 = strpos($content, $needle, $pos1+1);
       $pos2 = strpos($content, ')', $pos1+1);
       if($pos1===false){
         break;
       }
-      $plugin = substr($content, $pos1+strlen($needle), $pos2-$pos1-strlen($needle));
-      $plugin = str_replace("'", '', $plugin);
-      $plugin = str_replace('"', '', $plugin);
+      $plugin = wfPhpfunc::substr($content, $pos1+strlen($needle), $pos2-$pos1-strlen($needle));
+      $plugin = wfPhpfunc::str_replace("'", '', $plugin);
+      $plugin = wfPhpfunc::str_replace('"', '', $plugin);
       /**
        * Fix if wfDocument::createWidget(.
        */
-      if(strstr($plugin, ',')){
-        $plugin = substr($plugin, 0, strpos($plugin, ','));
+      if(wfPhpfunc::strstr($plugin, ',')){
+        $plugin = wfPhpfunc::substr($plugin, 0, strpos($plugin, ','));
       }
       /**
        *
        */
-      if(!strstr($plugin, '$')){
+      if(!wfPhpfunc::strstr($plugin, '$')){
         $this->plugin_search[] = array($needle, $pos1, $pos2, $plugin);
       }
     }
@@ -1032,7 +1032,7 @@ class PluginPluginAnalysis{
   private function setPlugin($data = array('has_public_folder' => true, 'has_manifest' => true, 'manifest_plugin' => true, 'theme_usage' => false, 'readme' => true, 'js' => true)){
     $data = new PluginWfArray($data);
     $id = wfRequest::get('id');
-    $id = str_replace('_A_DOT_', '.', $id);
+    $id = wfPhpfunc::str_replace('_A_DOT_', '.', $id);
     if(!wfRequest::get('cc')){
       $this->setPlugins(true);
     }else{
@@ -1068,7 +1068,7 @@ class PluginPluginAnalysis{
            *
            */
           foreach ($this->plugin->get('manifest/plugin') as $k => $v) {
-            $v['id_dot'] = str_replace('/', '.', $v['name']);
+            $v['id_dot'] = wfPhpfunc::str_replace('/', '.', $v['name']);
             $this->plugin->set("manifest/plugin/$k/find", 'M');
             $this->plugin->set("manifest/plugin/$k/icon_path", $this->plugins->get($v['id_dot']."/icon_path"));
           }
@@ -1174,7 +1174,7 @@ class PluginPluginAnalysis{
         $string_array = new PluginStringArray();
         $readme_links = null;
         foreach($string_array->from_br($readme) as $k => $v){
-          if(substr($v, 0, 1)=='#'){
+          if(wfPhpfunc::substr($v, 0, 1)=='#'){
             $readme_links .= '<a href="#anchor_'.$k.'">'.str_replace('#', '&nbsp;', $v).'</a><br>';
             $v .= '<a id="anchor_'.$k.'"></a>';
           }
@@ -1324,7 +1324,7 @@ class PluginPluginAnalysis{
    * @return array
    */
   private function getThemesUsingPlugin($plugin){
-    $plugin = str_replace('/', '.', $plugin);
+    $plugin = wfPhpfunc::str_replace('/', '.', $plugin);
     $theme = $this->getTheme();
     wfPlugin::includeonce('theme/analysis');
     $theme_usage = array();
@@ -1345,7 +1345,7 @@ class PluginPluginAnalysis{
     $files=array();
     foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $startfolder, RecursiveDirectoryIterator::KEY_AS_PATHNAME ), RecursiveIteratorIterator::CHILD_FIRST ) as $file => $info ) {
         if( $info->isFile() && $info->isReadable() ){
-            $files[substr($info->getPathname(), strlen($dir))]=array('size'=> filesize($info->getPathname()) );
+            $files[substr($info->getPathname(), wfPhpfunc::strlen($dir))]=array('size'=> filesize($info->getPathname()) );
         }
     }
     return $files;
@@ -1393,8 +1393,8 @@ class PluginPluginAnalysis{
     /**
      * 
      */
-    $v1_a = ($obj->from_char(str_replace('.', ':', $v1), ':'));
-    $v2_a = ($obj->from_char(str_replace('.', ':', $v2), ':'));
+    $v1_a = ($obj->from_char(wfPhpfunc::str_replace('.', ':', $v1), ':'));
+    $v2_a = ($obj->from_char(wfPhpfunc::str_replace('.', ':', $v2), ':'));
     $match = false;
     /**
      * Versions should have like 1.2 or 1.2.3 to be compared.
@@ -1443,7 +1443,7 @@ class PluginPluginAnalysis{
     wfPlugin::includeonce('git/kbjr');
     $git = new PluginGitKbjr();
     foreach ($plugin_array as $key => $value) {
-      $value_dot = str_replace('/', '.', $value);
+      $value_dot = wfPhpfunc::str_replace('/', '.', $value);
       $plugin->set($value_dot.'/name', $value);
       $plugin->set($value_dot.'/exist', true);
       /**
@@ -1464,15 +1464,15 @@ class PluginPluginAnalysis{
           /**
            * 
            */
-          if(strstr($git->status(), 'Your branch is behind')){
+          if(wfPhpfunc::strstr($git->status(), 'Your branch is behind')){
             $plugin->set($value_dot.'/git/has', 'Yes (behind)');
-          }elseif(strstr($git->status(), 'Your branch is ahead of')){
+          }elseif(wfPhpfunc::strstr($git->status(), 'Your branch is ahead of')){
             $plugin->set($value_dot.'/git/has', 'Yes (ahead)');
-          }elseif(strstr($git->status(), 'but the upstream is gone')){
+          }elseif(wfPhpfunc::strstr($git->status(), 'but the upstream is gone')){
             $plugin->set($value_dot.'/git/has', 'Yes (upstream)');
-          }elseif(strstr($git->status(), 'have diverged')){
+          }elseif(wfPhpfunc::strstr($git->status(), 'have diverged')){
             $plugin->set($value_dot.'/git/has', 'Yes (diverged)');
-          }elseif(strstr($git->status(), 'nothing to commit, working tree clean')){
+          }elseif(wfPhpfunc::strstr($git->status(), 'nothing to commit, working tree clean')){
             $plugin->set($value_dot.'/git/has', 'Yes');
           }else{
             $plugin->set($value_dot.'/git/has', 'Yes (changes)');
@@ -1564,7 +1564,7 @@ class PluginPluginAnalysis{
           /**
            * version_manifest
            */
-          $version_manifest = $this->plugins->get(str_replace('/', '.', $plugin->get('name'))."/version_manifest");
+          $version_manifest = $this->plugins->get(wfPhpfunc::str_replace('/', '.', $plugin->get('name'))."/version_manifest");
           $star = null;
           if(!$this->version_compare($version_manifest, $plugin->get('version'))){
             $star = '*';
@@ -1577,7 +1577,7 @@ class PluginPluginAnalysis{
       }
       $this->plugins->set("$key/conflict", $conflict);
       $this->plugins->set("$key/id", $key);
-      $this->plugins->set("$key/url_id", str_replace('.', '_A_DOT_', $key));
+      $this->plugins->set("$key/url_id", wfPhpfunc::str_replace('.', '_A_DOT_', $key));
     }
     /**
      * Cache save
@@ -1601,7 +1601,7 @@ class PluginPluginAnalysis{
       if(is_array($manifest->get('plugin'))){
         foreach ($manifest->get('plugin') as $key2 => $value2) {
           $item = new PluginWfArray($value2);
-          $this->plugins->set(str_replace('/', '.', $value2['name']).'/name', $value2['name']);
+          $this->plugins->set(wfPhpfunc::str_replace('/', '.', $value2['name']).'/name', $value2['name']);
         }
       }
       /**
@@ -1646,7 +1646,7 @@ class PluginPluginAnalysis{
     $status2 = $sa->from_br($status);
     $status3 = null;
     foreach($status2 as $v){
-      if(substr($v, 1, 12)=='modified:   '){
+      if(wfPhpfunc::substr($v, 1, 12)=='modified:   '){
         $status3 .= '<a href="#" onclick="PluginPluginAnalysis.git_diff(this)" data-file="'.substr($v, 13).'" data-id="'.wfRequest::get('plugin').'">'.$v."</a>\n";
       }else{
         $status3 .= $v."\n";
@@ -1706,9 +1706,9 @@ class PluginPluginAnalysis{
     $diff2 = $sa->from_br($diff);
     $diff3 = null;
     foreach($diff2 as $v){
-      if(substr($v, 0, 1)=='+'){
+      if(wfPhpfunc::substr($v, 0, 1)=='+'){
         $diff3 .= '<span style="color:green">'.$v."</span>\n";
-      }elseif(substr($v, 0, 1)=='-'){
+      }elseif(wfPhpfunc::substr($v, 0, 1)=='-'){
         $diff3 .= '<span style="color:red">'.$v."</span>\n";
       }else{
         $diff3 .= $v."\n";
@@ -1718,12 +1718,12 @@ class PluginPluginAnalysis{
     wfDocument::renderElement(array($element));
   }
   private function replace_a_dot_to_slash($str){
-    $str = str_replace('_A_DOT_', "/", $str);
-    $str = str_replace('.', "/", $str);
+    $str = wfPhpfunc::str_replace('_A_DOT_', "/", $str);
+    $str = wfPhpfunc::str_replace('.', "/", $str);
     return $str;
   }
   private function replace_slash_to_dot($str){
-    $str = str_replace('/', ".", $str);
+    $str = wfPhpfunc::str_replace('/', ".", $str);
     return $str;
   }
 }
