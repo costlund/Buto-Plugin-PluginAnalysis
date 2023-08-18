@@ -35,6 +35,9 @@
                 text: Update versions
                 onclick: "PluginPluginAnalysis.versions_update_all(this);"
               -
+                text: Manifest history
+                onclick: "PluginPluginAnalysis.manifest_history_form(this);"
+              -
                 text: Git Push (ahead)
                 onclick: "PluginPluginAnalysis.git_push_ahead(this);"
               -

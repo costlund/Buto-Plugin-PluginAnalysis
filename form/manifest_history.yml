@@ -1,0 +1,39 @@
+url: /plugin_analysis/manifest_history_capture
+ajax: true
+submit_value: Save
+id: form_history
+focus_first_element: true
+items:
+  version_type:
+    type: varchar
+    label: Version type
+    mandatory: true
+    option:
+      '': ''
+      'Minor': 'Minor (1.0.0 to 1.0.1)'
+      'Major': 'Major (1.0.0 to 1.1.0)'
+  date:
+    type: date
+    label: Date
+    mandatory: true
+  title:
+    type: varchar
+    label: Title
+    placeholder: 'Text (1-255)'
+    mandatory: true
+  description:
+    type: text
+    label: Description
+    mandatory: true
+  webmaster:
+    type: text
+    label: Webmaster
+capture:
+  plugin: plugin/analysis
+  method: manifest_history_capture
+elements_before:
+  -
+    type: div
+    attribute: 
+      class: alert alert-info
+    innerHTML: 'This is added to plugins where GIT is "Yes (changed)" only!'

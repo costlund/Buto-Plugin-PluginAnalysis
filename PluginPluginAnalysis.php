@@ -434,7 +434,9 @@ class PluginPluginAnalysis{
       $command .= '&& pwd ';
       $command .= '&& git add . ';
       $command .= '&& git commit -m "'.$v['version_manifest'].'" ';
-      $command .= '&& git push ';
+      if($this->git_has_url_origin($v)){
+        $command .= '&& git push ';
+      }
     }
     /**
      * 
@@ -458,6 +460,13 @@ class PluginPluginAnalysis{
      */
     wfHelp::textarea_dump($result->get('command'));
     exit("Git (changed) done (".$result->get('count').")!");
+  }
+  private function git_has_url_origin($v){
+    if(isset($v['git']['remote_get_url_origin']) && $v['git']['remote_get_url_origin']){
+      return true;
+    }else{
+      return false;
+    }
   }
   private function get_git_push_ahead($type, $action = 'command'){
     /**
@@ -487,7 +496,10 @@ class PluginPluginAnalysis{
         }
       }else{
         if($type=='ahead'){
-          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd && git push ';
+          $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd ';
+          if($this->git_has_url_origin($v)){
+            $command .= '&& git push ';
+          }
         }elseif($type=='behind'){
           $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd && git pull ';
         }
@@ -561,14 +573,39 @@ class PluginPluginAnalysis{
     $element->setByTag(array('command' => $result->get('command'), 'count' => $result->get('count')));
     wfDocument::renderElement($element);
   }
-  private function history_add_version($version, $history){
-    $new = array($version => array('date' => date('Y-m-d'), 'title' => 'Versions', 'description' => 'Versions update.'));
+  private function history_add_version($version, $history, $title = 'Versions', $description = 'Versions update.', $webmaster = ''){
+    $new = array($version => array('date' => date('Y-m-d'), 'title' => $title, 'description' => $description));
+    if($webmaster){
+      $new[$version]['webmaster'] = $webmaster;
+    }
     if($history){
       $history = array_merge($new, $history);
     }else{
       $history = $new;
     }
     return $history;
+  }
+  public function page_manifest_history_form(){
+    wfDocument::renderElementFromFolder(__DIR__, __FUNCTION__);
+  }
+  public function page_manifest_history_capture(){
+    wfDocument::renderElementFromFolder(__DIR__, __FUNCTION__);
+  }
+  public function manifest_history_capture(){
+    $this->setPlugins();
+    $temp = new PluginWfArray();
+    foreach($this->plugins->get() as $k => $v){
+      if($this->plugins->get("$k/git/has")=='Yes (changes)'){
+        $temp->set($k, $v);
+      }
+    }
+    $str = '';
+    foreach($temp->get() as $k => $v){
+      $str .= ','.$k;
+      $this->update_manifest_history($k);
+    }
+    $str = substr($str, 1);
+    return array("alert('". sizeof($temp->get()) ." plugins was updated ($str)!')");
   }
   public function page_versions_update_all(){
     /**
@@ -602,8 +639,11 @@ class PluginPluginAnalysis{
        */
       $manifest = $this->update_manifest_versions($k);
       $this->git_run($k, $manifest->get('version'));
-      $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd && git push ';
-    }
+      $command .= '&& cd '.wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$k/name").' && pwd ';
+      if($this->git_has_url_origin($v)){
+        $command .= '&& git push ';
+      }
+}
     /**
      * 
      */
@@ -675,6 +715,20 @@ class PluginPluginAnalysis{
     }
     $version = wfPhpfunc::substr($version, 1);
     return $version;
+  }
+  private function update_manifest_history($plugins_key){
+    /**
+     * Get plugin manifest.
+     */
+    $manifest = new PluginWfYml(wfGlobals::getAppDir().'/plugin/'.$this->plugins->get("$plugins_key/name").'/manifest.yml');
+    if(wfRequest::get('version_type')=='Minor'){
+      $manifest->set('version', $this->version_upgrade($manifest->get('version')));
+    }else{
+      $manifest->set('version', $this->version_upgrade($manifest->get('version'), true));
+    }
+    $manifest->set('history', $this->history_add_version($manifest->get('version'), $manifest->get('history'), wfRequest::get('title'), wfRequest::get('description'), wfRequest::get('webmaster')));
+    $manifest->save();
+    return null;
   }
   private function update_manifest_versions($plugins_key){
     /**

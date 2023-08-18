@@ -115,6 +115,9 @@ function PluginPluginAnalysis(){
   this.versions_update_all = function(btn){
     PluginWfBootstrapjs.modal({id: 'modal_versions_update_all', label: 'Update versions', url: '/plugin_analysis/versions_update_all'});
   }
+  this.manifest_history_form = function(btn){
+    PluginWfBootstrapjs.modal({id: 'modal_manifest_history_form', label: btn.innerHTML, url: '/plugin_analysis/manifest_history_form'});
+  }
   this.git_push_ahead = function(btn, action){
     /**
      * 
