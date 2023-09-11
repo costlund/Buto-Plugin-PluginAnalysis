@@ -197,39 +197,21 @@ function PluginPluginAnalysis(){
   }
   this.dt_public_folder_files_row_click_left = function(){
     $.getJSON( "/plugin_analysis/public_folder_files_left?"+$.param(this.dt_public_folder_files_data), function( data ) {
-      if(data.success){
-        console.log(data);
-        $('#modal_public_folder_files_one').modal('hide');
-      }else{
-        alert(data.error);
-      }
+      $('#modal_public_folder_files_one').modal('hide');
     });
-    return null;
   }
   this.dt_public_folder_files_row_click_delete = function(){
     if(!confirm('Are you sure to DELETE?')){
       return null;
     }
     $.getJSON( "/plugin_analysis/public_folder_files_delete?"+$.param(this.dt_public_folder_files_data), function( data ) {
-      if(data.success){
-        console.log(data);
-        $('#modal_public_folder_files_one').modal('hide');
-      }else{
-        alert(data.error);
-      }
+      $('#modal_public_folder_files_one').modal('hide');
     });
-    return null;
   }
   this.dt_public_folder_files_row_click_right = function(){
     $.getJSON( "/plugin_analysis/public_folder_files_right?"+$.param(this.dt_public_folder_files_data), function( data ) {
-      if(data.success){
-        console.log(data);
-        $('#modal_public_folder_files_one').modal('hide');
-      }else{
-        alert(data.error);
-      }
+      $('#modal_public_folder_files_one').modal('hide');
     });
-    return null;
   }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

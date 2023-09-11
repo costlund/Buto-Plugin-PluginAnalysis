@@ -303,7 +303,7 @@ class PluginPluginAnalysis{
     $data->set('to', wfGlobals::getAppDir().'/plugin/'.wfRequest::get('plugin').'/public'.wfRequest::get('name'));
     $data->set('from', wfGlobals::getWebDir().'/plugin/'.wfRequest::get('plugin').''.wfRequest::get('name'));
     wfFilesystem::copyFile($data->get('from'), $data->get('to'));
-    exit('ok');
+    exit(json_encode(wfRequest::getAll()));
   }
   public function page_public_folder_files_delete(){
     $data = new PluginWfArray();
@@ -315,15 +315,14 @@ class PluginPluginAnalysis{
     if(wfFilesystem::fileExist($data->get('right'))){
       wfFilesystem::delete($data->get('right'));
     }
-    wfHelp::print($data);
-    exit('ok');
+    exit(json_encode(wfRequest::getAll()));
   }
   public function page_public_folder_files_right(){
     $data = new PluginWfArray();
     $data->set('from', wfGlobals::getAppDir().'/plugin/'.wfRequest::get('plugin').'/public'.wfRequest::get('name'));
     $data->set('to', wfGlobals::getWebDir().'/plugin/'.wfRequest::get('plugin').''.wfRequest::get('name'));
     wfFilesystem::copyFile($data->get('from'), $data->get('to'));
-    exit('ok');
+    exit(json_encode(wfRequest::getAll()));
   }
   public function page_plugin_theme_usage(){
     $this->setPlugin(array('theme_usage' => true));
