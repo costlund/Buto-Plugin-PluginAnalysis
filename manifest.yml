@@ -1,8 +1,12 @@
-version: 1.62.2
+version: 1.62.3
 history:
+  1.62.3:
+    date: '2023-09-27'
+    title: Versions
+    description: 'Versions update.'
   1.62.2:
     date: '2023-09-11'
-    title: Public files
+    title: 'Public files'
     description: 'Improvements in public files handling.'
   1.62.1:
     date: '2023-09-11'
@@ -539,13 +543,13 @@ history:
 plugin:
   -
     name: theme/include
-    version: 1.20.4
+    version: 1.21.0
   -
     name: wf/array
-    version: 1.5.0
+    version: 1.5.1
   -
     name: wf/yml
-    version: 1.8.0
+    version: 1.8.1
   -
     name: git/kbjr
     version: 1.7.0
@@ -557,19 +561,19 @@ plugin:
     version: 1.4.0
   -
     name: theme/analysis
-    version: 1.3.0
+    version: 1.3.1
   -
     name: datatable/datatable_1_10_18
-    version: 1.6.1
+    version: 1.6.2
   -
     name: wf/table
-    version: 1.35.0
+    version: 1.35.1
   -
     name: image/element
-    version: 1.3.0
+    version: 1.3.1
   -
     name: form/form_v1
-    version: 1.64.0
+    version: 1.64.2
 sys:
   -
     name: mercury
