@@ -5,15 +5,15 @@
   innerHTML:
     -
       type: div
-      settings:
-        enabled: stat:conflict
       attribute:
-        class: col-md-3
+        class: col-md-12 mb-2
       innerHTML:
         -
-          type: div
+          type: span
+          settings:
+            enabled: stat:conflict
           attribute:
-            class: alert alert-info
+            class: badge bg-info
           innerHTML:
             -
               type: strong
@@ -21,17 +21,12 @@
             -
               type: span
               innerHTML: stat:conflict
-    -
-      type: div
-      settings:
-        enabled: stat:has_public_folder_text_yes_star
-      attribute:
-        class: col-md-3
-      innerHTML:
         -
-          type: div
+          type: span
+          settings:
+            enabled: stat:has_public_folder_text_yes_star
           attribute:
-            class: alert alert-warning
+            class: badge bg-warning
           innerHTML:
             -
               type: strong
@@ -39,17 +34,12 @@
             -
               type: span
               innerHTML: stat:has_public_folder_text_yes_star
-    -
-      type: div
-      settings:
-        enabled: 'stat:git_has_Yes (changes)'
-      attribute:
-        class: col-md-3
-      innerHTML:
         -
-          type: div
+          type: span
+          settings:
+            enabled: 'stat:git_has_Yes (changes)'
           attribute:
-            class: alert alert-success
+            class: badge bg-success
           innerHTML:
             -
               type: strong
@@ -57,17 +47,12 @@
             -
               type: span
               innerHTML: 'stat:git_has_Yes (changes)'
-    -
-      type: div
-      settings:
-        enabled: 'stat:git_has_Yes (behind)'
-      attribute:
-        class: col-md-3
-      innerHTML:
         -
-          type: div
+          type: span
+          settings:
+            enabled: 'stat:git_has_Yes (behind)'
           attribute:
-            class: alert alert-success
+            class: badge bg-success
           innerHTML:
             -
               type: strong
@@ -75,17 +60,12 @@
             -
               type: span
               innerHTML: 'stat:git_has_Yes (behind)'
-    -
-      type: div
-      settings:
-        enabled: 'stat:git_has_Yes (ahead)'
-      attribute:
-        class: col-md-3
-      innerHTML:
         -
-          type: div
+          type: span
+          settings:
+            enabled: 'stat:git_has_Yes (ahead)'
           attribute:
-            class: alert alert-success
+            class: badge bg-success
           innerHTML:
             -
               type: strong
@@ -93,17 +73,12 @@
             -
               type: span
               innerHTML: 'stat:git_has_Yes (ahead)'
-    -
-      type: div
-      settings:
-        enabled: 'stat:git_has_Yes (diverged)'
-      attribute:
-        class: col-md-3
-      innerHTML:
         -
-          type: div
+          type: span
+          settings:
+            enabled: 'stat:git_has_Yes (diverged)'
           attribute:
-            class: alert alert-warning
+            class: badge bg-warning
           innerHTML:
             -
               type: strong
@@ -111,17 +86,12 @@
             -
               type: span
               innerHTML: 'stat:git_has_Yes (diverged)'
-    -
-      type: div
-      settings:
-        enabled: 'stat:not_exist'
-      attribute:
-        class: col-md-3
-      innerHTML:
         -
-          type: div
+          type: span
+          settings:
+            enabled: 'stat:not_exist'
           attribute:
-            class: alert alert-warning
+            class: badge bg-warning
           innerHTML:
             -
               type: strong

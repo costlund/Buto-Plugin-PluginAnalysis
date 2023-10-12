@@ -1,5 +1,9 @@
-version: 1.62.3
+version: 1.62.4
 history:
+  1.62.4:
+    date: '2023-10-12'
+    title: Warnings
+    description: 'Change warnings from alerts to badges to save space.'
   1.62.3:
     date: '2023-09-27'
     title: Versions
