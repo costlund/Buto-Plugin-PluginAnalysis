@@ -4,15 +4,17 @@
     plugin: 'bootstrap/navbar_v1'
     method: navbar
     data:
-      brand_href: '#'
-      brand:
-        -
-          type: img
-          attribute:
-            src: /plugin/plugin/analysis/icon/icon.png
-            style:
-              width: 24px
-              margin-top: -5px
+      navbar_theme: light
+      bg: none
+      # brand_href: '#'
+      # brand:
+      #   -
+      #     type: img
+      #     attribute:
+      #       src: /plugin/plugin/analysis/icon/icon.png
+      #       style:
+      #         width: 24px
+      #         margin-top: -5px
       navbar:
         id: navbar_plugin_analysis
         item:

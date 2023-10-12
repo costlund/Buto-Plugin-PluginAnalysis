@@ -1,5 +1,9 @@
-version: 1.62.4
+version: 1.62.5
 history:
+  1.62.5:
+    date: '2023-10-12'
+    title: Icon
+    description: 'Move icon upp to left of headline. Remove background from navbar.'
   1.62.4:
     date: '2023-10-12'
     title: Warnings
