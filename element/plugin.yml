@@ -412,37 +412,8 @@
         id: tab_readme
         class: plugin_bootstrap_navtabs_content
         style: 'display:none'
+        data-url: rs:readme_url
       innerHTML:
-        -
-          type: p
-          innerHTML:
-            -
-              type: a
-              attribute:
-                classzzz: 'btn btn-secondary btn-sm'
-                style:
-                  float: right
-                data-bs-toggle: collapse
-                data-bs-target: '#collapse_tree'
-                aria-expanded: 'false'
-                aria-controls: collapse_tree
-              innerHTML: 'Tree'
-        -
-          type: div
-          attribute:
-            class: collapse
-            id: collapse_tree
-          innerHTML:
-            -
-              type: div
-              attribute:
-                style:
-                  font-family: courier new
-                  font-size: smaller
-              innerHTML: rs:readme_links
-        -
-          type: div
-          innerHTML: rs:readme
     -
       type: div
       attribute:

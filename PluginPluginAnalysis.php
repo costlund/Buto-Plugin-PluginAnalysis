@@ -282,6 +282,7 @@ class PluginPluginAnalysis{
     $element->setByTag(array('links' => $this->getLinks(), 'has_links' => sizeof($links)));
     $element->setByTag(array('theme_usage_url' => '/plugin_analysis/plugin_theme_usage/id/'.wfRequest::get('id')));
     $element->setByTag(array('i18n_url' => '/plugin_analysis/i18n/id/'.wfRequest::get('id')));
+    $element->setByTag(array('readme_url' => '/plugin_analysis/readme/id/'.wfRequest::get('id')));
     $element->setByTag(array('public_folder_files_url' => '/plugin_analysis/public_folder_files/id/'.wfRequest::get('id')));
     wfDocument::renderElement($element->get());
   }
@@ -375,6 +376,59 @@ class PluginPluginAnalysis{
     $element->setByTag(array('title' => 'i18n_'.$id));
     $element->setByTag(array('id' => $id));
     wfDocument::renderElement($element->get());
+  }
+  public function page_readme(){
+    $id = wfRequest::get('id');
+    $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
+    $data = new PluginWfArray();
+    $data->set('file_yml', wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.yml');
+    $data->set('file_yml_exist', wfFilesystem::fileExist($data->get('file_yml')));
+    $data->set('file_md', wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.md');
+    $data->set('file_md_exist', wfFilesystem::fileExist($data->get('file_md')));
+    if(!$data->get('file_md_exist')){
+      $data->set('file_md', wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/README.md');
+      $data->set('file_md_exist', wfFilesystem::fileExist($data->get('file_md')));
+    }
+    $data->set('file_yml_relative', '/plugin/'.$plugin_name.'/readme.yml');
+    $data->set('file_md_relative', '/plugin/'.$plugin_name.'/README.md');
+    /**
+     * 
+     */
+    if($data->get('file_yml_exist')){
+      /**¨
+       * 
+       */
+    }elseif(!$data->get('file_yml_exist') && $data->get('file_md_exist')){
+      /**
+       * 
+       */
+      $readme = file_get_contents($data->get('file_md'));
+      $readme2 = null;
+      /**
+       * 
+       */
+      wfPlugin::includeonce('string/array');
+      $string_array = new PluginStringArray();
+      $readme_links = null;
+      foreach($string_array->from_br($readme) as $k => $v){
+        if(wfPhpfunc::substr($v, 0, 1)=='#'){
+          $readme_links .= '<a href="#anchor_'.$k.'">'.str_replace('#', '&nbsp;', $v).'</a><br>';
+          $v .= '<a id="anchor_'.$k.'"></a>';
+        }
+        $readme2 .= $v."\n";
+      }
+      /**
+       * 
+       */
+      wfPlugin::includeonce('readme/parser');
+      $parser = new PluginReadmeParser();
+      $readme2 = $parser->parse_text($readme2);
+      $data->set('md_content', $readme2);
+      $data->set('md_content_links', $readme_links);
+    }
+    $element = wfDocument::getElementFromFolder(__DIR__, __FUNCTION__);
+    $element->setByTag($data->get());
+    wfDocument::renderElement($element);
   }
   public function page_i18n_form(){
     wfPlugin::enable('form/form_v1');
@@ -893,10 +947,23 @@ class PluginPluginAnalysis{
      */
     $id = wfRequest::get('id');
     $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
+    /**
+     * README.md
+     */
     $contents = file_get_contents(__DIR__.'/data/README.md');
     $contents = wfPhpfunc::str_replace("# Buto-Plugin-_", "# Buto-Plugin-".wfPlugin::to_camel_case($plugin_name), $contents);
     $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/README.md';
     file_put_contents($filename, $contents);
+    /**
+     * readme.yml
+     */
+    $contents = file_get_contents(__DIR__.'/data/readme.yml');
+    $contents = wfPhpfunc::str_replace("Buto-Plugin-_", "Buto-Plugin-".wfPlugin::to_camel_case($plugin_name), $contents);
+    $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.yml';
+    file_put_contents($filename, $contents);
+    /**
+     * 
+     */
     exit("File $filename was created!");
   }
   public function page_manifest_create(){
@@ -1205,49 +1272,8 @@ class PluginPluginAnalysis{
     /**
      * 5. readme
      * Get README.md content.
+     * Loading in own page since 231218.
      */
-    if($data->get('readme')){
-      $readme = null;
-      $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/readme.md';
-      $exist = wfFilesystem::fileExist($file);
-      if(!$exist){
-        $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/README.md';
-        $exist = wfFilesystem::fileExist($file);
-      }
-      if($exist){
-        /**
-         * 
-         */
-        $readme = file_get_contents($file);
-        $readme2 = null;
-        /**
-         * 
-         */
-        wfPlugin::includeonce('string/array');
-        $string_array = new PluginStringArray();
-        $readme_links = null;
-        foreach($string_array->from_br($readme) as $k => $v){
-          if(wfPhpfunc::substr($v, 0, 1)=='#'){
-            $readme_links .= '<a href="#anchor_'.$k.'">'.str_replace('#', '&nbsp;', $v).'</a><br>';
-            $v .= '<a id="anchor_'.$k.'"></a>';
-          }
-          $readme2 .= $v."\n";
-        }
-        /**
-         * 
-         */
-        wfPlugin::includeonce('readme/parser');
-        $parser = new PluginReadmeParser();
-        $readme2 = $parser->parse_text($readme2);
-        $this->plugin->set('readme', $readme2);
-        $this->plugin->set('has_readme', 'Yes');
-        $this->plugin->set('readme_links', $readme_links);
-      }else{
-        $this->plugin->set('readme', $readme);
-        $this->plugin->set('has_readme', 'No');
-        $this->plugin->set('readme_links', null);
-      }
-    }
     /**
      * 6. js
      * Get Js.

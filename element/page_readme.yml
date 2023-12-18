@@ -1,0 +1,47 @@
+-
+  type: div
+  settings:
+    enabled: rs:file_yml_exist
+  innerHTML:
+    -
+      type: widget
+      data:
+        plugin: readme/yml
+        method: parse
+        data:
+          file: rs:file_yml_relative
+          save: rs:file_md_relative
+-
+  type: div
+  settings:
+    disabled: rs:file_yml_exist
+  innerHTML:
+    -
+      type: p
+      innerHTML:
+        -
+          type: a
+          attribute:
+            style:
+              float: right
+            data-bs-toggle: collapse
+            data-bs-target: '#collapse_tree'
+            aria-expanded: 'false'
+            aria-controls: collapse_tree
+          innerHTML: 'Tree'
+    -
+      type: div
+      attribute:
+        class: collapse
+        id: collapse_tree
+      innerHTML:
+        -
+          type: div
+          attribute:
+            style:
+              font-family: courier new
+              font-size: smaller
+          innerHTML: rs:md_content_links
+    -
+      type: div
+      innerHTML: rs:md_content
