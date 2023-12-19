@@ -1,5 +1,9 @@
-version: 1.62.6
+version: 1.62.7
 history:
+  1.62.7:
+    date: '2023-12-19'
+    title: Readme
+    description: 'Add back readme variables.'
   1.62.6:
     date: '2023-12-18'
     title: Readme

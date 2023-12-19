@@ -1271,9 +1271,23 @@ class PluginPluginAnalysis{
     }
     /**
      * 5. readme
-     * Get README.md content.
      * Loading in own page since 231218.
      */
+     if($data->get('readme')){
+      $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/readme.md';
+      $exist = wfFilesystem::fileExist($file);
+      if(!$exist){
+        $file = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/README.md';
+        $exist = wfFilesystem::fileExist($file);
+      }
+      if($exist){
+        $this->plugin->set('readme', true);
+        $this->plugin->set('has_readme', 'Yes');
+      }else{
+        $this->plugin->set('readme', false);
+        $this->plugin->set('has_readme', 'No');
+      }
+    }
     /**
      * 6. js
      * Get Js.
