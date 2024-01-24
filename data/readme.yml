@@ -5,3 +5,9 @@ readme:
       name: Settings
     -
       name: Usage
+    -
+      name: Pages
+    -
+      name: Widgets
+    -
+      name: Methods
