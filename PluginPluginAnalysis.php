@@ -990,8 +990,12 @@ class PluginPluginAnalysis{
         $readme->set('readme/item/2/item/', array('name' => $v['name']));
       }elseif(substr($k, 0, 7)=='widget_'){
         $readme->set('readme/item/3/item/', array('name' => $v['name']));
-      }else{
+      }elseif(substr($k, 0, 6)=='event_'){
         $readme->set('readme/item/4/item/', array('name' => $v['name']));
+      }elseif(substr($k, 0, 11)=='__construct'){
+        $readme->set('readme/item/5/item/', array('name' => $v['name']));
+      }else{
+        $readme->set('readme/item/6/item/', array('name' => $v['name']));
       }
     }
     $readme = $this->readme_sort_item($readme, 2);

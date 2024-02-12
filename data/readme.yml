@@ -10,4 +10,8 @@ readme:
     -
       name: Widgets
     -
+      name: Event
+    -
+      name: Construct
+    -
       name: Methods
