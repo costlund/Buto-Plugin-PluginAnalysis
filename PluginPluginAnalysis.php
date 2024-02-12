@@ -394,6 +394,11 @@ class PluginPluginAnalysis{
     /**
      * 
      */
+    $data->set('md_content', '');
+    $data->set('md_content_links', '');
+    /**
+     * 
+     */
     if($data->get('file_yml_exist')){
       /**¨
        * 
@@ -429,6 +434,16 @@ class PluginPluginAnalysis{
     $element = wfDocument::getElementFromFolder(__DIR__, __FUNCTION__);
     $element->setByTag($data->get());
     wfDocument::renderElement($element);
+  }
+  private function readme_sort_item($readme, $item){
+    $temp = new PluginWfArray($readme->get("readme/item/$item/item"));
+    $temp->sort('name');
+    $temp2 = array();
+    foreach($temp->get() as $k => $v){
+      $temp2[] = $v;
+    }
+    $readme->set("readme/item/$item/item", $temp2);
+    return $readme;
   }
   public function page_i18n_form(){
     wfPlugin::enable('form/form_v1');
@@ -961,6 +976,28 @@ class PluginPluginAnalysis{
     $contents = wfPhpfunc::str_replace("Buto-Plugin-_", "Buto-Plugin-".wfPlugin::to_camel_case($plugin_name), $contents);
     $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.yml';
     file_put_contents($filename, $contents);
+    /**
+     * Open readme and put content from class.
+     */
+    wfPlugin::includeonce('wf/editor');
+    wfPlugin::includeonce($plugin_name);
+    $wf_editor = new PluginWfEditor();
+    $reflection = $wf_editor::getReflectionClass(wfSettings::getPluginObj($plugin_name, false));
+    $reflection = new PluginWfArray($reflection);
+    $readme = new PluginWfYml($filename);
+    foreach($reflection->get('methods') as $k => $v){
+      if(substr($k, 0, 5)=='page_'){
+        $readme->set('readme/item/2/item/', array('name' => $v['name']));
+      }elseif(substr($k, 0, 7)=='widget_'){
+        $readme->set('readme/item/3/item/', array('name' => $v['name']));
+      }else{
+        $readme->set('readme/item/4/item/', array('name' => $v['name']));
+      }
+    }
+    $readme = $this->readme_sort_item($readme, 2);
+    $readme = $this->readme_sort_item($readme, 3);
+    $readme = $this->readme_sort_item($readme, 4);
+    $readme->save();
     /**
      * 
      */

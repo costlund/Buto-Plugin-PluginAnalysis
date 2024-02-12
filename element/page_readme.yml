@@ -45,3 +45,10 @@
     -
       type: div
       innerHTML: rs:md_content
+    -
+      type: div
+      settings:
+        disabled: rs:md_content
+      attribute: 
+        class: alert alert-warning
+      innerHTML: Readme content is missing!
