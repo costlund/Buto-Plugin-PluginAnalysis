@@ -439,8 +439,10 @@ class PluginPluginAnalysis{
     $temp = new PluginWfArray($readme->get("readme/item/$item/item"));
     $temp->sort('name');
     $temp2 = array();
-    foreach($temp->get() as $k => $v){
-      $temp2[] = $v;
+    if($temp->get()){
+      foreach($temp->get() as $k => $v){
+        $temp2[] = $v;
+      }
     }
     $readme->set("readme/item/$item/item", $temp2);
     return $readme;

@@ -1,5 +1,9 @@
-version: 1.63.1
+version: 1.63.2
 history:
+  1.63.2:
+    date: '2024-02-16'
+    title: Readme
+    description: 'Handle null values.'
   1.63.1:
     date: '2024-02-12'
     title: Readme
