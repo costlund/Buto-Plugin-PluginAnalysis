@@ -213,5 +213,8 @@ function PluginPluginAnalysis(){
       $('#modal_public_folder_files_one').modal('hide');
     });
   }
+  this.plugin_pages = function(btn){
+    PluginWfBootstrapjs.modal({id: 'modal_plugin_pages', label: btn.innerHTML, url: '/plugin_analysis/plugin_pages/id/'+btn.getAttribute('data-id')});
+  }
 }
 var PluginPluginAnalysis = new PluginPluginAnalysis();

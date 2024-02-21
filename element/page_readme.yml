@@ -1,4 +1,10 @@
 -
+  type: a
+  attribute:
+    onclick: PluginPluginAnalysis.plugin_pages(this)
+    data-id: rs:id
+  innerHTML: 'Plugin pages'
+-
   type: div
   settings:
     enabled: rs:file_yml_exist

@@ -381,6 +381,7 @@ class PluginPluginAnalysis{
     $id = wfRequest::get('id');
     $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
     $data = new PluginWfArray();
+    $data->set('id', $id);
     $data->set('file_yml', wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.yml');
     $data->set('file_yml_exist', wfFilesystem::fileExist($data->get('file_yml')));
     $data->set('file_md', wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.md');
@@ -981,12 +982,30 @@ class PluginPluginAnalysis{
     /**
      * Open readme and put content from class.
      */
-    wfPlugin::includeonce('wf/editor');
+    $readme = $this->getReadme($plugin_name);
+    $readme->save();
+    /**
+     * 
+     */
+    exit("File $filename was created!");
+  }
+  private function getReadme($plugin_name, $dry = false){
+    $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.yml';
+    $readme = new PluginWfYml($filename);
+    /**
+     * 
+     */
+    if($dry){
+      return $readme;
+    }
+    /**
+     * 
+     */
+   wfPlugin::includeonce('wf/editor');
     wfPlugin::includeonce($plugin_name);
     $wf_editor = new PluginWfEditor();
     $reflection = $wf_editor::getReflectionClass(wfSettings::getPluginObj($plugin_name, false));
     $reflection = new PluginWfArray($reflection);
-    $readme = new PluginWfYml($filename);
     foreach($reflection->get('methods') as $k => $v){
       if(substr($k, 0, 5)=='page_'){
         $readme->set('readme/item/2/item/', array('name' => $v['name']));
@@ -1003,11 +1022,7 @@ class PluginPluginAnalysis{
     $readme = $this->readme_sort_item($readme, 2);
     $readme = $this->readme_sort_item($readme, 3);
     $readme = $this->readme_sort_item($readme, 4);
-    $readme->save();
-    /**
-     * 
-     */
-    exit("File $filename was created!");
+    return $readme;
   }
   public function page_manifest_create(){
     /**
@@ -1861,5 +1876,18 @@ class PluginPluginAnalysis{
   private function replace_slash_to_dot($str){
     $str = wfPhpfunc::str_replace('/', ".", $str);
     return $str;
+  }
+  public function page_plugin_pages(){
+    $id = wfRequest::get('id');
+    $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
+    $readme = $this->getReadme($plugin_name, true);
+    $links = array();
+    if($readme->get('readme/item/2/item')){
+      foreach($readme->get('readme/item/2/item') as $k => $v){
+        $page = substr($v['name'], 5);
+        $links[] = wfDocument::createHtmlElement('div', array(wfDocument::createHtmlElement('a', $page, array('href' => "/?webmaster_plugin=$plugin_name&page=$page", 'target' => '_blank'))));
+      }
+    }
+    wfDocument::renderElement($links);
   }
 }
