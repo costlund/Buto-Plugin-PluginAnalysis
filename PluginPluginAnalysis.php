@@ -338,7 +338,7 @@ class PluginPluginAnalysis{
     $folder_exist = wfFilesystem::fileExist($i18n_folder);
     $result = new PluginWfArray();
     if($folder_exist){
-      $i18n_files = wfFilesystem::getScandir($i18n_folder);
+      $i18n_files = wfFilesystem::getScandir($i18n_folder, array('.yml'));
       /*
        * Add data.
        */
