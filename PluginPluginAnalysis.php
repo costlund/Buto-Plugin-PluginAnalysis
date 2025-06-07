@@ -1001,17 +1001,19 @@ class PluginPluginAnalysis{
     $reflection = $wf_editor::getReflectionClass(wfSettings::getPluginObj($plugin_name, false));
     $reflection = new PluginWfArray($reflection);
     if(!$dry && $readme->file_exists || $dry && !$readme->file_exists){
-      foreach($reflection->get('methods') as $k => $v){
-        if(substr($k, 0, 5)=='page_'){
-          $readme->set('readme/item/2/item/', array('name' => $v['name']));
-        }elseif(substr($k, 0, 7)=='widget_'){
-          $readme->set('readme/item/3/item/', array('name' => $v['name']));
-        }elseif(substr($k, 0, 6)=='event_'){
-          $readme->set('readme/item/4/item/', array('name' => $v['name']));
-        }elseif(substr($k, 0, 11)=='__construct'){
-          $readme->set('readme/item/5/item/', array('name' => $v['name']));
-        }else{
-          $readme->set('readme/item/6/item/', array('name' => $v['name']));
+      if($reflection->get('methods')){
+        foreach($reflection->get('methods') as $k => $v){
+          if(substr($k, 0, 5)=='page_'){
+            $readme->set('readme/item/2/item/', array('name' => $v['name']));
+          }elseif(substr($k, 0, 7)=='widget_'){
+            $readme->set('readme/item/3/item/', array('name' => $v['name']));
+          }elseif(substr($k, 0, 6)=='event_'){
+            $readme->set('readme/item/4/item/', array('name' => $v['name']));
+          }elseif(substr($k, 0, 11)=='__construct'){
+            $readme->set('readme/item/5/item/', array('name' => $v['name']));
+          }else{
+            $readme->set('readme/item/6/item/', array('name' => $v['name']));
+          }
         }
       }
     }

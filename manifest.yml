@@ -1,5 +1,9 @@
-version: 1.64.1
+version: 1.64.2
 history:
+  1.64.2:
+    date: '2025-06-07'
+    title: Readme
+    description: 'Handle if no methods in method getReadme().'
   1.64.1:
     date: '2024-03-05'
     title: Readme
