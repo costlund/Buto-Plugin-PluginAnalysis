@@ -228,6 +228,25 @@
           innerHTML:
             -
               type: strong
+              attribute:
+                class: content-colon
+              innerHTML: License
+            - 
+              type: span
+              innerHTML: rs:has_license_text
+            -
+              type: a
+              settings:
+                disabled: rs:has_license
+              attribute:
+                data-url_id: rs:url_id
+                onclick: PluginPluginAnalysis.license_create(this)
+              innerHTML: Create
+        -
+          type: div
+          innerHTML:
+            -
+              type: strong
               innerHTML: Files
             -
               type: span

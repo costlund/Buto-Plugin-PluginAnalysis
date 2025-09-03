@@ -200,6 +200,9 @@
                           innerHTML: Version
                         -
                           type: th
+                          innerHTML: License
+                        -
+                          type: th
                           innerHTML: Conflict
                         -
                           type: th

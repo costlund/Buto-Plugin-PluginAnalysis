@@ -28,6 +28,9 @@ innerHTML:
     innerHTML: rs:version_manifest
   -
     type: td
+    innerHTML: rs:has_license_text
+  -
+    type: td
     innerHTML: rs:conflict
   -
     type: td

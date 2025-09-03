@@ -31,6 +31,10 @@ function PluginPluginAnalysis(){
     var id = element.getAttribute('data-url_id');
     PluginWfBootstrapjs.modal({id: 'modal_manifest_create', label: 'Readme create', url: '/plugin_analysis/readme_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
   }
+  this.license_create = function(element){
+    var id = element.getAttribute('data-url_id');
+    PluginWfBootstrapjs.modal({id: 'modal_license_create', label: 'License create', url: '/plugin_analysis/license_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});
+  }
   this.js_create = function(element){
     var id = element.getAttribute('data-url_id');
     PluginWfBootstrapjs.modal({id: 'modal_js_create', label: 'Js create', url: '/plugin_analysis/js_create/id/'+id, resizable: true, footer: '', footer_btn_close: true, footer_btn_close_text: 'Close'});

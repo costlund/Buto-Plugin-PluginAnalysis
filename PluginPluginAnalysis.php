@@ -989,6 +989,33 @@ class PluginPluginAnalysis{
      */
     exit("File $filename was created!");
   }
+  public function page_license_create(){
+    /**
+     * 
+     */
+    $this->setPlugin();
+    if($this->plugin->get('has_license')){
+      exit('Has already license.');
+    }
+    /**
+     * 
+     */
+    $id = wfRequest::get('id');
+    $plugin_name = wfPhpfunc::str_replace('_A_DOT_', "/", $id);
+    /**
+     * README.md
+     */
+    $contents = file_get_contents(__DIR__.'/data/license_copy');
+    $contents = wfPhpfunc::str_replace("[year]", date('Y'), $contents);
+    $contents = wfPhpfunc::str_replace("[developer_name]", wfGlobals::get('developer/name'), $contents);
+    wfHelp::textarea_dump($contents);
+    $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/LICENSE';
+    file_put_contents($filename, $contents);
+    /**
+     * 
+     */
+    exit("File $filename was created!");
+  }
   private function getReadme($plugin_name, $dry = false){
     $filename = wfGlobals::getAppDir().'/plugin/'.$plugin_name.'/readme.yml';
     $readme = new PluginWfYml($filename);
@@ -1691,6 +1718,12 @@ class PluginPluginAnalysis{
       $this->setManifest($key, $value);
     }
     /**
+     * License
+     */
+    foreach ($this->plugins->get() as $key => $value) {
+      $this->setLicense($key, $value);
+    }
+    /**
      * Manage data...
      */
     foreach ($this->plugins->get() as $key => $value) {
@@ -1780,6 +1813,17 @@ class PluginPluginAnalysis{
       $this->plugins->set("$key/has_manifest", 'No');
       $this->plugins->set("$key/manifest", null);
       $this->plugins->set("$key/version_manifest", null);
+    }
+  }
+  private function setLicense($key, $value){
+    $item = new PluginWfArray($value);
+    $filename = wfGlobals::getAppDir().'/plugin/'.$item->get('name').'/LICENSE';
+    if(wfFilesystem::fileExist($filename)){
+      $this->plugins->set("$key/has_license_text", 'Yes');
+      $this->plugins->set("$key/has_license", true);
+    }else{
+      $this->plugins->set("$key/has_license_text", 'No');
+      $this->plugins->set("$key/has_license", false);
     }
   }
   public function page_git(){
