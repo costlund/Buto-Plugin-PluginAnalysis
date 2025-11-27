@@ -1663,7 +1663,12 @@ class PluginPluginAnalysis{
           $plugin->set($value_dot.'/git/active_branch', $git->active_branch());
           $plugin->set($value_dot.'/git/remote_get_url_origin', $git->remote_get_url_origin());
         } catch (Exception $exc) {
-          $plugin->set($value_dot.'/git/has', 'Error ('.$exc->getMessage().')');
+          /**
+           * 
+           */
+          $message = $exc->getMessage();
+          $message = str_replace("'", "", $message);
+          $plugin->set($value_dot.'/git/has', 'Error ('.$message.')');
         }
       }
       /**

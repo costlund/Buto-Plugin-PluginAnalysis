@@ -1,5 +1,11 @@
-version: 1.65.0
+version: 1.65.1
 history:
+  1.65.1:
+    date: '2025-11-27'
+    title: Nginx
+    description: |
+      When using Nginx a git error occure.
+      Error (fatal: detected dubious ownership in repository at (plugin path). To add an exception for this directory, call:	git config --global --add safe.directory (plugin path).
   1.65.0:
     date: '2025-09-03'
     title: License
