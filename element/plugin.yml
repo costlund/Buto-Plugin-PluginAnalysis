@@ -358,6 +358,24 @@
               innerHTML: Include method
         -
           type: div
+          innerHTML:
+            -
+              type: strong
+              innerHTML:
+                -
+                  type: span
+                  innerHTML: '/js/'
+                -
+                  type: span
+                  innerHTML: rs:js_name
+            -
+              type: a
+              attribute:
+                data-url_id: rs:url_id
+                onclick: PluginPluginAnalysis.js_create_js(this)
+              innerHTML: Create
+        -
+          type: div
           attribute:
             class: row
           innerHTML:

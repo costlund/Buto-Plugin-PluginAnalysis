@@ -952,6 +952,52 @@ class PluginPluginAnalysis{
     wfFilesystem::createFile($filename_web, $contents);
     exit("File $filename and $filename_web was created !");
   }
+  public function page_js_create_js(){
+    /**
+     * 
+     */
+    $this->setPlugin();
+    /**
+     * 
+     */
+    $filename = wfGlobals::getAppDir().'/plugin/'.$this->plugin->get('name').'/js/'.$this->plugin->get('js_name');
+    $exist = false;
+    /**
+     * 
+     */
+    if(wfFilesystem::fileExist($filename)){
+      $exist = true;
+    }else{
+      /**
+       * 
+       */
+      $contents = file_get_contents(__DIR__.'/data/PluginXxxYyy.js');
+      $contents = wfPhpfunc::str_replace("PluginXxxYyy", "Plugin".wfPlugin::to_camel_case($this->plugin->get('name')), $contents);
+      wfFilesystem::createFile($filename, $contents);
+    }
+    /**
+     * 
+     */
+    $element = wfDocument::getElementFromFolder(__DIR__, __FUNCTION__);
+    $element->setByTag(array('exist' => $exist));
+    /**
+     * 
+     */
+    $textarea_yml = $element->getById('textarea_yml');
+    $textarea_yml->set('innerHTML', str_replace('[name]', $this->plugin->get('name'), $textarea_yml->get('innerHTML')));
+    $textarea_yml->set('innerHTML', str_replace('[js_name]', $this->plugin->get('js_name'), $textarea_yml->get('innerHTML')));
+    $element->setById('textarea_yml', 'innerHTML', $textarea_yml->get('innerHTML'));
+    /**
+     * 
+     */
+    $textarea_yml_theme = $element->getById('textarea_yml_theme');
+    $textarea_yml_theme->set('innerHTML', str_replace('[name]', $this->plugin->get('name'), $textarea_yml_theme->get('innerHTML')));
+    $element->setById('textarea_yml_theme', 'innerHTML', $textarea_yml_theme->get('innerHTML'));
+    /**
+     * 
+     */
+    wfDocument::renderElement($element);
+  }
   public function page_readme_create(){
     /**
      * 

@@ -1,5 +1,9 @@
-version: 1.65.1
+version: 1.66.0
 history:
+  1.66.0:
+    date: '2025-12-03'
+    title: Js
+    description: Creation of plugin js file inclusive code and yml proposal.
   1.65.1:
     date: '2025-11-27'
     title: Nginx

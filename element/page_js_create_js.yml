@@ -1,0 +1,64 @@
+
+-
+  type: div
+  settings:
+    enabled: rs:exist
+  attribute: 
+    class: alert alert-warning
+  innerHTML: File already exist!
+-
+  type: div
+  settings:
+    disabled: rs:exist
+  attribute: 
+    class: alert alert-success
+  innerHTML: File was created!
+-
+  type: strong
+  innerHTML: Code for inclusion
+-
+  type: textarea
+  attribute:
+    style:
+      height: 100px
+      width: 100%
+  innerHTML: |
+    public function widget_include(){
+      wfDocument::renderElementFromFolder(__DIR__, __FUNCTION__);
+    }
+-
+  type: strong
+  innerHTML: Yml in file /element/widget_include.yml
+-
+  type: textarea
+  attribute:
+    id: textarea_yml
+    style:
+      height: 240px
+      width: 100%
+  innerHTML: |
+    -
+      type: widget
+      data:
+        plugin: 'wf/embed'
+        method: embed
+        data:
+          type: script
+          file: /plugin/[name]/js/[js_name]
+
+
+-
+  type: strong
+  innerHTML: Yml to include in theme
+-
+  type: textarea
+  attribute:
+    id: textarea_yml_theme
+    style:
+      height: 140px
+      width: 100%
+  innerHTML: |
+    type: widget
+    data:
+      plugin: [name]
+      method: include
