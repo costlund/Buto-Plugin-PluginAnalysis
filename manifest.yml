@@ -1,5 +1,9 @@
-version: 1.66.0
+version: 1.67.0
 history:
+  1.67.0:
+    date: '2026-01-23'
+    title: Js
+    description: 'Set memory_limit to 2048M.'
   1.66.0:
     date: '2025-12-03'
     title: Js

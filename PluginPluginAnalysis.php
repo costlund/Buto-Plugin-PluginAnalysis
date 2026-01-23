@@ -11,6 +11,7 @@ class PluginPluginAnalysis{
      * Time limit.
      */
     set_time_limit(60*5);
+    ini_set('memory_limit', '2048M');
     /**
      * 
      */
