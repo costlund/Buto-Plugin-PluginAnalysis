@@ -1568,6 +1568,15 @@ class PluginPluginAnalysis{
     $files=array();
     foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $startfolder, RecursiveDirectoryIterator::KEY_AS_PATHNAME ), RecursiveIteratorIterator::CHILD_FIRST ) as $file => $info ) {
         if( $info->isFile() && $info->isReadable() ){
+            /**
+             * Skip git folders.
+             */
+            if(strstr($info->getPathname(), '/.git/')){
+              continue;
+            }
+            /**
+             * 
+             */
             $files[substr($info->getPathname(), wfPhpfunc::strlen($dir))]=array('size'=> filesize($info->getPathname()) );
         }
     }

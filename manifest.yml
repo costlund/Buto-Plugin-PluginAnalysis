@@ -1,5 +1,9 @@
-version: 1.67.0
+version: 1.68.0
 history:
+  1.68.0:
+    date: '2026-04-16'
+    title: Git
+    description: 'Skip Git folder in method scan_dir.'
   1.67.0:
     date: '2026-01-23'
     title: Js
